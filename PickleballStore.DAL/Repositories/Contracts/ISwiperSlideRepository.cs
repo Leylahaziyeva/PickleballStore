@@ -2,8 +2,8 @@
 
 namespace PickleballStore.DAL.Repositories.Contracts
 {
-    public interface ISwiperSlideRepository : IRepository<SwiperSlide>
+    public interface ISliderRepository : IRepository<Slider>
     {
-        Task<List<SwiperSlide>> GetSliderByIdAsync(int id);
+        Task<List<Slider>> GetSliderByIdAsync(int id);
     }
 }

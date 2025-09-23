@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Identity;
+using PickleballStore.BLL;
+using PickleballStore.BLL.Constants;
+using PickleballStore.DAL;
 using PickleballStore.DAL.DataContext;
 using PickleballStore.DAL.DataContext.Entities;
 
@@ -6,15 +9,16 @@ namespace PickleballStore.MVC
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            //builder.Services.AddDataAccessLayerServices(builder.Configuration);
-            //builder.Services.AddBussinessLogicLayerServices();
+            builder.Services.AddDataAccessLayerServices(builder.Configuration);
+            builder.Services.AddBussinessLogicLayerServices();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
             {
@@ -28,6 +32,11 @@ namespace PickleballStore.MVC
                 options.Lockout.MaxFailedAccessAttempts = 3;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+            //FilePathConstants.ReviewImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "reviews");
+            FilePathConstants.ProductImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "products");
+            FilePathConstants.ProfileImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "users");
+            FilePathConstants.CategoryImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "categories");
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -38,6 +47,12 @@ namespace PickleballStore.MVC
                 app.UseHsts();
             }
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var dataInitializer = scope.ServiceProvider.GetRequiredService<DataInitializer>();
+                await dataInitializer.InitializeAsync();
+            }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -45,11 +60,15 @@ namespace PickleballStore.MVC
 
             app.UseAuthorization();
 
+            //app.MapControllerRoute(
+            //   name: "areas",
+            //   pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

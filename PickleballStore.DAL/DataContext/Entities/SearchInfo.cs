@@ -2,8 +2,10 @@
 {
     public class SearchInfo : TimeStample
     {
-        public string? Placeholder { get; set; }
-        public string? ActionUrl { get; set; }
-        public string? Icon { get; set; }
+        public string Title { get; set; } = "Search our site";
+        public string Placeholder { get; set; } = "Search";
+        public string ActionUrl { get; set; } = "/products/search";
+        public string Icon { get; set; } = "icon-search";
+        public ICollection<SearchQuickLink> QuickLinks { get; set; } = [];
     }
 }

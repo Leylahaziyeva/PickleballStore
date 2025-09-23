@@ -2,8 +2,7 @@
 {
     public class FooterBottom : TimeStample
     {
-        public required string Copyright { get; set; }
-        public required string PaymentMethods { get; set; }
-        public required string PaymentIcons { get; set; }
+        public string Copyright { get; set; } = null!;
+        public string PaymentIcons { get; set; } = null!;
     }
 }

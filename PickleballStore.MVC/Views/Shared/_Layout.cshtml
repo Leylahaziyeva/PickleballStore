@@ -1,49 +1,108 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+
+<!-- Mirrored from themesflat.co/html/ecomus/home-pickleball.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Jul 2025 16:14:57 GMT -->
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PickleballStore.MVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PickleballStore.MVC.styles.css" asp-append-version="true" />
+    <meta charset="utf-8">
+    <title>Ecomus - Ultimate HTML</title>
+
+    <meta name="author" content="themesflat.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description"
+          content="Themesflat Ecomus - A modern and versatile eCommerce template designed for various online stores, including fashion, furniture, electronics, and more. SEO-friendly, fast-loading, and highly customizable.">
+
+    <!-- font -->
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <!-- Icons -->
+    <link rel="stylesheet" href="fonts/font-icons.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/image-compare-viewer.min.css">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+
+    <!-- Favicon and Touch Icons  -->
+    <link rel="shortcut icon" href="images/logo/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="images/logo/favicon.png">
+
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PickleballStore.MVC</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+<body class="preload-wrapper">
+    <!-- RTL -->
+    <a href="#" id="toggle-rtl" class="tf-btn animate-hover-btn btn-fill">RTL</a>
+    <!-- /RTL  -->
+    <!-- preload -->
+    <div class="preload preload-container">
+        <div class="preload-logo">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <!-- /preload -->
+    <div id="wrapper">
+        <!-- Announcement Bar -->
+       @*  <div class="announcement-bar bg_dark-purple">
+            <div class="px_15 lg-px_40">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-md-4 col-12 text-center wrap-announcement-bar-2">
+                        <div dir="ltr" class="swiper tf-sw-top_bar" data-preview="1" data-space="0" data-loop="true"
+                             data-speed="1000" data-delay="2000">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <p class="noti-bar-text text-white fw-5">Welcome to our store</p>
+                                </div>
+                                <div class="swiper-slide">
+                                    <p class="noti-bar-text text-white fw-5">The best HTML theme</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="navigation-topbar nav-next-topbar"><span class="icon icon-arrow-left"></span></div>
+                        <div class="navigation-topbar nav-prev-topbar"><span class="icon icon-arrow-right"></span></div>
+                    </div>
                 </div>
+                <span class="icon-close close-announcement-bar"></span>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        </div> *@
+        <!-- /Announcement Bar -->
+
+        <!-- header -->
+        @await Component.InvokeAsync("Header")
+        <!-- /header -->
+
             @RenderBody()
-        </main>
+
+        <!-- footer -->
+        @await Component.InvokeAsync("Footer")
+        <!-- /footer -->
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - PickleballStore.MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <!-- gotop -->
+    <button id="goTop">
+        <span class="border-progress"></span>
+        <span class="icon icon-arrow-up"></span>
+    </button>
+    <!-- /gotop -->
+    <!-- Javascript -->
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/swiper-bundle.min.js"></script>
+    <script src="~/js/count-down.js"></script>
+    <script src="~/js/carousel.js"></script>
+    <script src="~/js/bootstrap-select.min.js"></script>
+    <script src="~/js/lazysize.min.js"></script>
+    <script src="~/js/bootstrap-select.min.js"></script>
+    <script src="~/js/drift.min.js"></script>
+    <script src="~/js/wow.min.js"></script>
+    <script src="~/js/multiple-modal.js"></script>
+    <script src="~/js/main.js"></script>
+
+    <script src="~/js/photoswipe-lightbox.umd.min.js"></script>
+    <script src="~/js/photoswipe.umd.min.js"></script>
+    <script src="~/js/zoom.js"></script>
+
 </body>
+
+<!-- Mirrored from themesflat.co/html/ecomus/home-pickleball.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Jul 2025 16:15:01 GMT -->
 </html>

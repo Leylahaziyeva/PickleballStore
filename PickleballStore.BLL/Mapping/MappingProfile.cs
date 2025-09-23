@@ -1,4 +1,8 @@
 ﻿using AutoMapper;
+using PickleballStore.BLL.ViewModels.Category;
+using PickleballStore.BLL.ViewModels.Product;
+using PickleballStore.BLL.ViewModels.Slider;
+using PickleballStore.DAL.DataContext.Entities;
 
 namespace PickleballStore.BLL.Mapping
 {
@@ -6,7 +10,29 @@ namespace PickleballStore.BLL.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<Category, CategoryViewModel>().ReverseMap();
+            CreateMap<Category, CreateCategoryViewModel>().ReverseMap();
+            CreateMap<Category, UpdateCategoryViewModel>().ReverseMap();
 
+            CreateMap<Product, ProductViewModel>()
+                .ForMember(x => x.CategoryName, opt => opt.MapFrom(src => src.Category == null ? "" : src.Category.Name))
+                .ForMember(x => x.ImageNames, opt => opt.MapFrom(src => src.Images.Select(i => i.ImageName).ToList()))
+                .ReverseMap();
+
+            CreateMap<Product, CreateProductViewModel>().ReverseMap();
+            CreateMap<Product, UpdateProductViewModel>().ReverseMap();
+
+            CreateMap<Slider, SliderViewModel>().ReverseMap();
+            CreateMap<Slider, CreateSliderViewModel>().ReverseMap();
+            CreateMap<Slider, UpdateSliderViewModel>().ReverseMap();
+
+            //CreateMap<Review, CreateReviewViewModel>().ReverseMap();
+            //CreateMap<Review, UpdateReviewViewModel>().ReverseMap();
+            //CreateMap<Review, ReviewViewModel>()
+            //    .ForMember(x => x.ProductName, opt => opt.MapFrom(src => src.Product == null ? "" : src.Product.Name))
+            //    .ForMember(x => x.AppUserName, opt => opt.MapFrom(src => src.AppUser == null ? "" : src.AppUser.UserName))
+            //    .ForMember(x => x.AppUserProfileImageName, opt => opt.MapFrom(src => src.AppUser == null ? "" : src.AppUser.ProfileImageName))
+            //    .ReverseMap();
         }
     }
 }

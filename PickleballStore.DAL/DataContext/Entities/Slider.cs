@@ -1,9 +1,15 @@
 ﻿namespace PickleballStore.DAL.DataContext.Entities
 {
-    public class SwiperSlide : TimeStample
+    public class Slider : TimeStample
     {
-        public required string ImageUrl { get; set; } 
-        public required string Title { get; set; } 
-        public required decimal Price { get; set; } 
+        public string? SubTitle { get; set; } 
+
+        public string Title { get; set; } = null!; 
+
+        public decimal? OldPrice { get; set; }
+
+        public decimal? NewPrice { get; set; }
+
+        public string ImageName { get; set; } = null!; 
     }
 }

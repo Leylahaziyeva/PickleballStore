@@ -13,17 +13,16 @@ namespace PickleballStore.DAL.DataContext
 
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
-        //public DbSet<ProductImage> ProductImages { get; set; } = null!;
-        //public DbSet<ProductTag> ProductTags { get; set; } = null!;
+        public DbSet<ProductImage> ProductImages { get; set; } = null!;
         //public DbSet<Review> Reviews { get; set; } = null!;
-        //public DbSet<Tag> Tags { get; set; } = null!;
         public DbSet<ContactInfo> ContactInfos { get; set; } = null!;
         public DbSet<FooterBottom> FooterBottoms { get; set; } = null!;
         public DbSet<Logo> Logos { get; set; } = null!;
         public DbSet<SubscribeForm> SubscribeForms { get; set; } = null!;
         public DbSet<SocialLink> SocialLinks { get; set; } = null!;
-        public DbSet<SwiperSlide> SwiperSlides { get; set; } = null!;
+        public DbSet<Slider> Sliders { get; set; } = null!;
         public DbSet<SearchInfo> SearchInfos { get; set; } = null!;
+        public DbSet<SearchQuickLink> SearchQuickLinks { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
