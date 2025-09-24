@@ -18,8 +18,7 @@ namespace PickleballStore.DAL.Repositories
         {
             return await _dbContext.Products
                 .Include(p => p.Category)
-                //.Include(p => p.Images)
-                //.Include(p => p.ProductTags).ThenInclude(pt => pt.Tag)
+                .Include(p => p.Images)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
     }

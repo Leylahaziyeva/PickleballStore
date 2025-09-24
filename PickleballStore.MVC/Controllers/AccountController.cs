@@ -36,7 +36,7 @@ namespace PickleballStore.MVC.Controllers
                 return View(model);
             }
 
-            var profileImageName = await _fileService.GenerateFile(model.ProfileImage, FilePathConstants.ProfileImagePath);
+            var profileImageName = await _fileService.GenerateFile(model.ProfileImage!, FilePathConstants.ProfileImagePath);
 
             var user = new AppUser
             {
@@ -97,7 +97,7 @@ namespace PickleballStore.MVC.Controllers
 
             if (result.IsLockedOut)
             {
-                ModelState.AddModelError("", $"You are banned {user.LockoutEnd.Value.AddHours(4).ToString()}");
+                ModelState.AddModelError("", $"You are banned {user.LockoutEnd!.Value.AddHours(4).ToString()}");
 
                 return View(model);
             }

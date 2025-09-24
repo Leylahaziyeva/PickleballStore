@@ -6,7 +6,7 @@ namespace PickleballStore.MVC.Models
     {
         public string? FullName { get; set; }
         public required string Username { get; set; }
-        public IFormFile ProfileImage { get; set; }
+        public IFormFile? ProfileImage { get; set; }
 
         [DataType(DataType.EmailAddress)]
         public required string Email { get; set; }

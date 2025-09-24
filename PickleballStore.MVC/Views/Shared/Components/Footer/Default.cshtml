@@ -1,5 +1,146 @@
 ﻿@model FooterViewModel
 
+<!-- footer -->
+<footer id="footer" class="footer background-black">
+    <div class="footer-wrap wow fadeIn" data-wow-delay="0s">
+        <div class="footer-body">
+            <div class="container">
+                <div class="row">
+                    <!-- Column 1: Info -->
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="footer-infor">
+                            <div class="footer-logo">
+                                <a href="@Url.Action("Index","Home")">
+                                    <img src="@Model.Logo?.LogoPath" alt="Logo" />
+                                </a>
+                            </div>
+                            <ul>
+                                <li>
+                                    <p>Address: @Model.FooterInfo.Address</p>
+                                </li>
+                                <li>
+                                    <p>Email: <a href="#">@Model.FooterInfo.Email</a></p>
+                                </li>
+                                <li>
+                                    <p>Phone: <a href="#">@Model.FooterInfo.Phone</a></p>
+                                </li>
+                            </ul>
+                            <a href="@Url.Action("Contact","Home")" class="tf-btn btn-line">
+                                Get direction<i class="icon icon-arrow1-top-left"></i>
+                            </a>
+
+                            <ul class="tf-social-icon d-flex gap-10 style-white">
+                                @foreach (var social in Model.SocialLinks)
+                                {
+                                    <li>
+                                        <a href="@social.Url" class="box-icon w_34 round social-line" title="@social.Name">
+                                            <i class="icon fs-14 @social.IconClass"></i>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Help -->
+                    <div class="col-xl-3 col-md-6 col-12 footer-col-block">
+                        <div class="footer-heading"><h6>Help</h6></div>
+                        <ul class="footer-menu-list tf-collapse-content">
+                            <li><a href="/privacy-policy" class="footer-menu_item">Privacy Policy</a></li>
+                            <li><a href="/returns" class="footer-menu_item">Returns + Exchanges</a></li>
+                            <li><a href="/shipping" class="footer-menu_item">Shipping</a></li>
+                            <li><a href="/terms" class="footer-menu_item">Terms &amp; Conditions</a></li>
+                            <li><a href="/faq" class="footer-menu_item">FAQ’s</a></li>
+                            <li><a href="/compare" class="footer-menu_item">Compare</a></li>
+                            <li><a href="/wishlist" class="footer-menu_item">My Wishlist</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3: About Us -->
+                    <div class="col-xl-3 col-md-6 col-12 footer-col-block">
+                        <div class="footer-heading"><h6>About us</h6></div>
+                        <ul class="footer-menu-list tf-collapse-content">
+                            <li><a href="/about-us" class="footer-menu_item">Our Story</a></li>
+                            <li><a href="/store" class="footer-menu_item">Visit Our Store</a></li>
+                            <li><a href="/contact" class="footer-menu_item">Contact Us</a></li>
+                            <li><a href="/account" class="footer-menu_item">Account</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 4: Newsletter -->
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="footer-newsletter footer-col-block">
+                            <div class="footer-heading"><h6>Sign Up for Email</h6></div>
+                            <div class="tf-collapse-content">
+                                <div class="footer-menu_item">
+                                    @Model.NewsletterText
+                                </div>
+                                <form method="post" asp-controller="Newsletter" asp-action="Subscribe">
+                                    <fieldset class="email">
+                                        <input asp-for="NewsletterSubscription.Email" placeholder="Enter your email..." required />
+                                    </fieldset>
+                                    <div class="button-submit">
+                                        <button type="submit" class="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn">
+                                            Subscribe<i class="icon icon-arrow1-top-left"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="tf-cur">
+                                    <!-- Currencies -->
+                                    <div class="tf-currencies">
+                                        <select class="image-select center style-default type-currencies color-white">
+                                            @foreach (var currency in Model.Currencies)
+                                            {
+                                                <option data-thumbnail="@currency.FlagImageUrl" selected="@(currency.IsDefault)">
+                                                    @currency.Code @currency.Symbol | @currency.Country
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <!-- Languages -->
+                                    <div class="tf-languages">
+                                        <select class="image-select center style-default type-languages color-white">
+                                            @foreach (var lang in Model.Languages)
+                                            {
+                                                <option selected="@(lang.IsDefault)">@lang.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="footer-bottom-wrap d-flex gap-20 flex-wrap justify-content-between align-items-center">
+                            <div class="footer-menu_item">
+                                @Model.FooterBottom?.CopyrightText
+                            </div>
+                            <div class="tf-payment">
+                                @foreach (var payment in Model.PaymentMethods)
+                                {
+                                    <img src="@payment.ImageUrl" alt="@payment.Name" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- /footer -->
+
+
+@* <!-- footer -->
 <footer id="footer" class="footer background-black">
     <div class="footer-wrap wow fadeIn" data-wow-delay="0s">
         <div class="footer-body">
@@ -9,7 +150,7 @@
                         <div class="footer-infor">
                             <div class="footer-logo">
                                 <a href="index.html">
-                                    <img src="~/images/logo/logo-white.svg" alt="">
+                                    <img src="images/logo/logo-white.svg" alt="">
                                 </a>
                             </div>
                             <ul>
@@ -184,11 +325,11 @@
                         <div class="footer-bottom-wrap d-flex gap-20 flex-wrap justify-content-between align-items-center">
                             <div class="footer-menu_item">© 2025 Ecomus Store. All Rights Reserved</div>
                             <div class="tf-payment">
-                                <img src="~/images/payments/visa.png" alt="">
-                                <img src="~/images/payments/img-1.png" alt="">
-                                <img src="~/images/payments/img-2.png" alt="">
-                                <img src="~/images/payments/img-3.png" alt="">
-                                <img src="~/images/payments/img-4.png" alt="">
+                                <img src="images/payments/visa.png" alt="">
+                                <img src="images/payments/img-1.png" alt="">
+                                <img src="images/payments/img-2.png" alt="">
+                                <img src="images/payments/img-3.png" alt="">
+                                <img src="images/payments/img-4.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -197,3 +338,5 @@
         </div>
     </div>
 </footer>
+<!-- /footer -->
+ *@

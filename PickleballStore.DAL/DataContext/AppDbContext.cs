@@ -14,12 +14,17 @@ namespace PickleballStore.DAL.DataContext
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<ProductImage> ProductImages { get; set; } = null!;
+        public DbSet<ProductVariant> ProductVariants { get; set; } = null!;
+
         //public DbSet<Review> Reviews { get; set; } = null!;
-        public DbSet<ContactInfo> ContactInfos { get; set; } = null!;
-        public DbSet<FooterBottom> FooterBottoms { get; set; } = null!;
         public DbSet<Logo> Logos { get; set; } = null!;
-        public DbSet<SubscribeForm> SubscribeForms { get; set; } = null!;
+        public DbSet<FooterBottom> FooterBottoms { get; set; } = null!;
+        public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
         public DbSet<SocialLink> SocialLinks { get; set; } = null!;
+        public DbSet<FooterInfo> FooterInfos { get; set; } = null!;
+        public DbSet<NewsletterSubscription> NewsletterSubscriptions { get; set; } = null!;
+        public DbSet<Currency> Currencies { get; set; } = null!;
+        public DbSet<Language> Languages { get; set; } = null!;
         public DbSet<Slider> Sliders { get; set; } = null!;
         public DbSet<SearchInfo> SearchInfos { get; set; } = null!;
         public DbSet<SearchQuickLink> SearchQuickLinks { get; set; } = null!;

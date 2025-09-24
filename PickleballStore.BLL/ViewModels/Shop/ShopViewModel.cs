@@ -1,5 +1,6 @@
 ﻿using PickleballStore.BLL.ViewModels.Category;
 using PickleballStore.BLL.ViewModels.Product;
+using PickleballStore.BLL.ViewModels.ProductVariant;
 
 namespace PickleballStore.BLL.ViewModels.Shop
 {
@@ -7,6 +8,6 @@ namespace PickleballStore.BLL.ViewModels.Shop
     {
         public List<ProductViewModel> Products { get; set; } = [];
         public List<CategoryViewModel> Categories { get; set; } = [];
-        //public IList<string> TagNames { get; set; } = [];
+        public List<ProductVariantViewModel> ProductVariants { get; set; } = [];
     }
 }
