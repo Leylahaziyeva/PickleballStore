@@ -20,15 +20,15 @@ namespace PickleballStore.BLL.Services
         {
             var categories = await _categoryService.GetAllAsync(predicate: x => !x.IsDeleted);
 
-            var products = await _productService.GetAllAsync(predicate: x => !x.IsDeleted);
-
-            var Sliders = await _SliderService.GetAllAsync();
+            var products = (await _productService.GetAllAsync(predicate: x => !x.IsDeleted)).Take(6).ToList();
+                         
+            var sliders = await _SliderService.GetAllAsync();
 
             var homeViewModel = new HomeViewModel
             {
                 Categories = categories.ToList(),
-                Products = products.ToList(),
-                Sliders = Sliders.ToList(),
+                Products = products,
+                Sliders = sliders.ToList(),
             };
 
             return homeViewModel;

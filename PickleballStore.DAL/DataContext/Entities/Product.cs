@@ -14,11 +14,11 @@
 
         public string CoverImageName { get; set; } = null!;
 
-        public bool IsBestSeller { get; set; } // "Best seller" badge
+        public bool IsBestSeller { get; set; } 
 
-        public int LiveViewCount { get; set; } // "People are viewing"
+        public int LiveViewCount { get; set; } 
 
-        public int LiveInCarts { get; set; }   // "56 people have this"
+        public int LiveInCarts { get; set; }  
 
         public int QuantityAvailable { get; set; }
 
@@ -30,6 +30,8 @@
 
         public ICollection<ProductVariant> Variants { get; set; } = [];
 
-        //public ICollection<Review> Reviews { get; set; } = [];
+        public string? BadgeLabel { get; set; }
+        public string? BadgeCssClass { get; set; }       // "bg_red-2" və s.
+        public DateTime? CountdownEndDate { get; set; }  
     }
 }

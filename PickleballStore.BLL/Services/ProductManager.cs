@@ -30,8 +30,6 @@ namespace PickleballStore.BLL.Services
 
             var productViewModel = _mapper.Map<ProductViewModel>(product);
 
-            productViewModel.ImageNames = product.Images.Select(i => i.ImageName).ToList();
-
             productViewModel.CategoryName = product.Category?.Name;
 
             return productViewModel;

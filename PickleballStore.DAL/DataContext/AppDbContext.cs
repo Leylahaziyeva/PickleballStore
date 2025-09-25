@@ -26,7 +26,7 @@ namespace PickleballStore.DAL.DataContext
         public DbSet<Currency> Currencies { get; set; } = null!;
         public DbSet<Language> Languages { get; set; } = null!;
         public DbSet<Slider> Sliders { get; set; } = null!;
-        public DbSet<SearchInfo> SearchInfos { get; set; } = null!;
+        public DbSet<SearchSection> SearchSections { get; set; } = null!;
         public DbSet<SearchQuickLink> SearchQuickLinks { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)

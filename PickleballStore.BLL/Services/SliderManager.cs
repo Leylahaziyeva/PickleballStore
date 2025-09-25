@@ -6,7 +6,7 @@ using PickleballStore.DAL.Repositories.Contracts;
 
 namespace PickleballStore.BLL.Services
 {
-    internal class SliderManager : CrudManager<Slider, SliderViewModel, CreateSliderViewModel, UpdateSliderViewModel>, ISliderService
+    public class SliderManager : CrudManager<Slider, SliderViewModel, CreateSliderViewModel, UpdateSliderViewModel>, ISliderService
     {
         private readonly ISliderRepository _repository;
         private readonly IMapper _mapper;

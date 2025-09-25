@@ -4,7 +4,7 @@ namespace PickleballStore.BLL.ViewModels.Footer
 {
     public class FooterViewModel
     {
-        public Logo? Logo { get; set; } 
+        public Logo Logo { get; set; } = null!;
         public FooterInfo FooterInfo { get; set; } = null!;
         public List<SocialLink> SocialLinks { get; set; } = [];
         public NewsletterSubscription? NewsletterSubscription { get; set; }

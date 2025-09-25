@@ -6,7 +6,7 @@ namespace PickleballStore.BLL.ViewModels.Header
     public class HeaderViewModel
     {
         public Logo Logo { get; set; } = null!;
-        public SearchInfo? SearchInfo { get; set; }
+        public SearchSection? SearchSection { get; set; }
         public List<ProductViewModel>? InspirationProducts { get; set; }
     }
 }

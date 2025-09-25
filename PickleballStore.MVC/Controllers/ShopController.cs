@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PickleballStore.BLL.Services.Contracts;
+using PickleballStore.BLL.ViewModels.Shop;
 
 namespace PickleballStore.MVC.Controllers
 {
@@ -25,13 +26,33 @@ namespace PickleballStore.MVC.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Partial(int skip)
+        public async Task<IActionResult> ShopByCategory(int id)
         {
+            // Get all products including their category
             var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
 
-            var pagedProducts = products.Skip(skip).Take(3).ToList();
+            // Filter by category id
+            var categoryProducts = products.Where(p => p.CategoryId == id).ToList();
 
-            return PartialView("_ProductPartialForLoadMore", pagedProducts);
+            // Optional: Take first 3 products for homepage preview
+            var model = new ShopViewModel
+            {
+                Products = categoryProducts.Take(3).ToList()
+            };
+
+            ViewBag.ProductCount = categoryProducts.Count;
+
+            return View("Index", model); // Reuse the same Index view or create a new one
         }
+
+
+        //public async Task<IActionResult> Partial(int skip)
+        //{
+        //    var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
+
+        //    var pagedProducts = products.Skip(skip).Take(3).ToList();
+
+        //    return PartialView("_ProductPartialForLoadMore", pagedProducts);
+        //}
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace PickleballStore.DAL.DataContext.Entities
 {
-    public class SearchInfo : TimeStample
+    public class SearchSection : TimeStample
     {
         public string Title { get; set; } = "Search our site";
         public string Placeholder { get; set; } = "Search";

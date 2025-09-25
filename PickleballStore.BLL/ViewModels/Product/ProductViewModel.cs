@@ -1,4 +1,5 @@
-﻿using PickleballStore.BLL.ViewModels.ProductVariant;
+﻿using PickleballStore.BLL.ViewModels.ProductImage;
+using PickleballStore.BLL.ViewModels.ProductVariant;
 
 namespace PickleballStore.BLL.ViewModels.Product
 {
@@ -8,7 +9,7 @@ namespace PickleballStore.BLL.ViewModels.Product
 
         public string Name { get; set; } = null!;
 
-        public string DetailsUrl => $"{Name?.Replace(" ", "-").Replace("/", "-")}-{Id}";
+        public string DetailsUrl => $"{Name?.Replace(" ", "-").Replace("/", "-")}-{Id}".ToLower();
 
         public string Description { get; set; } = null!;
 
@@ -31,8 +32,12 @@ namespace PickleballStore.BLL.ViewModels.Product
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
 
-        public List<string> ImageNames { get; set; } = [];
+        public List<ProductImageViewModel> Images { get; set; } = [];
         public List<ProductVariantViewModel> Variants { get; set; } = [];
+
+        public string? BadgeLabel { get; set; }          // Məs: "-29%", "Hot"
+        public string? BadgeCssClass { get; set; }       // Məs: "bg_red-2"
+        public DateTime? CountdownEndDate { get; set; }  // Endirim üçün son tarix
 
         //public List<ReviewViewModel> Reviews { get; set; } = [];
     }

@@ -6,74 +6,60 @@
          data-centered="false" data-space="0" data-loop="false" data-auto-play="true" data-delay="1000"
          data-speed="1000">
         <div class="swiper-wrapper">
-            <div class="swiper-slide" lazy="true">
-                <div class="wrap-slider">
-                    <img class="lazyload" data-src="images/slider/pickleball1.jpg"
-                         src="images/slider/pickleball1.jpg" alt="slideshow" loading="lazy">
-                    <div class="box-content">
-                        <div class="container">
-                            <div class="card-box-2">
-                                <div class="fade-item fade-item-1 text-extra-heading text_white fw-8">
-                                    Frank <br>
-                                    lin
-                                </div>
-                                <div class="fade-item fade-item-1 title">
-                                    <a href="product-detail.html"
-                                       class="link text-white">
-                                        Selkirk Vanguard Power Air Invikta <br class="d-none d-md-block"> Midweight Pickleball Paddle
-                                    </a>
-                                </div>
-                                <div class="fade-item fade-item-2 price">
-                                    <span class="old-price">$274.99</span>
-                                    <span class="new-price text_primary">$279.99</span>
-                                </div>
-                                <div class="fade-item fade-item-3">
-                                    <a href="product-detail.html"
-                                       class="tf-btn btn-line btn-line-light collection-other-link fw-6">
-                                        <span>
-                                            Shop
-                                            now
-                                        </span><i class="icon icon-arrow1-top-left"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="swiper-slide" lazy="true">
-                <div class="wrap-slider">
-                    <img class="lazyload" data-src="images/slider/pickleball1.jpg"
-                         src="images/slider/pickleball1.jpg" alt="slideshow" loading="lazy">
-                    <div class="box-content">
-                        <div class="container">
-                            <div class="card-box-2">
-                                <div class="fade-item fade-item-1 text-extra-heading text_white fw-8">
-                                    Frank <br>
-                                    lin
-                                </div>
-                                <div class="fade-item fade-item-2 title">
-                                    <a href="product-detail.html"
-                                       class="link text_white">Franklin Signature Pickleball Paddle</a>
-                                </div>
-                                <span class="fade-item fade-item-3 price">
-                                    <span class="old-price">$139.99</span>
-                                    <span class="new-price text_primary">$100.00</span>
-                                </span>
-                                <div class="fade-item fade-item-4">
-                                    <a href="product-detail.html"
-                                       class="tf-btn btn-line btn-line-light collection-other-link fw-6">
-                                        <span>
-                                            Shop
-                                            now
-                                        </span><i class="icon icon-arrow1-top-left"></i>
-                                    </a>
+            @foreach (var slider in Model.Sliders)
+            {
+                <div class="swiper-slide" lazy="true">
+                    <div class="wrap-slider">
+                        <img class="lazyload"
+                             data-src="@Url.Content("~/images/slider/" + slider.ImageName)"
+                             src="@Url.Content("~/images/slider/" + slider.ImageName)"
+                             alt="@slider.Title"
+                             loading="lazy">
+                        <div class="box-content">
+                            <div class="container">
+                                <div class="card-box-2">
+                                    @if (!string.IsNullOrEmpty(slider.SubTitle))
+                                    {
+                                        <div class="fade-item fade-item-1 text-extra-heading text_white fw-8">
+                                            @Html.Raw(slider.SubTitle)
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(slider.Title))
+                                    {
+                                        <div class="fade-item fade-item-2 title">
+                                            <a asp-controller="Product"
+                                               asp-action="Details"
+                                               asp-route-id="@slider.ProductId"
+                                               class="link text-white">
+                                                @slider.Title
+                                            </a>
+                                        </div>
+                                    }
+
+                                    @if (slider.NewPrice.HasValue)
+                                    {
+                                        <div class="fade-item fade-item-3 price">
+                                            @if (slider.OldPrice.HasValue)
+                                            {
+                                                <span class="old-price">$@slider.OldPrice</span>
+                                            }
+                                            <span class="new-price text_primary">$@slider.NewPrice</span>
+                                        </div>
+                                    }
+
+                                    <div class="fade-item fade-item-4">
+                                        <a asp-controller="Product" asp-action="Details" asp-route-id="@slider.ProductId"
+                                           class="tf-btn btn-line btn-line-light collection-other-link fw-6">
+                                            <span>Shop now</span>
+                                            <i class="icon icon-arrow1-top-left"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
     <div class="wrap-pagination sw-absolute-3">
@@ -127,8 +113,7 @@
                 </div>
             </div>
             <span class="text-3 fw-7 text-uppercase title wow fadeInUp" data-wow-delay="0s">
-                SHOP BY
-                CATEGORIES
+                SHOP BY CATEGORIES
             </span>
         </div>
         <div class="row">
@@ -137,84 +122,35 @@
                      data-space-lg="30" data-space-md="30" data-space="15" data-loop="false"
                      data-auto-play="false">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide" lazy="true">
-                            <div class="collection-item style-left hover-img">
-                                <div class="collection-inner">
-                                    <a href="shop-default.html" class="collection-image img-style">
-                                        <img class="lazyload"
-                                             data-src="images/collections/pickleball-clothing.jpg"
-                                             src="images/collections/pickleball-clothing.jpg"
-                                             alt="collection-img">
-                                    </a>
-                                    <div class="collection-content left-0">
-                                        <a href="shop-default.html"
-                                           class="tf-btn collection-title hover-icon fs-15">
-                                            <span>Clothing</span><i class="icon icon-arrow1-top-left"></i>
+                        @foreach (var category in Model.Categories.Where(c => !c.IsDeleted))
+                        {
+                            <div class="swiper-slide" lazy="true">
+                                <div class="collection-item style-left hover-img">
+                                    <div class="collection-inner">
+                                        <a asp-controller="Shop" asp-action="ShopByCategory" asp-route-id="@category.Id"
+                                           class="collection-image img-style">
+                                            <img class="lazyload"
+                                                 data-src="@Url.Content($"~/images/collections/{category.ImageName}")"
+                                                 src="@Url.Content($"~/images/collections/{category.ImageName}")"
+                                                 alt="@category.Name">
                                         </a>
+                                        <div class="collection-content left-0">
+                                            <a asp-controller="Shop" asp-action="ShopByCategory" asp-route-id="@category.Id"
+                                               class="tf-btn collection-title hover-icon fs-15">
+                                                <span>@category.Name</span><i class="icon icon-arrow1-top-left"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="swiper-slide" lazy="true">
-                            <div class="collection-item style-left hover-img">
-                                <div class="collection-inner">
-                                    <a href="shop-default.html" class="collection-image img-style">
-                                        <img class="lazyload"
-                                             data-src="images/collections/pickleball-paddles.jpg"
-                                             src="images/collections/pickleball-paddles.jpg"
-                                             alt="collection-img">
-                                    </a>
-                                    <div class="collection-content left-0">
-                                        <a href="shop-default.html"
-                                           class="tf-btn collection-title hover-icon fs-15">
-                                            <span>Paddles</span><i class="icon icon-arrow1-top-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide" lazy="true">
-                            <div class="collection-item style-left hover-img">
-                                <div class="collection-inner">
-                                    <a href="shop-default.html" class="collection-image img-style">
-                                        <img class="lazyload"
-                                             data-src="images/collections/pickleball-accessories.jpg"
-                                             src="images/collections/pickleball-accessories.jpg"
-                                             alt="collection-demo-1">
-                                    </a>
-                                    <div class="collection-content left-0">
-                                        <a href="shop-default.html"
-                                           class="tf-btn collection-title hover-icon fs-15">
-                                            <span>Accessories</span><i class="icon icon-arrow1-top-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide" lazy="true">
-                            <div class="collection-item style-left hover-img">
-                                <div class="collection-inner">
-                                    <a href="shop-default.html" class="collection-image img-style">
-                                        <img class="lazyload" data-src="images/collections/pickleball-men.jpg"
-                                             src="images/collections/pickleball-men.jpg" alt="collection-demo-1">
-                                    </a>
-                                    <div class="collection-content left-0">
-                                        <a href="shop-default.html"
-                                           class="tf-btn collection-title hover-icon fs-15">
-                                            <span>Men</span><i class="icon icon-arrow1-top-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        }
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-md-4">
                 <div class="discovery-new-item">
                     <h5>Discovery all new items</h5>
-                    <a href="shop-collection-list.html"><i class="icon-arrow1-top-left"></i></a>
+                    <a asp-controller="Shop" asp-action="Index"><i class="icon-arrow1-top-left"></i></a>
                 </div>
             </div>
         </div>
@@ -222,300 +158,93 @@
 </section>
 <!-- /Categories -->
 <!-- Product -->
+<!-- Product -->
 <section class="flat-spacing-3">
     <div class="flat-title">
         <span class="title wow fadeInUp" data-wow-delay="0s">Pickleball Paddle Tiers</span>
         <p class="sub-title fs-18 text_black-2 wow fadeInUp" data-wow-delay="0s">
-            Choose from our range of
-            premium paddles that offer different levels of control and power.
+            Choose from our range of premium paddles that offer different levels of control and power.
         </p>
     </div>
-    <div class="tf-grid-layout tf-col-2 md-col-3 gap-0">
-        <div class="card-product type-line-padding">
-            <div class="card-product-wrapper">
-                <a href="product-detail.html" class="product-img">
-                    <img class="lazyload img-product" data-src="images/products/pickleball-black-1.jpg"
-                         src="images/products/pickleball-black-1.jpg" alt="image-product">
-                    <img class="lazyload img-hover" data-src="images/products/pickleball-blue-1.jpg"
-                         src="images/products/pickleball-blue-1.jpg" alt="image-product">
-                </a>
-                <div class="list-product-btn absolute-2">
-                    <a href="#quick_add" data-bs-toggle="modal"
-                       class="box-icon bg_white quick-add tf-btn-loading">
-                        <span class="icon icon-bag"></span>
-                        <span class="tooltip">Quick Add</span>
-                    </a>
-                    <a href="#" class="box-icon bg_white wishlist btn-icon-action">
-                        <span class="icon icon-heart"></span>
-                        <span class="tooltip">Add to Wishlist</span>
-                        <span class="icon icon-delete"></span>
-                    </a>
-                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft"
-                       class="box-icon bg_white compare btn-icon-action">
-                        <span class="icon icon-compare"></span>
-                        <span class="tooltip">Add to Compare</span>
-                        <span class="icon icon-check"></span>
-                    </a>
-                    <a href="#quick_view" data-bs-toggle="modal"
-                       class="box-icon bg_white quickview tf-btn-loading">
-                        <span class="icon icon-view"></span>
-                        <span class="tooltip">Quick View</span>
-                    </a>
-                </div>
-                <div class="on-sale-wrap text-end">
-                    <div class="on-sale-item bg_red-2">-29%</div>
-                </div>
-            </div>
-            <div class="card-product-info text-center">
-                <a href="product-detail.html" class="title link">Franklin Signature Pickleball Paddle</a>
-                <div class="price">
-                    <span class="old-price">$139.00</span> <span class="new-price">$100.00</span>
-                </div>
-                <ul class="list-color-product justify-content-center">
-                    <li class="list-color-item color-swatch active">
-                        <span class="tooltip">Black</span>
-                        <span class="swatch-value bg_dark"></span>
-                        <img class="lazyload" data-src="images/products/pickleball-black-1.jpg"
-                             src="images/products/pickleball-black-1.jpg" alt="image-product">
-                    </li>
-                    <li class="list-color-item color-swatch">
-                        <span class="tooltip">Blue</span>
-                        <span class="swatch-value bg_blue-7"></span>
-                        <img class="lazyload" data-src="images/products/pickleball-blue-1.jpg"
-                             src="images/products/pickleball-blue-1.jpg" alt="image-product">
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="card-product type-line-padding none-hover">
-            <div class="card-product-wrapper">
-                <a href="product-detail.html" class="product-img">
-                    <img class="lazyload img-product" data-src="images/products/pickleball-black-2.jpg"
-                         src="images/products/pickleball-black-2.jpg" alt="image-product">
-                </a>
-                <div class="list-product-btn absolute-2">
-                    <a href="#quick_add" data-bs-toggle="modal"
-                       class="box-icon bg_white quick-add tf-btn-loading">
-                        <span class="icon icon-bag"></span>
-                        <span class="tooltip">Quick Add</span>
-                    </a>
-                    <a href="#" class="box-icon bg_white wishlist btn-icon-action">
-                        <span class="icon icon-heart"></span>
-                        <span class="tooltip">Add to Wishlist</span>
-                        <span class="icon icon-delete"></span>
-                    </a>
-                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft"
-                       class="box-icon bg_white compare btn-icon-action">
-                        <span class="icon icon-compare"></span>
-                        <span class="tooltip">Add to Compare</span>
-                        <span class="icon icon-check"></span>
-                    </a>
-                    <a href="#quick_view" data-bs-toggle="modal"
-                       class="box-icon bg_white quickview tf-btn-loading">
-                        <span class="icon icon-view"></span>
-                        <span class="tooltip">Quick View</span>
-                    </a>
-                </div>
-            </div>
-            <div class="card-product-info text-center">
-                <a href="product-detail.html" class="title link">
-                    Gearbox Pro Power Elongated Pickleball
-                    Paddle
-                </a>
-                <span class="price">$274.99</span>
-            </div>
-        </div>
-        <div class="card-product type-line-padding none-hover">
-            <div class="card-product-wrapper">
-                <a href="product-detail.html" class="product-img">
-                    <img class="lazyload img-product" data-src="images/products/pickleball-black-3.jpg"
-                         src="images/products/pickleball-black-3.jpg" alt="image-product">
-                </a>
-                <div class="list-product-btn absolute-2">
-                    <a href="#quick_add" data-bs-toggle="modal"
-                       class="box-icon bg_white quick-add tf-btn-loading">
-                        <span class="icon icon-bag"></span>
-                        <span class="tooltip">Quick Add</span>
-                    </a>
-                    <a href="#" class="box-icon bg_white wishlist btn-icon-action">
-                        <span class="icon icon-heart"></span>
-                        <span class="tooltip">Add to Wishlist</span>
-                        <span class="icon icon-delete"></span>
-                    </a>
-                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft"
-                       class="box-icon bg_white compare btn-icon-action">
-                        <span class="icon icon-compare"></span>
-                        <span class="tooltip">Add to Compare</span>
-                        <span class="icon icon-check"></span>
-                    </a>
-                    <a href="#quick_view" data-bs-toggle="modal"
-                       class="box-icon bg_white quickview tf-btn-loading">
-                        <span class="icon icon-view"></span>
-                        <span class="tooltip">Quick View</span>
-                    </a>
-                </div>
-            </div>
-            <div class="card-product-info text-center">
-                <a href="product-detail.html" class="title link">JOOLA Scorpeus Pickleball Paddle</a>
-                <span class="price">$199.00</span>
-            </div>
-        </div>
-        <div class="card-product type-line-padding">
-            <div class="card-product-wrapper">
-                <a href="product-detail.html" class="product-img">
-                    <img class="lazyload img-product" data-src="images/products/pickleball-green-1.jpg"
-                         src="images/products/pickleball-green-1.jpg" alt="image-product">
-                    <img class="lazyload img-hover" data-src="images/products/pickleball-pink-1.jpg"
-                         src="images/products/pickleball-pink-1.jpg" alt="image-product">
-                </a>
-                <div class="list-product-btn absolute-2">
-                    <a href="#quick_add" data-bs-toggle="modal"
-                       class="box-icon bg_white quick-add tf-btn-loading">
-                        <span class="icon icon-bag"></span>
-                        <span class="tooltip">Quick Add</span>
-                    </a>
-                    <a href="#" class="box-icon bg_white wishlist btn-icon-action">
-                        <span class="icon icon-heart"></span>
-                        <span class="tooltip">Add to Wishlist</span>
-                        <span class="icon icon-delete"></span>
-                    </a>
-                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft"
-                       class="box-icon bg_white compare btn-icon-action">
-                        <span class="icon icon-compare"></span>
-                        <span class="tooltip">Add to Compare</span>
-                        <span class="icon icon-check"></span>
-                    </a>
-                    <a href="#quick_view" data-bs-toggle="modal"
-                       class="box-icon bg_white quickview tf-btn-loading">
-                        <span class="icon icon-view"></span>
-                        <span class="tooltip">Quick View</span>
-                    </a>
-                </div>
-            </div>
-            <div class="card-product-info text-center">
-                <a href="product-detail.html" class="title link">RAD The Beverly Pickleball Paddle</a>
-                <span class="price">$98.00</span>
 
-            </div>
-        </div>
-        <div class="card-product type-line-padding">
-            <div class="card-product-wrapper">
-                <a href="product-detail.html" class="product-img">
-                    <img class="lazyload img-product" data-src="images/products/pickleball-red-1.jpg"
-                         src="images/products/pickleball-red-1.jpg" alt="image-product">
-                    <img class="lazyload img-hover" data-src="images/products/pickleball-blue-2.jpg"
-                         src="images/products/pickleball-blue-2.jpg" alt="image-product">
-                </a>
-                <div class="list-product-btn absolute-2">
-                    <a href="#quick_add" data-bs-toggle="modal"
-                       class="box-icon bg_white quick-add tf-btn-loading">
-                        <span class="icon icon-bag"></span>
-                        <span class="tooltip">Quick Add</span>
+    <div class="tf-grid-layout tf-col-2 md-col-3 gap-0">
+        @foreach (var product in Model.Products)
+        {
+            var mainImage = product.Images.FirstOrDefault(i => i.IsMain) ?? product.Images.FirstOrDefault();
+            var hoverImage = product.Images.FirstOrDefault(i => i.IsHover);
+
+            <div class="card-product type-line-padding @(hoverImage == null ? "none-hover" : "")" data-product-id="@product.Id">
+                <div class="card-product-wrapper">
+                    <a href="@Url.Action("Details", "Product", new { id = product.DetailsUrl })" class="product-img">
+                        <img class="lazyload img-product" src="@Url.Content(mainImage?.ImageName ?? "/images/products/default.jpg")" alt="@product.Name" />
+                        @if (hoverImage != null)
+                        {
+                            <img class="lazyload img-hover" src="@Url.Content(hoverImage.ImageName)" alt="@product.Name" />
+                        }
                     </a>
-                    <a href="#" class="box-icon bg_white wishlist btn-icon-action">
-                        <span class="icon icon-heart"></span>
-                        <span class="tooltip">Add to Wishlist</span>
-                        <span class="icon icon-delete"></span>
-                    </a>
-                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft"
-                       class="box-icon bg_white compare btn-icon-action">
-                        <span class="icon icon-compare"></span>
-                        <span class="tooltip">Add to Compare</span>
-                        <span class="icon icon-check"></span>
-                    </a>
-                    <a href="#quick_view" data-bs-toggle="modal"
-                       class="box-icon bg_white quickview tf-btn-loading">
-                        <span class="icon icon-view"></span>
-                        <span class="tooltip">Quick View</span>
-                    </a>
+
+                    <div class="list-product-btn absolute-2">
+                        <a href="#" class="box-icon bg_white quick-add tf-btn-loading" data-bs-toggle="modal" data-bs-target="#quick_add" data-product-id="@product.Id">
+                            <span class="icon icon-bag"></span>
+                            <span class="tooltip">Quick Add</span>
+                        </a>
+                        <a href="#" class="box-icon bg_white wishlist btn-icon-action">
+                            <span class="icon icon-heart"></span>
+                            <span class="tooltip">Add to Wishlist</span>
+                        </a>
+                        <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
+                            <span class="icon icon-compare"></span>
+                            <span class="tooltip">Add to Compare</span>
+                        </a>
+                        <a href="#" class="box-icon bg_white quickview tf-btn-loading" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="@product.Id">
+                            <span class="icon icon-view"></span>
+                            <span class="tooltip">Quick View</span>
+                        </a>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(product.BadgeLabel))
+                    {
+                        <div class="on-sale-wrap text-end">
+                            <div class="on-sale-item @product.BadgeCssClass">@product.BadgeLabel</div>
+                        </div>
+                    }
+
+                    @if (product.CountdownEndDate.HasValue)
+                    {
+                        <div class="countdown-box">
+                            <div class="js-countdown" data-timer="@( (int)(product.CountdownEndDate.Value - DateTime.Now).TotalSeconds )" data-labels="d :,h :,m :,s"></div>
+                        </div>
+                    }
+                </div>
+
+                <div class="card-product-info text-center">
+                    <a href="@Url.Action("Details", "Product", new { id = product.DetailsUrl })" class="title link">@product.Name</a>
+                    <div class="price">
+                        @if (product.PriceBeforeDiscount.HasValue && product.PriceBeforeDiscount.Value > product.Price)
+                        {
+                            <span class="old-price">$@product.PriceBeforeDiscount.Value</span>
+                        }
+                        <span class="new-price">$@product.Price</span>
+                    </div>
+
+                    @if (product.Images.Any())
+                    {
+                        <ul class="list-color-product justify-content-center">
+                            @foreach (var img in product.Images)
+                            {
+                                <li class="list-color-item color-swatch @(img.IsMain ? "active" : "")" data-image-url="@img.ImageName">
+                                    <span class="tooltip">@img.Color</span>
+                                    <span class="swatch-value" style="background-color:@img.Color;"></span>
+                                </li>
+                            }
+                        </ul>
+                    }
                 </div>
             </div>
-            <div class="card-product-info text-center">
-                <a href="product-detail.html" class="title link">
-                    Selkirk LUXX Control Air Invikta Pickleball
-                    Paddle
-                </a>
-                <span class="price">$249.99</span>
-                <ul class="list-color-product justify-content-center">
-                    <li class="list-color-item color-swatch active">
-                        <span class="tooltip">Red</span>
-                        <span class="swatch-value bg-red-2"></span>
-                        <img class="lazyload" data-src="images/products/pickleball-red-1.jpg"
-                             src="images/products/pickleball-red-1.jpg" alt="image-product">
-                    </li>
-                    <li class="list-color-item color-swatch">
-                        <span class="tooltip">Blue</span>
-                        <span class="swatch-value bg_blue-7"></span>
-                        <img class="lazyload" data-src="images/products/pickleball-blue-2.jpg"
-                             src="images/products/pickleball-blue-2.jpg" alt="image-product">
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="card-product type-line-padding">
-            <div class="card-product-wrapper">
-                <a href="product-detail.html" class="product-img">
-                    <img class="lazyload img-product" data-src="images/products/pickleball-black-4.jpg"
-                         src="images/products/pickleball-black-4.jpg" alt="image-product">
-                    <img class="lazyload img-hover" data-src="images/products/pickleball-black-4.jpg"
-                         src="images/products/pickleball-black-4.jpg" alt="image-product">
-                </a>
-                <div class="list-product-btn absolute-2">
-                    <a href="#quick_add" data-bs-toggle="modal"
-                       class="box-icon bg_white quick-add tf-btn-loading">
-                        <span class="icon icon-bag"></span>
-                        <span class="tooltip">Quick Add</span>
-                    </a>
-                    <a href="#" class="box-icon bg_white wishlist btn-icon-action">
-                        <span class="icon icon-heart"></span>
-                        <span class="tooltip">Add to Wishlist</span>
-                        <span class="icon icon-delete"></span>
-                    </a>
-                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft"
-                       class="box-icon bg_white compare btn-icon-action">
-                        <span class="icon icon-compare"></span>
-                        <span class="tooltip">Add to Compare</span>
-                        <span class="icon icon-check"></span>
-                    </a>
-                    <a href="#quick_view" data-bs-toggle="modal"
-                       class="box-icon bg_white quickview tf-btn-loading">
-                        <span class="icon icon-view"></span>
-                        <span class="tooltip">Quick View</span>
-                    </a>
-                </div>
-                <div class="on-sale-wrap text-end">
-                    <div class="on-sale-item bg_red-2">-9%</div>
-                </div>
-                <div class="countdown-box">
-                    <div class="js-countdown" data-timer="1007500" data-labels="d :,h :,m :,s"></div>
-                </div>
-            </div>
-            <div class="card-product-info text-center">
-                <a href="product-detail.html" class="title link">
-                    Selkirk Vanguard Power Air Invikta Midweight
-                    Pickleball Paddle
-                </a>
-                <div class="price">
-                    <span class="old-price">$274.00</span> <span class="new-price">$249.00</span>
-                </div>
-                <ul class="list-color-product justify-content-center">
-                    <li class="list-color-item color-swatch active">
-                        <span class="tooltip">Black</span>
-                        <span class="swatch-value bg_dark"></span>
-                        <img class="lazyload" data-src="images/products/pickleball-black-4.jpg"
-                             src="images/products/pickleball-black-4.jpg" alt="image-product">
-                    </li>
-                    <li class="list-color-item color-swatch">
-                        <span class="tooltip">Grey</span>
-                        <span class="swatch-value bg_red-2"></span>
-                        <img class="lazyload" data-src="images/products/pickleball-red-2.jpg"
-                             src="images/products/pickleball-red-2.jpg" alt="image-product">
-                    </li>
-                </ul>
-            </div>
-        </div>
+        }
     </div>
 </section>
+<!-- /Product -->
 <!-- /Product -->
 <!-- Banner -->
 <section class="flat-spacing-22">

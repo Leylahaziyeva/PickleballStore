@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using PickleballStore.BLL.Constants;
 using PickleballStore.BLL.Services.Contracts;
 using PickleballStore.BLL.ViewModels.Category;
 using PickleballStore.DAL.DataContext.Entities;
 using PickleballStore.DAL.Repositories.Contracts;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PickleballStore.BLL.Services
 {
@@ -15,14 +16,14 @@ namespace PickleballStore.BLL.Services
             _fileService = fileService;
         }
 
-        //public override async Task CreateAsync(CreateCategoryViewModel createViewModel)
-        //{
-        //    if (createViewModel.ImageFile != null)
-        //    {
-        //        createViewModel.ImageName = await _fileService.GenerateFile(createViewModel.ImageFile, FilePathConstants.CategoryImagePath);
-        //    }
-        //    await base.CreateAsync(createViewModel);
-        //}
+        public override async Task CreateAsync(CreateCategoryViewModel createViewModel)
+        {
+            if (createViewModel.ImageFile != null)
+            {
+                createViewModel.ImageName = await _fileService.GenerateFile(createViewModel.ImageFile, FilePathConstants.CategoryImagePath);
+            }
+            await base.CreateAsync(createViewModel);
+        }
 
         public async Task<List<SelectListItem>> GetCategorySelectListItemsAsync()
         {
@@ -35,20 +36,28 @@ namespace PickleballStore.BLL.Services
             }).ToList();
         }
 
-        //public override async Task<bool> UpdateAsync(int id, UpdateCategoryViewModel model)
-        //{
-        //    if (model.ImageFile != null)
-        //    {
-        //        var oldImageName = model.ImageName;
-        //        model.ImageName = await _fileService.GenerateFile(model.ImageFile, FilePathConstants.CategoryImagePath);
+        public override async Task<bool> UpdateAsync(int id, UpdateCategoryViewModel model)
+        {
+            if (model.ImageFile != null)
+            {
+                var oldImageName = model.ImageName;
 
-        //        if (System.IO.File.Exists(Path.Combine(FilePathConstants.CategoryImagePath, oldImageName ?? string.Empty)))
-        //        {
-        //            System.IO.File.Delete(Path.Combine(FilePathConstants.CategoryImagePath, oldImageName ?? string.Empty));
-        //        }
-        //    }
+                model.ImageName = await _fileService.GenerateFile(
+                    model.ImageFile,
+                    FilePathConstants.CategoryImagePath
+                );
 
-        //    return await base.UpdateAsync(id, model);
-        //}
+                if (!string.IsNullOrEmpty(oldImageName))
+                {
+                    var oldFilePath = Path.Combine(FilePathConstants.CategoryImagePath, oldImageName);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+            }
+
+            return await base.UpdateAsync(id, model);
+        }
     }
 }

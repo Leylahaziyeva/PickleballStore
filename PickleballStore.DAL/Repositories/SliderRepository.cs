@@ -16,9 +16,7 @@ namespace PickleballStore.DAL.Repositories
 
         public async Task<List<Slider>> GetSliderByIdAsync(int id)
         {
-            return await _dbContext.Sliders
-                .Where(s => s.Id == id)
-                .ToListAsync();
+            return await _dbContext.Sliders.Include(s => s.Product) .Where(s => s.Id == id).ToListAsync();
         }
     }
 }

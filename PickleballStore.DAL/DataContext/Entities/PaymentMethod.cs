@@ -2,8 +2,8 @@
 {
     public class PaymentMethod : TimeStample
     {
-        public required string Name { get; set; } // e.g., Visa, Mastercard
-        public required string ImageUrl { get; set; } // path to the image
+        public required string Name { get; set; } 
+        public required string ImageUrl { get; set; }
 
         public int FooterBottomId { get; set; }
         public FooterBottom? FooterBottom { get; set; }

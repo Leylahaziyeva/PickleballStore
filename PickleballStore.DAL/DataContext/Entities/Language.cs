@@ -2,7 +2,7 @@
 {
     public class Language : TimeStample
     {
-        public required string Name { get; set; } // English, etc.
+        public required string Name { get; set; }
         public bool IsDefault { get; set; } = false;
     }
 }
