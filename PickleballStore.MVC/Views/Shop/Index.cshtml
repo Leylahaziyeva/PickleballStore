@@ -224,7 +224,7 @@
                         </a>
                     </li>
                     <li class="nav-wishlist">
-                        <a href="wishlist.html" class="nav-icon-item">
+                        <a asp-controller="Wishlist" asp-action="Index" class="nav-icon-item">
                             <i class="icon icon-heart"></i><span class="count-box">0</span>
                         </a>
                     </li>
@@ -479,19 +479,14 @@
     </div>
 </section>
 <!-- /Section Product -->
-
-<!-- modal quick_view -->
+<!-- modal quick -->
 @foreach (var product in Model.Products)
 {
     <partial name="_ProductQuickViewModalPartial" model="product"></partial>
-}
-<!-- /modal quick_view -->
 
-<!-- modal quick_add -->
-@foreach (var product in Model.Products)
-{
     <partial name="_ProductQuickAddModalPartial" model="product"></partial>
 }
+<!-- /modal quick -->
 
 <!-- Filter -->
 <div class="offcanvas offcanvas-start canvas-filter" id="filterShop">

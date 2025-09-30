@@ -24,7 +24,7 @@ namespace PickleballStore.MVC.Controllers
 
             // Demo meqsedli productlari dublikat olundu
             var fakeProducts = new List<ProductViewModel>();
-            for (int i = 0; i < 10; i++) // 10 defe = 110 produkt
+            for (int i = 0; i < 10; i++) 
             {
                 fakeProducts.AddRange(model.Products);
             }
@@ -42,34 +42,6 @@ namespace PickleballStore.MVC.Controllers
 
             return View(model);
         }
-
-
-        //public async Task<IActionResult> Index()
-        //{
-        //    var model = await _shopService.GetShopViewModelAsync();
-
-        //    ViewBag.ProductCount = model.Products.Count;
-
-        //    model.Products = model.Products.ToList();
-
-        //    return View(model);
-        //}
-
-        //public async Task<IActionResult> ShopByCategory(int id)
-        //{
-        //    var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
-
-        //    var categoryProducts = products.Where(p => p.CategoryId == id).ToList();
-
-        //    var model = new ShopViewModel
-        //    {
-        //        Products = categoryProducts.Take(3).ToList()
-        //    };
-
-        //    ViewBag.ProductCount = categoryProducts.Count;
-
-        //    return View("Index", model); 
-        //}
 
         public async Task<IActionResult> ShopByCategory(int id, int page = 1)
         {
@@ -93,6 +65,5 @@ namespace PickleballStore.MVC.Controllers
 
             return View("Index", model);
         }
-
     }
 }

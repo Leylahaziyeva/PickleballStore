@@ -16,14 +16,12 @@ namespace PickleballStore.MVC.Controllers
             _mapper = mapper; 
         }
 
-        // GET: ProductVariant/Create
         public IActionResult Create(int productId)
         {
             var model = new CreateProductVariantViewModel { ProductId = productId };
             return View(model);
         }
 
-        // POST: ProductVariant/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProductVariantViewModel model)
@@ -34,8 +32,7 @@ namespace PickleballStore.MVC.Controllers
             await _productVariantService.CreateAsync(model);
             return RedirectToAction("Edit", "Product", new { id = model.ProductId });
         }
-
-        // GET: ProductVariant/Edit/5
+]
         public async Task<IActionResult> Edit(int id)
         {
             var variant = await _productVariantService.GetByIdAsync(id);
@@ -45,7 +42,7 @@ namespace PickleballStore.MVC.Controllers
             return View(model);
         }
 
-        // POST: ProductVariant/Edit/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UpdateProductVariantViewModel model)
@@ -56,7 +53,7 @@ namespace PickleballStore.MVC.Controllers
             return RedirectToAction("Edit", "Product", new { id = model.ProductId });
         }
 
-        // POST: ProductVariant/Delete/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, int productId)

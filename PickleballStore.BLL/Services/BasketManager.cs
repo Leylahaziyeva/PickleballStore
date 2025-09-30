@@ -68,14 +68,19 @@ namespace PickleballStore.BLL.Services
                         {
                             ProductId = product.Id,
                             ProductName = product.Name!,
-                            ImageName = product.CoverImageName!,
+
+                            ImageName = !string.IsNullOrEmpty(variant.OptionImageName)
+                                        ? variant.OptionImageName
+                                        : product.CoverImageName!,
+
                             Price = product.Price,
                             Quantity = item.Quantity,
+
                             Variant = new ProductVariantViewModel
                             {
                                 Id = variant.Id,
                                 OptionName = variant.OptionName,
-                                OptionValue = variant.OptionValue,
+                                OptionValue = variant.OptionValue,  
                                 ColorCode = variant.ColorCode,
                                 OptionImageName = variant.OptionImageName
                             }

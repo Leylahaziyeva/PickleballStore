@@ -68,21 +68,24 @@ function loadBasket() {
             console.error('Error loading basket:', error);
         });
 }
-function addToBasket(variantId, quantity = 1) {
-    if (!variantId) {
-        alert("Please select a variant first.");
-        return;
-    }
+function addToBasket(variantId, quantity = 1) {  
+    console.log(`Adding variant ${variantId} with quantity ${quantity}`);
 
-    fetch(`/basket/add?variantId=${variantId}&quantity=${quantity}`, {
+    fetch(`/basket/add?variantId=${variantId}`, {
         method: 'POST'
     })
         .then(response => {
             if (response.ok) {
-                loadBasket();
+                if (quantity > 1) {
+                    return changeQuantity(variantId, quantity - 1);
+                }
+                return loadBasket();
             } else {
                 alert('Failed to add product to basket.');
             }
+        })
+        .then(() => {
+            loadBasket();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -105,7 +108,6 @@ function removeFromBasket(variantId) {
             alert('An error occurred while removing the product from the basket.');
         });
 }
-
 function changeQuantity(variantId, change) {
     console.log(`Changing quantity for variant ${variantId} by ${change}`);
 
@@ -172,28 +174,3 @@ document.addEventListener("DOMContentLoaded", function () {
     loadBasket();
     initializeVariantSelection();
 });
-
-
-//function changeQuantity(productId, change) {
-
-//    const productIdInput = document.getElementById(`productId${productId}`);
-//    const currentQuantity = parseInt(productIdInput.value);
-//    const cartContainer = document.getElementById("cartContainer");
-
-//    if (currentQuantity + change < 1) {
-//        return; // Prevent quantity from going below 1
-//    }
-
-//    productIdInput.value = currentQuantity + change;
-
-//    fetch(`/cart/changeQuantity?productId=${productId}&change=${change}`, {
-//        method: 'POST'
-//    })
-//        .then(response => response.json())
-//        .then(data => {
-//            console.log(data);
-//            cartContainer.innerHTML = data.cartHtml;
-//            loadBasket1(data.basketViewModel);
-//        })
-//        .catch(error => console.error('Error:', error));
-//}

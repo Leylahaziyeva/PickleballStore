@@ -225,7 +225,7 @@
                         </a>
                     </li>
                     <li class="nav-wishlist">
-                        <a href="wishlist.html" class="nav-icon-item">
+                        <a asp-controller="Wishlist" asp-action="Index" class="nav-icon-item">
                             <i class="icon icon-heart"></i><span class="count-box">1</span>
                         </a>
                     </li>
@@ -288,7 +288,7 @@
                                     }
 
                                     <div class="fade-item fade-item-4">
-                                        <a asp-controller="Product" asp-action="Details" asp-route-id="@slider.ProductId"
+                                        <a pickleball-black-1.jpg
                                            class="tf-btn btn-line btn-line-light collection-other-link fw-6">
                                             <span>Shop now</span>
                                             <i class="icon icon-arrow1-top-left"></i>
@@ -534,7 +534,6 @@
 
     <partial name="_ProductQuickAddModalPartial" model="product"></partial>
 }
-
 <!-- /modal quick -->
 <!-- Banner -->
 <section class="flat-spacing-22">
@@ -547,7 +546,7 @@
                     accessories, we have you covered. Find high-quality pickleball equipment and accessories at
                     competitive prices, all from one pickleball store.
                 </p>
-                <a href="shop-collection-list.html" class="tf-btn btn-outline-dark radius-60 fw-6">
+                <a asp-controller="Shop" asp-action="Index" class="tf-btn btn-outline-dark radius-60 fw-6">
                     Shop
                     collection
                 </a>
@@ -676,7 +675,7 @@
                                     The lineup you know and love justgot a
                                     bold new update
                                 </p>
-                                <a href="shop-collection-list.html"
+                                <a asp-controller="Shop" asp-action="Index"
                                    class="tf-btn style-3 fw-6 btn-light-icon radius-60 animate-hover-btn">
                                     <span>
                                         Shop
@@ -700,7 +699,7 @@
                                     Expertly crafted by passionate picklers
                                     perfect playing experience.
                                 </p>
-                                <a href="shop-collection-list.html"
+                                <a asp-controller="Shop" asp-action="Index"
                                    class="tf-btn style-3 fw-6 btn-light-icon radius-60 animate-hover-btn">
                                     <span>
                                         Shop

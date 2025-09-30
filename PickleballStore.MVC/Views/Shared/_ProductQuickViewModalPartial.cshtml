@@ -122,7 +122,7 @@
 
                         <div class="tf-product-info-buy-button">
                             <form>
-                                <a onclick="addToBasket(document.getElementById('selectedVariantId-quickview-@Model.Id').value)"
+                                <a onclick="addToBasket(document.getElementById('selectedVariantId-quickview-@Model.Id').value,parseInt(document.querySelector('#quick_view_@Model.Id .wg-quantity input[name=number]').value))"
                                    class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart">
                                     <span>Add to cart -&nbsp;</span>
                                     <span class="tf-qty-price">$@Model.Price.ToString("F2")</span>

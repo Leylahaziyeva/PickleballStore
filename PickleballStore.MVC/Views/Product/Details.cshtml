@@ -224,7 +224,7 @@
                         </a>
                     </li>
                     <li class="nav-wishlist">
-                        <a href="wishlist.html" class="nav-icon-item">
+                        <a asp-controller="Wishlist" asp-action="Index" class="nav-icon-item">
                             <i class="icon icon-heart"></i><span class="count-box">0</span>
                         </a>
                     </li>
@@ -246,22 +246,19 @@
             <div class="tf-breadcrumb-list">
                 <a asp-controller="Home" asp-action="Index" class="text">Home</a>
                 <i class="icon icon-arrow-right"></i>
-                <a href="#" class="text">@Model.CategoryName</a>
+                <a asp-controller="Shop" asp-action="Index" class="text">@Model.CategoryName</a>
                 <i class="icon icon-arrow-right"></i>
                 <span class="text">@Model.Name</span>
             </div>
             <div class="tf-breadcrumb-prev-next">
                 <a href="#" class="tf-breadcrumb-prev hover-tooltip center">
                     <i class="icon icon-arrow-left"></i>
-                    <!-- <span class="tooltip">Cotton jersey top</span> -->
                 </a>
                 <a href="#" class="tf-breadcrumb-back hover-tooltip center">
                     <i class="icon icon-shop"></i>
-                    <!-- <span class="tooltip">Back to Women</span> -->
                 </a>
                 <a href="#" class="tf-breadcrumb-next hover-tooltip center">
                     <i class="icon icon-arrow-right"></i>
-                    <!-- <span class="tooltip">Cotton jersey top</span> -->
                 </a>
             </div>
         </div>
@@ -411,7 +408,7 @@
 
                                 @if (Model.QuantityAvailable > 0)
                                 {
-                                    <a onclick="addToBasket(document.querySelector('input[name=color-@Model.Id]:checked')?.dataset.variantId)"
+                                    <a onclick="addToBasket(document.querySelector('input[name=color-@Model.Id]:checked')?.dataset.variantId,parseInt(document.querySelector('.quantity-product').value))"
                                        class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart radius-60">
                                         <span>Add to cart - </span>
                                         <span class="tf-qty-price total-price">$@Model.Price.ToString("F2")</span>

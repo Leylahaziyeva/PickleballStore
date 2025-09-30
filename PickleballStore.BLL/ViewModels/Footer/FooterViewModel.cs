@@ -11,9 +11,6 @@ namespace PickleballStore.BLL.ViewModels.Footer
         public string NewsletterText { get; set; } = null!;
         public List<Currency> Currencies { get; set; } = new();
         public List<Language> Languages { get; set; } = new();
-
-        //public List<CurrencyViewModel> Currencies { get; set; } = new();
-        //public List<LanguageViewModel> Languages { get; set; } = new();
         public FooterBottom? FooterBottom { get; set; } 
         public List<PaymentMethod> PaymentMethods { get; set; } = [];
     }

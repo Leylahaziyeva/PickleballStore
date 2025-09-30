@@ -1,7 +1,12 @@
-﻿namespace PickleballStore.BLL.ViewModels.Wishlist
+﻿using PickleballStore.BLL.ViewModels.Footer;
+using PickleballStore.BLL.ViewModels.Product;
+using PickleballStore.DAL.DataContext.Entities;
+
+namespace PickleballStore.BLL.ViewModels.Wishlist
 {
     public class WishlistViewModel
     {
+        public List<ProductViewModel> Products { get; set; } = [];
         public List<WishlistItemViewModel> Items { get; set; } = new List<WishlistItemViewModel>();
     }
 
