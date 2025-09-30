@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PickleballStore.DAL.DataContext;
 
@@ -11,9 +12,11 @@ using PickleballStore.DAL.DataContext;
 namespace PickleballStore.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250926063147_OptionImageName")]
+    partial class OptionImageName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,7 +262,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Currency", b =>
@@ -305,7 +308,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies", (string)null);
+                    b.ToTable("Currencies");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.FooterBottom", b =>
@@ -342,7 +345,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterInfoId");
 
-                    b.ToTable("FooterBottoms", (string)null);
+                    b.ToTable("FooterBottoms");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.FooterInfo", b =>
@@ -387,7 +390,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("LogoId");
 
-                    b.ToTable("FooterInfos", (string)null);
+                    b.ToTable("FooterInfos");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Language", b =>
@@ -422,7 +425,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages", (string)null);
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Logo", b =>
@@ -454,7 +457,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logos", (string)null);
+                    b.ToTable("Logos");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.NewsletterSubscription", b =>
@@ -488,7 +491,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NewsletterSubscriptions", (string)null);
+                    b.ToTable("NewsletterSubscriptions");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.PaymentMethod", b =>
@@ -529,7 +532,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterBottomId");
 
-                    b.ToTable("PaymentMethods", (string)null);
+                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Product", b =>
@@ -605,7 +608,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.ProductImage", b =>
@@ -651,7 +654,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.ProductVariant", b =>
@@ -698,7 +701,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductVariants", (string)null);
+                    b.ToTable("ProductVariants");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SearchQuickLink", b =>
@@ -742,7 +745,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("SearchSectionId");
 
-                    b.ToTable("SearchQuickLinks", (string)null);
+                    b.ToTable("SearchQuickLinks");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SearchSection", b =>
@@ -786,7 +789,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SearchSections", (string)null);
+                    b.ToTable("SearchSections");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Slider", b =>
@@ -836,7 +839,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Sliders", (string)null);
+                    b.ToTable("Sliders");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SocialLink", b =>
@@ -880,7 +883,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterInfoId");
 
-                    b.ToTable("SocialLinks", (string)null);
+                    b.ToTable("SocialLinks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -7,7 +7,5 @@ namespace PickleballStore.DAL.DataContext.Entities
         public string? FullName { get; set; }
 
         public string? ProfileImageName { get; set; }
-
-        //public ICollection<Review> Reviews { get; set; } = [];
     }
 }

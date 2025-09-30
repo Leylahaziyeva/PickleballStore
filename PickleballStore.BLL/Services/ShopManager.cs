@@ -17,9 +17,15 @@ namespace PickleballStore.BLL.Services
 
         public async Task<ShopViewModel> GetShopViewModelAsync()
         {
-            var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
+            var products = await _productService.GetAllAsync(
+                predicate: x => !x.IsDeleted,
+                include: query => query
+                    .Include(p => p.Images)
+                    .Include(p => p.Variants)
+                    .Include(p => p.Category!)
+            );
 
-            var categories = await _categoryService.GetAllAsync();
+            var categories = await _categoryService.GetAllAsync(predicate: x => !x.IsDeleted);
 
             var shopViewModel = new ShopViewModel
             {
@@ -29,5 +35,6 @@ namespace PickleballStore.BLL.Services
 
             return shopViewModel;
         }
+
     }
 }

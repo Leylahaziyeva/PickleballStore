@@ -18,18 +18,14 @@ namespace PickleballStore.MVC.Controllers
         public async Task<IActionResult> Index()
         {
             var basket = await _basketManager.GetBasketAsync();
-
             return View(basket);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeQuantity(int productId, int change)
+        public async Task<IActionResult> ChangeQuantity(int variantId, int change)  
         {
-            var basketViewModel = await _basketManager.ChangeQuantityAsync(productId, change);
-
-            // Render partial view to string
+            var basketViewModel = await _basketManager.ChangeQuantityAsync(variantId, change);
             var cartHtml = await RenderPartialViewToString("_CartPartialView", basketViewModel);
-
             return Json(new
             {
                 success = true,
@@ -42,7 +38,6 @@ namespace PickleballStore.MVC.Controllers
         {
             ViewData.Model = model;
             using var writer = new StringWriter();
-
             var viewEngine = HttpContext.RequestServices.GetService<ICompositeViewEngine>();
             var viewResult = viewEngine!.FindView(ControllerContext, viewName, false);
 
@@ -52,7 +47,7 @@ namespace PickleballStore.MVC.Controllers
             }
 
             var viewContext = new ViewContext(
-                ControllerContext,  // This provides the ViewContext data
+                ControllerContext,
                 viewResult.View,
                 ViewData,
                 TempData,

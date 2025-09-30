@@ -31,7 +31,7 @@
         public ICollection<ProductVariant> Variants { get; set; } = [];
 
         public string? BadgeLabel { get; set; }
-        public string? BadgeCssClass { get; set; }       // "bg_red-2" və s.
+        public string? BadgeCssClass { get; set; } 
         public DateTime? CountdownEndDate { get; set; }  
     }
 }

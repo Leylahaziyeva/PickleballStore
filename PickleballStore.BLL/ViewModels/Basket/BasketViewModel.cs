@@ -1,4 +1,6 @@
-﻿namespace PickleballStore.BLL.ViewModels.Basket
+﻿using PickleballStore.BLL.ViewModels.ProductVariant;
+
+namespace PickleballStore.BLL.ViewModels.Basket
 {
     public class BasketViewModel
     {
@@ -15,11 +17,12 @@
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public decimal TotalPrice => Price * Quantity;
+        public ProductVariantViewModel? Variant { get; set; }
     }
 
     public class BasketCookieItemViewModel
     {
-        public int ProductId { get; set; }
+        public int ProductVariantId { get; set; }
         public int Quantity { get; set; }
     }
 }

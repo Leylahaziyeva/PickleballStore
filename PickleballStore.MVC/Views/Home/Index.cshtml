@@ -1,5 +1,245 @@
 ﻿@model HomeViewModel
 
+<!-- header -->
+<header id="header" class="header-default header-absolute header-white header-dark-abs">
+    <div class="px_15 lg-px_40">
+        <div class="row wrapper-header align-items-center">
+            <div class="col-md-4 col-3 tf-lg-hidden">
+                <a href="#mobilemenu" class="btn-mobile" data-bs-toggle="offcanvas"
+                   aria-controls="offcanvasleft">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewbox="0 0 24 16"
+                         fill="none">
+                        <path d="m2.00056 2.28571h16.8577c17.1608 2.28571 17.4515 2.16531 17.6658 1.95098c17.8802 1.73665 18.0006 1.44596 18.0006 1.14286c18.0006 0.839753 17.8802 0.549063 17.6658 0.334735c17.4515 0.120408 17.1608 0 16.8577 0h2.00056c1.69745 0 1.40676 0.120408 1.19244 0.334735c0.978109 0.549063 0.857702 0.839753 0.857702 1.14286c0.857702 1.44596 0.978109 1.73665 1.19244 1.95098c1.40676 2.16531 1.69745 2.28571 2.00056 2.28571zm0.857702 8c0.857702 7.6969 0.978109 7.40621 1.19244 7.19188c1.40676 6.97755 1.69745 6.85714 2.00056 6.85714h22.572c22.8751 6.85714 23.1658 6.97755 23.3801 7.19188c23.5944 7.40621 23.7148 7.6969 23.7148 8c23.7148 8.30311 23.5944 8.59379 23.3801 8.80812c23.1658 9.02245 22.8751 9.14286 22.572 9.14286h2.00056c1.69745 9.14286 1.40676 9.02245 1.19244 8.80812c0.978109 8.59379 0.857702 8.30311 0.857702 8zm0.857702 14.8571c0.857702 14.554 0.978109 14.2633 1.19244 14.049c1.40676 13.8347 1.69745 13.7143 2.00056 13.7143h12.2863c12.5894 13.7143 12.8801 13.8347 13.0944 14.049c13.3087 14.2633 13.4291 14.554 13.4291 14.8571c13.4291 15.1602 13.3087 15.4509 13.0944 15.6653c12.8801 15.8796 12.5894 16 12.2863 16h2.00056c1.69745 16 1.40676 15.8796 1.19244 15.6653c0.978109 15.4509 0.857702 15.1602 0.857702 14.8571z"
+                              fill="currentcolor"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="col-xxl-5 col-xl-6 tf-md-hidden">
+                <nav class="box-navigation text-center">
+                    <ul class="box-nav-ul d-flex align-items-center gap-30">
+                        <li class="menu-item">
+                            <a asp-controller="Home" asp-action="Index" class="item-link">Home</a>
+                        </li>
+                        <li class="menu-item">
+                            <a asp-controller="Shop" asp-action="Index" class="item-link">Shop</a>
+                        </li>
+                        <li class="menu-item position-relative">
+                            <a href="#" class="item-link">Pages<i class="icon icon-arrow-down"></i></a>
+                            <div class="sub-menu submenu-default">
+                                <ul class="menu-list">
+                                    <li>
+                                        <a href="about-us.html" class="menu-link-text link text_black-2">
+                                            about
+                                            us
+                                        </a>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">brands</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="brands.html"
+                                                       class="menu-link-text link text_black-2 position-relative">
+                                                        brands
+                                                        <div class="demo-label">
+                                                            <span class="demo-new">new</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="brands-v2.html"
+                                                       class="menu-link-text link text_black-2">brand v2</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">contact</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="contact-1.html"
+                                                       class="menu-link-text link text_black-2">contact 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="contact-2.html"
+                                                       class="menu-link-text link text_black-2">contact 2</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">faq</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="faq-1.html"
+                                                       class="menu-link-text link text_black-2">faq 01</a>
+                                                </li>
+                                                <li>
+                                                    <a href="faq-2.html"
+                                                       class="menu-link-text link text_black-2">faq 02</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">store</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="our-store.html"
+                                                       class="menu-link-text link text_black-2">our store</a>
+                                                </li>
+                                                <li>
+                                                    <a href="store-locations.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        store
+                                                        locator
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="timeline.html"
+                                           class="menu-link-text link text_black-2 position-relative">
+                                            timeline
+                                            <div class="demo-label"><span class="demo-new">new</span></div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="view-cart.html"
+                                           class="menu-link-text link text_black-2 position-relative">
+                                            view
+                                            cart
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="checkout.html"
+                                           class="menu-link-text link text_black-2 position-relative">
+                                            check
+                                            out
+                                        </a>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">payment</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="payment-confirmation.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        payment
+                                                        confirmation
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="payment-failure.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        payment
+                                                        failure
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">my account</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="my-account.html"
+                                                       class="menu-link-text link text_black-2">my account</a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-orders.html"
+                                                       class="menu-link-text link text_black-2">my order</a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-orders-details.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        my order
+                                                        details
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-address.html"
+                                                       class="menu-link-text link text_black-2">my address</a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-edit.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        my account
+                                                        details
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-wishlist.html"
+                                                       class="menu-link-text link text_black-2">my wishlist</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="invoice.html"
+                                           class="menu-link-text link text_black-2 position-relative">ınvoice</a>
+                                    </li>
+                                    <li>
+                                        <a href="404.html"
+                                           class="menu-link-text link text_black-2 position-relative">404</a>
+                                    </li>
+                                    <li>
+                                        <a href="icons.html"
+                                           class="menu-link-text link text_black-2 position-relative">ıcons</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="menu-item position-relative">
+                            <a href="#" class="item-link">Blog</a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3"
+                               class="item-link">Buy now</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-xl-2 col-md-4 col-6 text-center">
+                <a asp-controller="Home" asp-action="Index" class="logo-header">
+                    <img src="images/logo/logo-white%402x.png" alt="logo" class="logo">
+                </a>
+            </div>
+            <div class="col-xxl-5 col-md-4 col-3">
+                <ul class="nav-icon d-flex justify-content-end align-items-center gap-20">
+                    <li class="nav-search">
+                        <a href="#canvasSearch" data-bs-toggle="offcanvas"
+                           aria-controls="offcanvasleft" class="nav-icon-item">
+                            <i class="icon icon-search"></i>
+                        </a>
+                    </li>
+                    <li class="nav-account">
+                        <a href="#login" data-bs-toggle="modal" class="nav-icon-item">
+                            <i class="icon icon-account"></i>
+                        </a>
+                    </li>
+                    <li class="nav-wishlist">
+                        <a href="wishlist.html" class="nav-icon-item">
+                            <i class="icon icon-heart"></i><span class="count-box">1</span>
+                        </a>
+                    </li>
+                    <li class="nav-cart">
+                        <a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item">
+                            <i class="icon icon-bag"></i><span class="count-box" id="basketTotalBadge">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- /header -->
 <!-- slider -->
 <div class="tf-slideshow slider-effect-fade slider-skincare position-relative">
     <div dir="ltr" class="swiper tf-sw-slideshow" data-preview="1" data-tablet="1" data-mobile="1"
@@ -158,7 +398,6 @@
 </section>
 <!-- /Categories -->
 <!-- Product -->
-<!-- Product -->
 <section class="flat-spacing-3">
     <div class="flat-title">
         <span class="title wow fadeInUp" data-wow-delay="0s">Pickleball Paddle Tiers</span>
@@ -166,75 +405,117 @@
             Choose from our range of premium paddles that offer different levels of control and power.
         </p>
     </div>
-
     <div class="tf-grid-layout tf-col-2 md-col-3 gap-0">
         @foreach (var product in Model.Products)
         {
-            var mainImage = product.Images.FirstOrDefault(i => i.IsMain) ?? product.Images.FirstOrDefault();
-            var hoverImage = product.Images.FirstOrDefault(i => i.IsHover);
-
-            <div class="card-product type-line-padding @(hoverImage == null ? "none-hover" : "")" data-product-id="@product.Id">
+            <div class="card-product type-line-padding @(product.Variants.Count <= 1 ? "none-hover" : "")">
                 <div class="card-product-wrapper">
-                    <a href="@Url.Action("Details", "Product", new { id = product.DetailsUrl })" class="product-img">
-                        <img class="lazyload img-product" src="@Url.Content(mainImage?.ImageName ?? "/images/products/default.jpg")" alt="@product.Name" />
+                    <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="product-img">
+                        @{
+                            var mainImage = product.Images.FirstOrDefault(x => x.IsMain) ?? product.Images.FirstOrDefault();
+                            var hoverImage = product.Images.FirstOrDefault(x => x.IsHover);
+                        }
+                        
+                        @if (mainImage != null)
+                        {
+                            <img class="lazyload img-product" 
+                                 data-src="images/products/@mainImage.ImageName"
+                                 src="~/images/products/@mainImage.ImageName" 
+                                 alt="@product.Name">
+                        }
+                        
                         @if (hoverImage != null)
                         {
-                            <img class="lazyload img-hover" src="@Url.Content(hoverImage.ImageName)" alt="@product.Name" />
+                            <img class="lazyload img-hover" 
+                                 data-src="images/products/@hoverImage.ImageName"
+                                 src="~/images/products/@hoverImage.ImageName" 
+                                 alt="@product.Name">
                         }
                     </a>
-
+                    
                     <div class="list-product-btn absolute-2">
-                        <a href="#" class="box-icon bg_white quick-add tf-btn-loading" data-bs-toggle="modal" data-bs-target="#quick_add" data-product-id="@product.Id">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_add_@product.Id"
+                           class="box-icon bg_white quick-add tf-btn-loading quick-add-btn">
                             <span class="icon icon-bag"></span>
                             <span class="tooltip">Quick Add</span>
                         </a>
-                        <a href="#" class="box-icon bg_white wishlist btn-icon-action">
+
+                        <a href="#" data-product-id="@product.Id" 
+                           class="box-icon bg_white wishlist btn-icon-action wishlist-btn">
                             <span class="icon icon-heart"></span>
                             <span class="tooltip">Add to Wishlist</span>
+                            <span class="icon icon-delete"></span>
                         </a>
-                        <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                            <span class="icon icon-compare"></span>
-                            <span class="tooltip">Add to Compare</span>
-                        </a>
-                        <a href="#" class="box-icon bg_white quickview tf-btn-loading" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="@product.Id">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view_@product.Id"
+                           class="box-icon bg_white quickview tf-btn-loading quick-view-btn">
                             <span class="icon icon-view"></span>
                             <span class="tooltip">Quick View</span>
                         </a>
                     </div>
-
+                    
                     @if (!string.IsNullOrEmpty(product.BadgeLabel))
                     {
                         <div class="on-sale-wrap text-end">
                             <div class="on-sale-item @product.BadgeCssClass">@product.BadgeLabel</div>
                         </div>
                     }
+                    <div class="card-product-wrapper position-relative">
+                        <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="product-img">
+                            <!-- şəkil burada -->
+                        </a>
 
-                    @if (product.CountdownEndDate.HasValue)
-                    {
-                        <div class="countdown-box">
-                            <div class="js-countdown" data-timer="@( (int)(product.CountdownEndDate.Value - DateTime.Now).TotalSeconds )" data-labels="d :,h :,m :,s"></div>
-                        </div>
-                    }
+                        @if (product.CountdownEndDate.HasValue && product.CountdownEndDate.Value > DateTime.Now)
+                        {
+                                <div class="js-countdown"
+                                     data-countdown="@product.CountdownEndDate.Value.ToString("o")"
+                                     data-labels="Days,Hours,Minutes,Seconds"
+                                     data-visible-labels="d,h,m,s">
+                                </div>
+                        }
+                    </div>
                 </div>
-
+                
                 <div class="card-product-info text-center">
-                    <a href="@Url.Action("Details", "Product", new { id = product.DetailsUrl })" class="title link">@product.Name</a>
+                    <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="title link">
+                        @product.Name
+                    </a>
+                    
                     <div class="price">
                         @if (product.PriceBeforeDiscount.HasValue && product.PriceBeforeDiscount.Value > product.Price)
                         {
-                            <span class="old-price">$@product.PriceBeforeDiscount.Value</span>
+                            <span class="old-price">$@product.PriceBeforeDiscount.Value.ToString("F2")</span>
+                            <span class="new-price">$@product.Price.ToString("F2")</span>
                         }
-                        <span class="new-price">$@product.Price</span>
-                    </div>
-
-                    @if (product.Images.Any())
+                        else
+                        {
+                            <span class="price">$@product.Price.ToString("F2")</span>
+                        }
+                    </div>                 
+                    @if (product.Variants.Count > 1)
                     {
                         <ul class="list-color-product justify-content-center">
-                            @foreach (var img in product.Images)
+                            @foreach (var variant in product.Variants.Take(5))
                             {
-                                <li class="list-color-item color-swatch @(img.IsMain ? "active" : "")" data-image-url="@img.ImageName">
-                                    <span class="tooltip">@img.Color</span>
-                                    <span class="swatch-value" style="background-color:@img.Color;"></span>
+                                <li class="list-color-item color-swatch @(product.Variants.IndexOf(variant) == 0 ? "active" : "")"
+                                    data-product-id="@product.Id" 
+                                    data-variant-color="@variant.ColorCode"
+                                    data-variant-image="@variant.OptionImageName">
+                                    <span class="tooltip">@variant.OptionValue</span>
+                                    <span class="swatch-value" style="background-color: @variant.ColorCode"></span>
+                                    @if (!string.IsNullOrEmpty(variant.OptionImageName))
+                                    {
+                                        <img class="lazyload" 
+                                             data-src="/images/products/@variant.OptionImageName"
+                                             src="~/images/products/@variant.OptionImageName" 
+                                             alt="@variant.OptionValue @product.Name">
+                                    }
+                                </li>
+                            }
+                            @if (product.Variants.Count > 5)
+                            {
+                                <li class="list-color-item more-colors">
+                                    <span class="tooltip">+@(product.Variants.Count - 5) more</span>
+                                    <span class="swatch-value">+@(product.Variants.Count - 5)</span>
                                 </li>
                             }
                         </ul>
@@ -242,10 +523,19 @@
                 </div>
             </div>
         }
+    
     </div>
 </section>
 <!-- /Product -->
-<!-- /Product -->
+<!-- modal quick -->
+@foreach (var product in Model.Products)
+{
+    <partial name="_ProductQuickViewModalPartial" model="product"></partial>
+
+    <partial name="_ProductQuickAddModalPartial" model="product"></partial>
+}
+
+<!-- /modal quick -->
 <!-- Banner -->
 <section class="flat-spacing-22">
     <div class="container">
@@ -270,194 +560,6 @@
     </div>
 </section>
 <!-- /Banner -->
-<!-- Product -->
-<section class="flat-spacing-21">
-    <div class="container">
-        <div class="flat-title title-lg">
-            <span class="title wow fadeInUp" data-wow-delay="0s">Featured add-on</span>
-            <p class="sub-title fs-18 text_black-2 wow fadeInUp" data-wow-delay="0s">
-                Enhance and protect your
-                paddle by customizing it with edge guard tape, ensuring both style
-            </p>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="tf-product-media-wrap sticky-top">
-                    <div class="thumbs-slider">
-                        <div dir="ltr" class="swiper tf-product-media-thumbs other-image-zoom"
-                             data-direction="vertical">
-                            <div class="swiper-wrapper stagger-wrap">
-                                <!-- black -->
-                                <div class="swiper-slide stagger-item" data-color="red">
-                                    <div class="item">
-                                        <img class="lazyload" data-src="images/products/pickleball-red-2.jpg"
-                                             src="images/products/pickleball-red-2.jpg" alt="img-product">
-                                    </div>
-                                </div>
-                                <!-- red -->
-                                <div class="swiper-slide stagger-item" data-color="black">
-                                    <div class="item">
-                                        <img class="lazyload" data-src="images/products/pickleball-black-4.jpg"
-                                             src="images/products/pickleball-black-4.jpg" alt="img-product">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div dir="ltr" class="swiper tf-product-media-main" id="gallery-swiper-started">
-                            <div class="swiper-wrapper">
-                                <!-- black -->
-                                <div class="swiper-slide" data-color="red">
-                                    <a href="images/products/pickleball-red-2.jpg" target="_blank" class="item"
-                                       data-pswp-width="770px" data-pswp-height="1075px">
-                                        <img class="tf-image-zoom lazyload"
-                                             data-zoom="images/products/pickleball-red-2.jpg"
-                                             data-src="images/products/pickleball-red-2.jpg"
-                                             src="images/products/pickleball-red-2.jpg" alt="img-product">
-                                    </a>
-                                </div>
-                                <!-- red -->
-                                <div class="swiper-slide" data-color="black">
-                                    <a href="images/products/pickleball-black-4.jpg" target="_blank"
-                                       class="item" data-pswp-width="770px" data-pswp-height="1075px">
-                                        <img class="tf-image-zoom lazyload"
-                                             data-zoom="images/products/pickleball-black-4.jpg"
-                                             data-src="images/products/pickleball-black-4.jpg"
-                                             src="images/products/pickleball-black-4.jpg" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-button-next button-style-arrow thumbs-next"></div>
-                            <div class="swiper-button-prev button-style-arrow thumbs-prev"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="tf-product-info-wrap position-relative">
-                    <div class="tf-zoom-main"></div>
-                    <div class="tf-product-info-list other-image-zoom">
-                        <div class="tf-product-info-title">
-                            <h5>
-                                <a href="product-detail.html" class="link">
-                                    Selkirk Vanguard Power Air Invikta
-                                    Midweight Pickleball Paddle
-                                </a>
-                            </h5>
-                        </div>
-                        <div class="tf-product-info-badges">
-                            <div class="badges">Best seller</div>
-                            <div class="product-status-content">
-                                <i class="icon-lightning"></i>
-                                <p class="fw-6">Selling fast! 56 people have this in their carts.</p>
-                            </div>
-                        </div>
-                        <div class="tf-product-info-price">
-                            <div class="price-on-sale">$249.99</div>
-                            <div class="compare-at-price">$274.99</div>
-                            <div class="badges-on-sale bg_red-2"><span>9</span>% OFF</div>
-                        </div>
-                        <div class="tf-product-info-liveview">
-                            <div class="liveview-count">38</div>
-                            <p class="fw-6">People are viewing this right now</p>
-                        </div>
-                        <div class="tf-product-info-variant-picker">
-                            <div class="variant-picker-item">
-                                <div class="variant-picker-label">
-                                    Color: <span class="fw-6 variant-picker-label-value value-currentColor">Black</span>
-                                </div>
-                                <div class="variant-picker-values">
-                                    <input type="radio" name="color1" id="values-black" checked>
-                                    <label for="values-black" class="style-text color-btn" data-color="black"
-                                           data-value="black">
-                                        <p>Black</p>
-                                    </label>
-                                    <input type="radio" name="color1" id="values-red">
-                                    <label for="values-red" class="style-text color-btn" data-color="red"
-                                           data-value="red">
-                                        <p>Red</p>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tf-product-info-quantity">
-                            <div class="quantity-title fw-6">Quantity</div>
-                            <div class="wg-quantity">
-                                <span class="btn-quantity btn-decrease">-</span>
-                                <input type="text" class="quantity-product" name="number" value="1">
-                                <span class="btn-quantity btn-increase">+</span>
-                            </div>
-                        </div>
-                        <div class="tf-product-info-buy-button">
-                            <form class="">
-                                <a href="#"
-                                   class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart radius-60">
-                                    <span>
-                                        Add
-                                        to cart -&nbsp;
-                                    </span><span class="tf-qty-price total-price">$249.99</span>
-                                </a>
-                                <a href="#"
-                                   class="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action">
-                                    <span class="icon icon-heart"></span>
-                                    <span class="tooltip">Add to Wishlist</span>
-                                    <span class="icon icon-delete"></span>
-                                </a>
-                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft"
-                                   class="tf-product-btn-wishlist hover-tooltip box-icon bg_white compare btn-icon-action">
-                                    <span class="icon icon-compare"></span>
-                                    <span class="tooltip">Add to Compare</span>
-                                    <span class="icon icon-check"></span>
-                                </a>
-                            </form>
-                        </div>
-                        <div class="tf-product-info-extra-link">
-                            <a href="#ask_question" data-bs-toggle="modal" class="tf-product-extra-icon">
-                                <div class="icon">
-                                    <i class="icon-question"></i>
-                                </div>
-                                <div class="text fw-6">Ask a question</div>
-                            </a>
-                            <a href="#delivery_return" data-bs-toggle="modal" class="tf-product-extra-icon">
-                                <div class="icon">
-                                    <svg class="d-inline-block" xmlns="http://www.w3.org/2000/svg" width="22"
-                                         height="18" viewBox="0 0 22 18" fill="currentColor">
-                                        <path d="M21.7872 10.4724C21.7872 9.73685 21.5432 9.00864 21.1002 8.4217L18.7221 5.27043C18.2421 4.63481 17.4804 4.25532 16.684 4.25532H14.9787V2.54885C14.9787 1.14111 13.8334 0 12.4255 0H9.95745V1.69779H12.4255C12.8948 1.69779 13.2766 2.07962 13.2766 2.54885V14.5957H8.15145C7.80021 13.6052 6.85421 12.8936 5.74468 12.8936C4.63515 12.8936 3.68915 13.6052 3.33792 14.5957H2.55319C2.08396 14.5957 1.70213 14.2139 1.70213 13.7447V2.54885C1.70213 2.07962 2.08396 1.69779 2.55319 1.69779H9.95745V0H2.55319C1.14528 0 0 1.14111 0 2.54885V13.7447C0 15.1526 1.14528 16.2979 2.55319 16.2979H3.33792C3.68915 17.2884 4.63515 18 5.74468 18C6.85421 18 7.80021 17.2884 8.15145 16.2979H13.423C13.7742 17.2884 14.7202 18 15.8297 18C16.9393 18 17.8853 17.2884 18.2365 16.2979H21.7872V10.4724ZM16.684 5.95745C16.9494 5.95745 17.2034 6.08396 17.3634 6.29574L19.5166 9.14894H14.9787V5.95745H16.684ZM5.74468 16.2979C5.27545 16.2979 4.89362 15.916 4.89362 15.4468C4.89362 14.9776 5.27545 14.5957 5.74468 14.5957C6.21392 14.5957 6.59575 14.9776 6.59575 15.4468C6.59575 15.916 6.21392 16.2979 5.74468 16.2979ZM15.8298 16.2979C15.3606 16.2979 14.9787 15.916 14.9787 15.4468C14.9787 14.9776 15.3606 14.5957 15.8298 14.5957C16.299 14.5957 16.6809 14.9776 16.6809 15.4468C16.6809 15.916 16.299 16.2979 15.8298 16.2979ZM18.2366 14.5957C17.8853 13.6052 16.9393 12.8936 15.8298 12.8936C15.5398 12.8935 15.252 12.943 14.9787 13.04V10.8511H20.0851V14.5957H18.2366Z">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <div class="text fw-6">Delivery & Return</div>
-                            </a>
-                            <a href="#share_social" data-bs-toggle="modal" class="tf-product-extra-icon">
-                                <div class="icon">
-                                    <i class="icon-share"></i>
-                                </div>
-                                <div class="text fw-6">Share</div>
-                            </a>
-                        </div>
-
-                        <div class="tf-product-info-trust-seal">
-                            <div class="tf-product-trust-mess">
-                                <i class="icon-safe"></i>
-                                <p class="fw-6">Guarantee Safe <br> Checkout</p>
-                            </div>
-                            <div class="tf-payment">
-                                <img src="images/payments/visa.png" alt="">
-                                <img src="images/payments/img-1.png" alt="">
-                                <img src="images/payments/img-2.png" alt="">
-                                <img src="images/payments/img-3.png" alt="">
-                                <img src="images/payments/img-4.png" alt="">
-                            </div>
-                        </div>
-                        <a href="product-detail.html" class="tf-btn btn-line fw-6">
-                            View full details<i class="icon icon-arrow1-top-left"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /Product -->
 <!-- Marquee -->
 <div class="tf-marquee marquee-st2 bg_dark-blue-2 marquee-white">
     <div class="wrap-marquee">
@@ -678,7 +780,7 @@
                             </div>
                             <div class="author">
                                 <div class="name">Hellen Ase</div>
-                                <div class="metas">Customer from Japan</span></div>
+                                <div class="metas">Customer from Japan</div>
                             </div>
                             <div class="product">
                                 <div class="image">

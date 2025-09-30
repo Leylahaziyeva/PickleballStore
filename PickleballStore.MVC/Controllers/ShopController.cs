@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PickleballStore.BLL.Services.Contracts;
+using PickleballStore.BLL.ViewModels.Product;
 using PickleballStore.BLL.ViewModels.Shop;
 
 namespace PickleballStore.MVC.Controllers
@@ -15,44 +16,83 @@ namespace PickleballStore.MVC.Controllers
             _shopService = shopService;
             _productService = productService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
+            int pageSize = 12;
+
             var model = await _shopService.GetShopViewModelAsync();
 
-            ViewBag.ProductCount = model.Products.Count;
+            // Demo meqsedli productlari dublikat olundu
+            var fakeProducts = new List<ProductViewModel>();
+            for (int i = 0; i < 10; i++) // 10 defe = 110 produkt
+            {
+                fakeProducts.AddRange(model.Products);
+            }
 
-            model.Products = model.Products.Take(3).ToList();
+            model.TotalItems = fakeProducts.Count;
+            model.Products = fakeProducts
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            model.CurrentPage = page;
+            model.PageSize = pageSize;
+
+            ViewBag.ProductCount = model.TotalItems;
 
             return View(model);
         }
 
-        public async Task<IActionResult> ShopByCategory(int id)
-        {
-            // Get all products including their category
-            var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
 
-            // Filter by category id
+        //public async Task<IActionResult> Index()
+        //{
+        //    var model = await _shopService.GetShopViewModelAsync();
+
+        //    ViewBag.ProductCount = model.Products.Count;
+
+        //    model.Products = model.Products.ToList();
+
+        //    return View(model);
+        //}
+
+        //public async Task<IActionResult> ShopByCategory(int id)
+        //{
+        //    var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
+
+        //    var categoryProducts = products.Where(p => p.CategoryId == id).ToList();
+
+        //    var model = new ShopViewModel
+        //    {
+        //        Products = categoryProducts.Take(3).ToList()
+        //    };
+
+        //    ViewBag.ProductCount = categoryProducts.Count;
+
+        //    return View("Index", model); 
+        //}
+
+        public async Task<IActionResult> ShopByCategory(int id, int page = 1)
+        {
+            int pageSize = 12;
+
+            var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
             var categoryProducts = products.Where(p => p.CategoryId == id).ToList();
 
-            // Optional: Take first 3 products for homepage preview
             var model = new ShopViewModel
             {
-                Products = categoryProducts.Take(3).ToList()
+                Products = categoryProducts
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList(),
+                CurrentPage = page,
+                PageSize = pageSize,
+                TotalItems = categoryProducts.Count
             };
 
             ViewBag.ProductCount = categoryProducts.Count;
 
-            return View("Index", model); // Reuse the same Index view or create a new one
+            return View("Index", model);
         }
 
-
-        //public async Task<IActionResult> Partial(int skip)
-        //{
-        //    var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
-
-        //    var pagedProducts = products.Skip(skip).Take(3).ToList();
-
-        //    return PartialView("_ProductPartialForLoadMore", pagedProducts);
-        //}
     }
 }

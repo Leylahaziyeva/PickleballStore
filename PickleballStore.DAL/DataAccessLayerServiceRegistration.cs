@@ -23,6 +23,7 @@ namespace PickleballStore.DAL
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISliderRepository, SliderRepository>();
+            services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
 
             return services;
         }

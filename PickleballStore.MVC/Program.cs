@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using PickleballStore.BLL;
 using PickleballStore.BLL.Constants;
+using PickleballStore.BLL.Services.Contracts;
 using PickleballStore.DAL;
 using PickleballStore.DAL.DataContext;
 using PickleballStore.DAL.DataContext.Entities;
+using PickleballStore.Services;
 
 namespace PickleballStore.MVC
 {
@@ -32,7 +34,6 @@ namespace PickleballStore.MVC
                 options.Lockout.MaxFailedAccessAttempts = 3;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-            //FilePathConstants.ReviewImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "reviews");
             FilePathConstants.ProductImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "products");
             FilePathConstants.ProfileImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "users");
             FilePathConstants.CategoryImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "categories");

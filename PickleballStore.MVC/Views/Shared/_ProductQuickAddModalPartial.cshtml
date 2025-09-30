@@ -1,0 +1,105 @@
+﻿@model ProductViewModel
+
+<div class="modal fade modalDemo popup-quickadd" id="quick_add_@Model.Id">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="header">
+                <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
+            </div>
+            <div class="wrap">
+                <div class="tf-product-info-item">
+                    <div class="image">
+                        @{
+                            var mainImage = Model.Images.FirstOrDefault(x => x.IsMain) ?? Model.Images.FirstOrDefault();
+                        }
+                        @if (mainImage != null)
+                        {
+                            <img src="~/images/products/@mainImage.ImageName" alt="@Model.Name">
+                        }
+                    </div>
+                    <div class="content">
+                        <a href="@Url.Action("Details", "Product", new { id = Model.Id })">@Model.Name</a>
+                        <div class="tf-product-info-price">
+                            @if (Model.PriceBeforeDiscount.HasValue && Model.PriceBeforeDiscount.Value > Model.Price)
+                            {
+                                <div class="price-on-sale">$@Model.Price.ToString("F2")</div>
+                                <div class="compare-at-price">$@Model.PriceBeforeDiscount.Value.ToString("F2")</div>
+                            }
+                            else
+                            {
+                                <div class="price">$@Model.Price.ToString("F2")</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="selectedVariantId-@Model.Id" value="@Model.Variants.FirstOrDefault()?.Id" />
+
+                @if (Model.Variants.Count > 0)
+                {
+                    <div class="tf-product-info-variant-picker mb_15">
+                        <div class="variant-picker-item">
+                            <div class="variant-picker-label">
+                                Color:
+                                <span class="fw-6 variant-picker-label-value">
+                                    @Model.Variants.First().OptionValue
+                                </span>
+                            </div>
+                            <div class="variant-picker-values">
+                                @foreach (var variant in Model.Variants)
+                                {
+                                    <input type="radio"
+                                           name="color-@Model.Id"
+                                           id="variant-@variant.Id-@Model.Id"
+                                           data-variant-id="@variant.Id"
+                                           @(Model.Variants.IndexOf(variant) == 0 ? "checked" : "")>
+                                    <label class="hover-tooltip radius-60"
+                                           for="variant-@variant.Id-@Model.Id"
+                                           data-value="@variant.OptionValue"
+                                           data-variant-id="@variant.Id"
+                                           data-image="@(!string.IsNullOrEmpty(variant.OptionImageName) ? variant.OptionImageName : Model.Images.FirstOrDefault(x => x.IsMain)?.ImageName)">
+                                        <span class="btn-checkbox" style="background-color:@variant.ColorCode"></span>
+                                        <span class="tooltip">@variant.OptionValue</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="tf-product-info-quantity mb_15">
+                    <div class="quantity-title fw-6">Quantity</div>
+                    <div class="wg-quantity">
+                        <span class="btn-quantity minus-btn">-</span>
+                        <input type="text" name="number" value="1">
+                        <span class="btn-quantity plus-btn">+</span>
+                    </div>
+                </div>
+
+                <div class="tf-product-info-buy-button">
+                    <form>
+                        <a onclick="addToBasket(document.getElementById('selectedVariantId-@Model.Id').value, parseInt(document.querySelector('#quick_add_@Model.Id input[name=number]').value))"
+                           class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart">
+                            <span>Add to cart -&nbsp;</span>
+                            <span class="tf-qty-price">$@Model.Price.ToString("F2")</span>
+                        </a>
+
+                        <div class="tf-product-btn-wishlist btn-icon-action">
+                            <i class="icon-heart"></i>
+                            <i class="icon-delete"></i>
+                        </div>
+                        <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft"
+                           class="tf-product-btn-wishlist box-icon bg_white compare btn-icon-action">
+                            <span class="icon icon-compare"></span>
+                            <span class="icon icon-check"></span>
+                        </a>
+                        <div class="w-100">
+                            <a href="#" class="btns-full">Buy with <img src="~/images/payments/paypal.png" alt=""></a>
+                            <a href="#" class="payment-more-option">More payment options</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

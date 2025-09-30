@@ -15,8 +15,6 @@ namespace PickleballStore.DAL.DataContext
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<ProductImage> ProductImages { get; set; } = null!;
         public DbSet<ProductVariant> ProductVariants { get; set; } = null!;
-
-        //public DbSet<Review> Reviews { get; set; } = null!;
         public DbSet<Logo> Logos { get; set; } = null!;
         public DbSet<FooterBottom> FooterBottoms { get; set; } = null!;
         public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;

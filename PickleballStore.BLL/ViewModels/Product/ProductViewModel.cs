@@ -35,10 +35,8 @@ namespace PickleballStore.BLL.ViewModels.Product
         public List<ProductImageViewModel> Images { get; set; } = [];
         public List<ProductVariantViewModel> Variants { get; set; } = [];
 
-        public string? BadgeLabel { get; set; }          // Məs: "-29%", "Hot"
-        public string? BadgeCssClass { get; set; }       // Məs: "bg_red-2"
-        public DateTime? CountdownEndDate { get; set; }  // Endirim üçün son tarix
-
-        //public List<ReviewViewModel> Reviews { get; set; } = [];
+        public string? BadgeLabel { get; set; }  
+        public string? BadgeCssClass { get; set; }       
+        public DateTime? CountdownEndDate { get; set; }  
     }
 }

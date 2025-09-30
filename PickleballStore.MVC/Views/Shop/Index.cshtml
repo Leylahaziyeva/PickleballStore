@@ -1,5 +1,245 @@
 ﻿@model ShopViewModel
 
+<!-- header -->
+<header id="header" class="header-default">
+    <div class="px_15 lg-px_40">
+        <div class="row wrapper-header align-items-center">
+            <div class="col-md-4 col-3 tf-lg-hidden">
+                <a href="#mobileMenu" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16"
+                         fill="none">
+                        <path d="M2.00056 2.28571H16.8577C17.1608 2.28571 17.4515 2.16531 17.6658 1.95098C17.8802 1.73665 18.0006 1.44596 18.0006 1.14286C18.0006 0.839753 17.8802 0.549063 17.6658 0.334735C17.4515 0.120408 17.1608 0 16.8577 0H2.00056C1.69745 0 1.40676 0.120408 1.19244 0.334735C0.978109 0.549063 0.857702 0.839753 0.857702 1.14286C0.857702 1.44596 0.978109 1.73665 1.19244 1.95098C1.40676 2.16531 1.69745 2.28571 2.00056 2.28571ZM0.857702 8C0.857702 7.6969 0.978109 7.40621 1.19244 7.19188C1.40676 6.97755 1.69745 6.85714 2.00056 6.85714H22.572C22.8751 6.85714 23.1658 6.97755 23.3801 7.19188C23.5944 7.40621 23.7148 7.6969 23.7148 8C23.7148 8.30311 23.5944 8.59379 23.3801 8.80812C23.1658 9.02245 22.8751 9.14286 22.572 9.14286H2.00056C1.69745 9.14286 1.40676 9.02245 1.19244 8.80812C0.978109 8.59379 0.857702 8.30311 0.857702 8ZM0.857702 14.8571C0.857702 14.554 0.978109 14.2633 1.19244 14.049C1.40676 13.8347 1.69745 13.7143 2.00056 13.7143H12.2863C12.5894 13.7143 12.8801 13.8347 13.0944 14.049C13.3087 14.2633 13.4291 14.554 13.4291 14.8571C13.4291 15.1602 13.3087 15.4509 13.0944 15.6653C12.8801 15.8796 12.5894 16 12.2863 16H2.00056C1.69745 16 1.40676 15.8796 1.19244 15.6653C0.978109 15.4509 0.857702 15.1602 0.857702 14.8571Z"
+                              fill="currentColor"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="col-xl-3 col-md-4 col-6">
+                <a asp-controller="Home" asp-action="Index" class="logo-header">
+                    <img src="~/images/logo/logo.svg" alt="logo" class="logo">
+                </a>
+            </div>
+            <div class="col-xl-6 tf-md-hidden">
+                <nav class="box-navigation text-center">
+                    <ul class="box-nav-ul d-flex align-items-center justify-content-center gap-30">
+                        <li class="menu-item">
+                            <a asp-controller="Home" asp-action="Index" class="item-link">Home</a>
+                        </li>
+                        <li class="menu-item">
+                            <a asp-controller="Shop" asp-action="Index" class="item-link">Shop</a>
+                        </li>
+                        <li class="menu-item position-relative">
+                            <a href="#" class="item-link">Pages<i class="icon icon-arrow-down"></i></a>
+                            <div class="sub-menu submenu-default">
+                                <ul class="menu-list">
+                                    <li>
+                                        <a href="about-us.html" class="menu-link-text link text_black-2">
+                                            About
+                                            us
+                                        </a>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">Brands</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="brands.html"
+                                                       class="menu-link-text link text_black-2 position-relative">
+                                                        Brands
+                                                        <div class="demo-label">
+                                                            <span class="demo-new">New</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="brands-v2.html"
+                                                       class="menu-link-text link text_black-2">Brand V2</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">Contact</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="contact-1.html"
+                                                       class="menu-link-text link text_black-2">Contact 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="contact-2.html"
+                                                       class="menu-link-text link text_black-2">Contact 2</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">FAQ</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="faq-1.html"
+                                                       class="menu-link-text link text_black-2">FAQ 01</a>
+                                                </li>
+                                                <li>
+                                                    <a href="faq-2.html"
+                                                       class="menu-link-text link text_black-2">FAQ 02</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">Store</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="our-store.html"
+                                                       class="menu-link-text link text_black-2">Our store</a>
+                                                </li>
+                                                <li>
+                                                    <a href="store-locations.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        Store
+                                                        locator
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="timeline.html"
+                                           class="menu-link-text link text_black-2 position-relative">
+                                            Timeline
+                                            <div class="demo-label"><span class="demo-new">New</span></div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="view-cart.html"
+                                           class="menu-link-text link text_black-2 position-relative">
+                                            View
+                                            cart
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="checkout.html"
+                                           class="menu-link-text link text_black-2 position-relative">
+                                            Check
+                                            out
+                                        </a>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">Payment</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="payment-confirmation.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        Payment
+                                                        Confirmation
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="payment-failure.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        Payment
+                                                        Failure
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-2">
+                                        <a href="#" class="menu-link-text link text_black-2">My account</a>
+                                        <div class="sub-menu submenu-default">
+                                            <ul class="menu-list">
+                                                <li>
+                                                    <a href="my-account.html"
+                                                       class="menu-link-text link text_black-2">My account</a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-orders.html"
+                                                       class="menu-link-text link text_black-2">My order</a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-orders-details.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        My order
+                                                        details
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-address.html"
+                                                       class="menu-link-text link text_black-2">My address</a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-edit.html"
+                                                       class="menu-link-text link text_black-2">
+                                                        My account
+                                                        details
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="my-account-wishlist.html"
+                                                       class="menu-link-text link text_black-2">My wishlist</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="invoice.html"
+                                           class="menu-link-text link text_black-2 position-relative">Invoice</a>
+                                    </li>
+                                    <li>
+                                        <a href="404.html"
+                                           class="menu-link-text link text_black-2 position-relative">404</a>
+                                    </li>
+                                    <li>
+                                        <a href="icons.html"
+                                           class="menu-link-text link text_black-2 position-relative">Icons</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="menu-item position-relative">
+                            <a href="#" class="item-link">Blog</a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3"
+                               class="item-link">Buy now</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-xl-3 col-md-4 col-3">
+                <ul class="nav-icon d-flex justify-content-end align-items-center gap-20">
+                    <li class="nav-search">
+                        <a href="#canvasSearch" data-bs-toggle="offcanvas"
+                           aria-controls="offcanvasLeft" class="nav-icon-item">
+                            <i class="icon icon-search"></i>
+                        </a>
+                    </li>
+                    <li class="nav-account">
+                        <a href="#login" data-bs-toggle="modal" class="nav-icon-item">
+                            <i class="icon icon-account"></i>
+                        </a>
+                    </li>
+                    <li class="nav-wishlist">
+                        <a href="wishlist.html" class="nav-icon-item">
+                            <i class="icon icon-heart"></i><span class="count-box">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-cart">
+                        <a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item">
+                            <i class="icon icon-bag"></i><span class="count-box" id="basketTotalBadge">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- /header -->
+
 <div class="tf-page-title">
     <div class="container-full">
         <div class="heading text-center">New Arrival</div>
@@ -7,6 +247,360 @@
     </div>
 </div>
 
+<!-- Section Product -->
+<section class="flat-spacing-2">
+    <div class="container">
+        <div class="tf-shop-control grid-3 align-items-center">
+            <div class="tf-control-filter">
+                <a href="#filterShop" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="tf-btn-filter">
+                    <span class="icon icon-filter"></span><span class="text">Filter</span>
+                </a>
+            </div>
+            <ul class="tf-control-layout d-flex justify-content-center">
+                <li class="tf-view-layout-switch sw-layout-list list-layout" data-value-layout="list">
+                    <div class="item"><span class="icon icon-list"></span></div>
+                </li>
+                <li class="tf-view-layout-switch sw-layout-2" data-value-layout="tf-col-2">
+                    <div class="item"><span class="icon icon-grid-2"></span></div>
+                </li>
+                <li class="tf-view-layout-switch sw-layout-3" data-value-layout="tf-col-3">
+                    <div class="item"><span class="icon icon-grid-3"></span></div>
+                </li>
+                <li class="tf-view-layout-switch sw-layout-4 active" data-value-layout="tf-col-4">
+                    <div class="item"><span class="icon icon-grid-4"></span></div>
+                </li>
+                <li class="tf-view-layout-switch sw-layout-5" data-value-layout="tf-col-5">
+                    <div class="item"><span class="icon icon-grid-5"></span></div>
+                </li>
+                <li class="tf-view-layout-switch sw-layout-6" data-value-layout="tf-col-6">
+                    <div class="item"><span class="icon icon-grid-6"></span></div>
+                </li>
+            </ul>
+            <div class="tf-control-sorting d-flex justify-content-end">
+                <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
+                    <div class="btn-select">
+                        <span class="text-sort-value">Featured</span>
+                        <span class="icon icon-arrow-down"></span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <div class="select-item active"><span class="text-value-item">Featured</span></div>
+                        <div class="select-item"><span class="text-value-item">Best selling</span></div>
+                        <div class="select-item" data-sort-value="a-z"><span class="text-value-item">Alphabetically, A-Z</span></div>
+                        <div class="select-item" data-sort-value="z-a"><span class="text-value-item">Alphabetically, Z-A</span></div>
+                        <div class="select-item" data-sort-value="price-low-high"><span class="text-value-item">Price, low to high</span></div>
+                        <div class="select-item" data-sort-value="price-high-low"><span class="text-value-item">Price, high to low</span></div>
+                        <div class="select-item"><span class="text-value-item">Date, old to new</span></div>
+                        <div class="select-item"><span class="text-value-item">Date, new to old</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="wrapper-control-shop">
+            <div class="meta-filter-shop">
+                <div id="product-count-grid" class="count-text"></div>
+                <div id="product-count-list" class="count-text"></div>
+                <div id="applied-filters"></div>
+                <button id="remove-all" class="remove-all-filters" style="display: none;">
+                    Remove All <i class="icon icon-close"></i>
+                </button>
+            </div>
 
+            <!-- List Layout -->
+            <div class="tf-list-layout wrapper-shop" id="listLayout">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="card-product list-layout" data-availability="@(product.QuantityAvailable > 0 ? "In stock" : "Out of stock")">
+                        <div class="card-product-wrapper">
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="product-img">
+                                <img class="lazyload img-product"
+                                     data-src="/images/products/@product.CoverImageName"
+                                     src="~/images/products/@product.CoverImageName"
+                                     alt="@product.Name" />
+                                @if (product.Images.Count > 1)
+                                {
+                                    <img class="lazyload img-hover"
+                                         data-src="/images/products/@product.Images.Skip(1).First().ImageName"
+                                         src="~/images/products/@product.Images.Skip(1).First().ImageName"
+                                         alt="@product.Name" />
+                                }
+                            </a>
+                            @if (!string.IsNullOrEmpty(product.BadgeLabel))
+                            {
+                                <div class="on-sale-wrap text-end">
+                                    <div class="on-sale-item @product.BadgeCssClass">@product.BadgeLabel</div>
+                                </div>
+                            }
+                        </div>
+                        <div class="card-product-info">
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="title link">@product.Name</a>
+                            <span class="price current-price">$@product.Price</span>
+                            @if (!string.IsNullOrEmpty(product.Description))
+                            {
+                                <p class="description">@product.Description</p>
+                            }
 
+                            @if (product.Variants.Count > 0)
+                            {
+                                <ul class="list-color-product">
+                                    @foreach (var variant in product.Variants.Take(5))
+                                    {
+                                        var isActive = product.Variants.IndexOf(variant) == 0 ? "active" : "";
+                                        <li class="list-color-item color-swatch @isActive"
+                                            data-product-id="@product.Id"
+                                            data-variant-color="@variant.ColorCode"
+                                            data-variant-image="@variant.OptionImageName">
+                                            <span class="tooltip">@variant.OptionValue</span>
+                                            <span class="swatch-value" style="background-color:@variant.ColorCode"></span>
+
+                                            @if (!string.IsNullOrEmpty(variant.OptionImageName))
+                                            {
+                                                <img class="lazyload"
+                                                     data-src="/images/products/@variant.OptionImageName"
+                                                     src="~/images/products/@variant.OptionImageName"
+                                                     alt="@variant.OptionValue @product.Name" />
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            <div class="list-product-btn style-3 hover-tooltip">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#quick_add_@product.Id"
+                                   class="box-icon quick-add">
+                                    <span class="icon icon-bag"></span>
+                                    <span class="tooltip">Quick Add</span>
+                                </a>
+
+                                <a href="#" data-product-id="@product.Id"
+                                   class="box-icon wishlist">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Add to Wishlist</span>
+                                </a>
+
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view_@product.Id"
+                                   class="box-icon quickview">
+                                    <span class="icon icon-view"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+                <!-- pagination -->
+                @await Html.PartialAsync("_Pagination", Model)
+                <!-- /pagination -->
+            </div>
+
+            <!-- Grid Layout -->
+            <div class="tf-grid-layout wrapper-shop tf-col-4" id="gridLayout">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="card-product grid" data-availability="@(product.QuantityAvailable > 0 ? "In stock" : "Out of stock")">
+                        <div class="card-product-wrapper">
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="product-img">
+                                <img class="lazyload img-product"
+                                     data-src="/images/products/@product.CoverImageName"
+                                     src="~/images/products/@product.CoverImageName"
+                                     alt="@product.Name" />
+
+                                @if (product.Images.Count > 1)
+                                {
+                                    <img class="lazyload img-hover"
+                                         data-src="/images/products/@product.Images.Skip(1).First().ImageName"
+                                         src="~/images/products/@product.Images.Skip(1).First().ImageName"
+                                         alt="@product.Name" />
+                                }
+                            </a>
+                            @if (!string.IsNullOrEmpty(product.BadgeLabel))
+                            {
+                                <div class="on-sale-wrap text-end">
+                                    <div class="on-sale-item @product.BadgeCssClass">@product.BadgeLabel</div>
+                                </div>
+                            }
+                            <div class="list-product-btn absolute-2">
+                                <a href="#quick_add_@product.Id" data-bs-toggle="modal" class="box-icon bg_white quick-add tf-btn-loading">
+                                    <span class="icon icon-bag"></span>
+                                    <span class="tooltip">Quick Add</span>
+                                </a>
+
+                                <a href="#" data-product-id="@product.Id" class="box-icon bg_white wishlist btn-icon-action">
+                                    <span class="icon icon-heart"></span>
+                                    <span class="tooltip">Add to Wishlist</span>
+                                </a>
+
+                                <a href="#quick_view_@product.Id" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
+                                    <span class="icon icon-view"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <div class="card-product-info">
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="title link">@product.Name</a>
+                            <span class="price current-price">$@product.Price</span>
+
+                            @if (product.Variants.Count > 0)
+                            {
+                                <ul class="list-color-product">
+                                    @foreach (var variant in product.Variants.Take(5))
+                                    {
+                                        var isActive = product.Variants.IndexOf(variant) == 0 ? "active" : "";
+                                        <li class="list-color-item color-swatch @isActive"
+                                            data-product-id="@product.Id"
+                                            data-variant-color="@variant.ColorCode"
+                                            data-variant-image="@variant.OptionImageName">
+                                            <span class="tooltip">@variant.OptionValue</span>
+                                            <span class="swatch-value" style="background-color:@variant.ColorCode"></span>
+
+                                            @if (!string.IsNullOrEmpty(variant.OptionImageName))
+                                            {
+                                                <img class="lazyload"
+                                                     data-src="/images/products/@variant.OptionImageName"
+                                                     src="~/images/products/@variant.OptionImageName"
+                                                     alt="@variant.OptionValue @product.Name" />
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                       
+                        </div>
+                    </div>
+                }
+
+                <!-- pagination -->
+                @await Html.PartialAsync("_Pagination", Model)
+                <!-- /pagination -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Section Product -->
+
+<!-- modal quick_view -->
+@foreach (var product in Model.Products)
+{
+    <partial name="_ProductQuickViewModalPartial" model="product"></partial>
+}
+<!-- /modal quick_view -->
+
+<!-- modal quick_add -->
+@foreach (var product in Model.Products)
+{
+    <partial name="_ProductQuickAddModalPartial" model="product"></partial>
+}
+
+<!-- Filter -->
+<div class="offcanvas offcanvas-start canvas-filter" id="filterShop">
+    <div class="canvas-wrapper">
+        <header class="canvas-header">
+            <div class="filter-icon">
+                <span class="icon icon-filter"></span>
+                <span>Filter</span>
+            </div>
+            <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
+        </header>
+        <div class="canvas-body">
+
+            <!-- Categories -->
+            <div class="widget-facet wd-categories">
+                <div class="facet-title" data-bs-target="#categories" data-bs-toggle="collapse" aria-expanded="true" aria-controls="categories">
+                    <span>Product categories</span>
+                    <span class="icon icon-arrow-up"></span>
+                </div>
+                <div id="categories" class="collapse show">
+                    <ul class="list-categoris current-scrollbar mb_36">
+                        @foreach (var category in Model.Products.Select(p => p.CategoryName).Distinct())
+                        {
+                            <li class="cate-item"><a href="#"><span>@category</span></a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <form action="#" id="facet-filter-form" class="facet-filter-form">
+
+                <!-- Availability -->
+                <div class="widget-facet">
+                    <div class="facet-title" data-bs-target="#availability" data-bs-toggle="collapse" aria-expanded="true" aria-controls="availability">
+                        <span>Availability</span>
+                        <span class="icon icon-arrow-up"></span>
+                    </div>
+                    <div id="availability" class="collapse show">
+                        <ul class="tf-filter-group current-scrollbar mb_36">
+                            <li class="list-item d-flex gap-12 align-items-center">
+                                <input type="radio" name="availability" class="tf-check" id="inStock">
+                                <label for="inStock" class="label">
+                                    <span>In stock</span>&nbsp;<span>@Model.Products.Count(p => p.QuantityAvailable > 0)</span>
+                                </label>
+                            </li>
+                            <li class="list-item d-flex gap-12 align-items-center">
+                                <input type="radio" name="availability" class="tf-check" id="outStock">
+                                <label for="outStock" class="label">
+                                    <span>Out of stock</span>&nbsp;<span>@Model.Products.Count(p => p.QuantityAvailable == 0)</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="widget-facet">
+                    <div class="facet-title" data-bs-target="#price" data-bs-toggle="collapse" aria-expanded="true" aria-controls="price">
+                        <span>Price</span>
+                        <span class="icon icon-arrow-up"></span>
+                    </div>
+                    <div id="price" class="collapse show">
+                        @{
+                            var minPrice = Model.Products.Min(p => p.Price);
+                            var maxPrice = Model.Products.Max(p => p.Price);
+                        }
+                        <div class="widget-price filter-price">
+                            <div class="price-val-range" id="price-value-range" data-min="@minPrice" data-max="@maxPrice"></div>
+                            <div class="box-title-price">
+                                <span class="title-price">Price :</span>
+                                <div class="caption-price">
+                                    <div class="price-val" id="price-min-value" data-currency="$">@minPrice</div>
+                                    <span>-</span>
+                                    <div class="price-val" id="price-max-value" data-currency="$">@maxPrice</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colors -->
+                <div class="widget-facet">
+                    <div class="facet-title" data-bs-target="#color" data-bs-toggle="collapse" aria-expanded="true" aria-controls="color">
+                        <span>Color</span>
+                        <span class="icon icon-arrow-up"></span>
+                    </div>
+                    <div id="color" class="collapse show">
+                        <ul class="tf-filter-group filter-color current-scrollbar mb_36">
+                            @foreach (var color in Model.Products
+                                                        .SelectMany(p => p.Variants)
+                                                        .Where(v => !string.IsNullOrEmpty(v.OptionValue))
+                                                        .Select(v => v.OptionValue)
+                                                        .Distinct())
+                            {
+                                <li class="list-item d-flex gap-12 align-items-center">
+                                    <input type="radio" name="color" class="tf-check-color" id="@color" value="@color" />
+                                    <label for="@color" class="label">
+                                        <span>@color</span>&nbsp;<span>(@Model.Products.Count(p => p.Variants.Any(v => v.OptionValue == color)))</span>
+                                    </label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Filter -->
+
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/shop.js"></script>

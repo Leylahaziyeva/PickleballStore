@@ -13,23 +13,29 @@ namespace PickleballStore.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(int id)
+        public IActionResult Add(int variantId)
         {
-            _basketManager.AddToBasket(id);
+            _basketManager.AddToBasket(variantId);
             return NoContent();
         }
 
         [HttpPost]
-        public IActionResult Remove(int id)
+        public IActionResult Remove(int variantId)  
         {
-            _basketManager.RemoveFromBasket(id);
+            _basketManager.RemoveFromBasket(variantId);
             return NoContent();
         }
 
         public async Task<IActionResult> GetBasket()
         {
             var model = await _basketManager.GetBasketAsync();
+            return Json(model);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> ChangeQuantity(int variantId, int quantity)
+        {
+            var model = await _basketManager.ChangeQuantityAsync(variantId, quantity);
             return Json(model);
         }
     }

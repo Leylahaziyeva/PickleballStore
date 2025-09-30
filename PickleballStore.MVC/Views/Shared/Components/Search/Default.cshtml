@@ -1,0 +1,82 @@
+﻿@model SearchViewModel
+
+<div class="offcanvas offcanvas-end canvas-search" id="canvasSearch">
+    <div class="canvas-wrapper">
+        <header class="tf-search-head">
+            <div class="title fw-5">
+                @(Model.SearchSection?.Title ?? "Search our site")
+                <div class="close">
+                    <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
+                </div>
+            </div>
+            <div class="tf-search-sticky">
+                <form class="tf-mini-search-frm" asp-controller="Product" asp-action="Search" method="get">
+                    <fieldset class="text">
+                        <input type="text"
+                               placeholder="@(Model.SearchSection?.Placeholder ?? "Search")"
+                               name="query"
+                               tabindex="0"
+                               aria-required="true"
+                               required>
+                    </fieldset>
+                    <button type="submit">
+                        <i class="@(Model.SearchSection?.Icon ?? "icon-search")"></i>
+                    </button>
+                </form>
+            </div>
+        </header>
+        <div class="canvas-body p-0">
+            <div class="tf-search-content">
+                <div class="tf-cart-hide-has-results">
+                    @if (Model.SearchSection?.QuickLinks?.Any() == true)
+                    {
+                        <div class="tf-col-quicklink">
+                            <div class="tf-search-content-title fw-5">Quick link</div>
+                            <ul class="tf-quicklink-list">
+                                @foreach (var link in Model.SearchSection.QuickLinks.Where(l => l.IsActive))
+                                {
+                                    <li class="tf-quicklink-item">
+                                        <a href="@link.Url">@link.Title</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    @if (Model.InspirationProducts?.Any() == true)
+                    {
+                        <div class="tf-col-content">
+                            <div class="tf-search-content-title fw-5">Need some inspiration?</div>
+                            <div class="tf-search-hidden-inner">
+                                @foreach (var product in Model.InspirationProducts)
+                                {
+                                    <div class="tf-loop-item">
+                                        <div class="image">
+                                            <a asp-controller="Product" asp-action="Detail" asp-route-url="@product.DetailsUrl">
+                                                <img src="~/images/products/@product.CoverImageName" alt="@product.Name">
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <a asp-controller="Product" asp-action="Detail" asp-route-url="@product.DetailsUrl">@product.Name</a>
+                                            <div class="tf-product-info-price">
+                                                @if (product.PriceBeforeDiscount.HasValue && product.PriceBeforeDiscount > product.Price)
+                                                {
+                                                    <div class="compare-at-price">$@product.PriceBeforeDiscount.Value.ToString("F2")</div>
+                                                    <div class="price-on-sale fw-6">$@product.Price.ToString("F2")</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="price fw-6">$@product.Price.ToString("F2")</div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

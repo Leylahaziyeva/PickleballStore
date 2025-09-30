@@ -1,4 +1,5 @@
-﻿using PickleballStore.BLL.Services.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using PickleballStore.BLL.Services.Contracts;
 using PickleballStore.BLL.ViewModels;
 
 namespace PickleballStore.BLL.Services
@@ -20,8 +21,14 @@ namespace PickleballStore.BLL.Services
         {
             var categories = await _categoryService.GetAllAsync(predicate: x => !x.IsDeleted);
 
-            var products = (await _productService.GetAllAsync(predicate: x => !x.IsDeleted)).Take(6).ToList();
-                         
+            var products = (await _productService.GetAllAsync(
+                predicate: x => !x.IsDeleted,
+                include: query => query
+                    .Include(p => p.Images)
+                    .Include(p => p.Variants)
+                    .Include(p => p.Category!)
+            )).Take(6).ToList();
+
             var sliders = await _SliderService.GetAllAsync();
 
             var homeViewModel = new HomeViewModel
@@ -30,7 +37,6 @@ namespace PickleballStore.BLL.Services
                 Products = products,
                 Sliders = sliders.ToList(),
             };
-
             return homeViewModel;
         }
     }
