@@ -5,17 +5,17 @@ namespace PickleballStore.MVC.Controllers
 {
     public class WishlistController : Controller
     {
-        private readonly WishlistManager _wishlistManager;
+        //private readonly WishlistManager _wishlistManager;
 
-        public WishlistController(WishlistManager wishlistManager)
-        {
-            _wishlistManager = wishlistManager;
-        }
-        public async Task<IActionResult> Index()
-        {
-            var wishlist = await _wishlistManager.GetWishlistAsync();
-            return View(wishlist);
-        }
+        //public WishlistController(WishlistManager wishlistManager)
+        //{
+        //    _wishlistManager = wishlistManager;
+        //}
+        //public async Task<IActionResult> Index()
+        //{
+        //    var wishlist = await _wishlistManager.GetWishlistAsync();
+        //    return View(wishlist);
+        //}
 
         //[HttpPost("wishlist/addToWishlist/{productId}")]
         //public IActionResult AddToWishlist(int productId)

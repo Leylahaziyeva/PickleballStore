@@ -22,7 +22,7 @@ namespace PickleballStore.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeQuantity(int variantId, int change)  
+        public async Task<IActionResult> ChangeQuantity(int variantId, int change)
         {
             var basketViewModel = await _basketManager.ChangeQuantityAsync(variantId, change);
             var cartHtml = await RenderPartialViewToString("_CartPartialView", basketViewModel);

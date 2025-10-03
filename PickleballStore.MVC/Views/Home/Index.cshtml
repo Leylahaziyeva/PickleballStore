@@ -225,7 +225,7 @@
                         </a>
                     </li>
                     <li class="nav-wishlist">
-                        <a asp-controller="Wishlist" asp-action="Index" class="nav-icon-item">
+                        <a asp-controller="Account" asp-action="WishlistPage" class="nav-icon-item">
                             <i class="icon icon-heart"></i><span class="count-box">1</span>
                         </a>
                     </li>
@@ -461,7 +461,6 @@
                     }
                     <div class="card-product-wrapper position-relative">
                         <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="product-img">
-                            <!-- şəkil burada -->
                         </a>
 
                         @if (product.CountdownEndDate.HasValue && product.CountdownEndDate.Value > DateTime.Now)
@@ -479,7 +478,6 @@
                     <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="title link">
                         @product.Name
                     </a>
-                    
                     <div class="price">
                         @if (product.PriceBeforeDiscount.HasValue && product.PriceBeforeDiscount.Value > product.Price)
                         {

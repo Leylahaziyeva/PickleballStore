@@ -155,6 +155,86 @@ namespace PickleballStore.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Province")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Suite")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Both");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
+                });
+
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -167,6 +247,9 @@ namespace PickleballStore.DAL.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -174,7 +257,10 @@ namespace PickleballStore.DAL.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -200,20 +286,24 @@ namespace PickleballStore.DAL.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProfileImageName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -259,7 +349,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Currency", b =>
@@ -305,7 +395,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies", (string)null);
+                    b.ToTable("Currencies");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.FooterBottom", b =>
@@ -342,7 +432,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterInfoId");
 
-                    b.ToTable("FooterBottoms", (string)null);
+                    b.ToTable("FooterBottoms");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.FooterInfo", b =>
@@ -387,7 +477,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("LogoId");
 
-                    b.ToTable("FooterInfos", (string)null);
+                    b.ToTable("FooterInfos");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Language", b =>
@@ -422,7 +512,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages", (string)null);
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Logo", b =>
@@ -454,7 +544,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logos", (string)null);
+                    b.ToTable("Logos");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.NewsletterSubscription", b =>
@@ -488,7 +578,184 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NewsletterSubscriptions", (string)null);
+                    b.ToTable("NewsletterSubscriptions");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CourierService")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EstimatedDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ItemCategory")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ItemCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ShippedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ShippingAddressId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Warehouse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.OrderHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CourierService")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EstimatedDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Warehouse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderHistories");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.PaymentMethod", b =>
@@ -529,7 +796,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterBottomId");
 
-                    b.ToTable("PaymentMethods", (string)null);
+                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Product", b =>
@@ -605,7 +872,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.ProductImage", b =>
@@ -651,7 +918,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.ProductVariant", b =>
@@ -698,7 +965,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductVariants", (string)null);
+                    b.ToTable("ProductVariants");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SearchQuickLink", b =>
@@ -742,7 +1009,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("SearchSectionId");
 
-                    b.ToTable("SearchQuickLinks", (string)null);
+                    b.ToTable("SearchQuickLinks");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SearchSection", b =>
@@ -786,7 +1053,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SearchSections", (string)null);
+                    b.ToTable("SearchSections");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Slider", b =>
@@ -836,7 +1103,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Sliders", (string)null);
+                    b.ToTable("Sliders");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SocialLink", b =>
@@ -880,7 +1147,64 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterInfoId");
 
-                    b.ToTable("SocialLinks", (string)null);
+                    b.ToTable("SocialLinks");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.WishlistItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DiscountPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("DiscountPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("WishlistItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -934,6 +1258,17 @@ namespace PickleballStore.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Address", b =>
+                {
+                    b.HasOne("PickleballStore.DAL.DataContext.Entities.AppUser", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.FooterBottom", b =>
                 {
                     b.HasOne("PickleballStore.DAL.DataContext.Entities.FooterInfo", "FooterInfo")
@@ -954,6 +1289,39 @@ namespace PickleballStore.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Logo");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Order", b =>
+                {
+                    b.HasOne("PickleballStore.DAL.DataContext.Entities.AppUser", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.OrderHistory", b =>
+                {
+                    b.HasOne("PickleballStore.DAL.DataContext.Entities.Order", "Order")
+                        .WithMany("OrderHistories")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.OrderItem", b =>
+                {
+                    b.HasOne("PickleballStore.DAL.DataContext.Entities.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.PaymentMethod", b =>
@@ -1031,6 +1399,26 @@ namespace PickleballStore.DAL.Migrations
                     b.Navigation("FooterInfo");
                 });
 
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.WishlistItem", b =>
+                {
+                    b.HasOne("PickleballStore.DAL.DataContext.Entities.AppUser", "User")
+                        .WithMany("WishlistItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.AppUser", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("WishlistItems");
+                });
+
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Category", b =>
                 {
                     b.Navigation("Products");
@@ -1044,6 +1432,13 @@ namespace PickleballStore.DAL.Migrations
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.FooterInfo", b =>
                 {
                     b.Navigation("SocialLinks");
+                });
+
+            modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Order", b =>
+                {
+                    b.Navigation("OrderHistories");
+
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Product", b =>

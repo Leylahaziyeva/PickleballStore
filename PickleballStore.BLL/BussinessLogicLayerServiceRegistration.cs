@@ -20,8 +20,11 @@ namespace PickleballStore.BLL
             services.AddScoped<ISliderService, SliderManager>();
             services.AddScoped<IHomeService, HomeManager>();
             services.AddScoped<IShopService, ShopManager>();
+            services.AddScoped<IWishlistService, WishlistManager>();
+            services.AddScoped<IOrderService, OrderManager>();
+            //services.AddScoped<IAddressService, AddressManager>();
+            //services.AddScoped<ICheckoutService,CheckoutManager>();
             services.AddScoped<FileService>();
-            services.AddScoped<WishlistManager>();
             services.AddScoped<BasketManager>();
 
             return services;

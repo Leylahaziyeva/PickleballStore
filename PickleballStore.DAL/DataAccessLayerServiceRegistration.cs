@@ -21,9 +21,12 @@ namespace PickleballStore.DAL
 
             services.AddScoped(typeof(IRepository<>), typeof(EfCoreRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISliderRepository, SliderRepository>();
-            services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IWishlistRepository, WishlistRepository>();
 
             return services;
         }

@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using PickleballStore.BLL;
 using PickleballStore.BLL.Constants;
-using PickleballStore.BLL.Services.Contracts;
 using PickleballStore.DAL;
 using PickleballStore.DAL.DataContext;
 using PickleballStore.DAL.DataContext.Entities;
-using PickleballStore.Services;
 
 namespace PickleballStore.MVC
 {
@@ -28,8 +26,7 @@ namespace PickleballStore.MVC
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-
-                //options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 3;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();

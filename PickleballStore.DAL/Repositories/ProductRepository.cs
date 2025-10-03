@@ -22,5 +22,15 @@ namespace PickleballStore.DAL.Repositories
            .Include(p => p.Category)
            .FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task<List<Product>> GetProductsByCategoryAsync(int categoryId, int excludeProductId)
+        {
+            return await _dbContext.Products
+                .Where(p => p.CategoryId == categoryId && p.Id != excludeProductId)
+                .Include(p => p.Images)      
+                .Include(p => p.Variants)
+                .Take(8)
+                .ToListAsync();
+        }
     }
 }

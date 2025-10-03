@@ -1,13 +1,18 @@
 ﻿function addToWishlist(productId) {
-    fetch('/wishlist/addToWishlist/' + productId, {
-        method: 'POST'
+    var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+    fetch('/Account/AddToWishlist', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'productId=' + productId + '&__RequestVerificationToken=' + token  
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 alert('Added to wishlist!');
-            }
-            else {
+            } else {
                 alert('Failed to add product to wishlist.');
             }
         })
@@ -16,9 +21,16 @@
             alert('An error occurred while adding the product to the wishlist.');
         });
 }
+
 function removeFromWishlist(productId, element) {
-    fetch('/wishlist/removeFromWishlist/' + productId, {
-        method: 'POST'
+    var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+    fetch('/Account/RemoveFromWishlist', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id=' + productId + '&__RequestVerificationToken=' + token  
     })
         .then(response => response.json())
         .then(data => {

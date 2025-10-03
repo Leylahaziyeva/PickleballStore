@@ -1,0 +1,69 @@
+﻿@model RegisterViewModel
+
+<div class="modal modalCentered fade form-sign-in modal-part-content" id="register">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="header">
+                <div class="demo-title">Register</div>
+                <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
+            </div>
+            <div class="tf-login-form">
+                <form asp-action="Register" asp-controller="Account" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="tf-field style-1">
+                        <input asp-for="FirstName" class="tf-field-input tf-input" placeholder=" " />
+                        <label asp-for="FirstName" class="tf-field-label"></label>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="tf-field style-1">
+                        <input asp-for="LastName" class="tf-field-input tf-input" placeholder=" " />
+                        <label asp-for="LastName" class="tf-field-label"></label>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="tf-field style-1">
+                        <input asp-for="Username" class="tf-field-input tf-input" placeholder=" " />
+                        <label asp-for="Username" class="tf-field-label"></label>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="tf-field style-1">
+                        <input asp-for="Email" class="tf-field-input tf-input" placeholder=" " />
+                        <label asp-for="Email" class="tf-field-label"></label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="tf-field style-1">
+                        <input asp-for="Password" class="tf-field-input tf-input" placeholder=" " type="password" />
+                        <label asp-for="Password" class="tf-field-label"></label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check">
+                        <input asp-for="AgreeToTerms" class="form-check-input" type="checkbox" />
+                        <label asp-for="AgreeToTerms" class="form-check-label"></label>
+                        <span asp-validation-for="AgreeToTerms" class="text-danger d-block"></span>
+                    </div>
+
+                    <div class="bottom">
+                        <div class="w-100">
+                            <button type="submit" class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center">
+                                <span>Register</span>
+                            </button>
+                        </div>
+                        <div class="w-100">
+                            <a href="#login" data-bs-toggle="modal" class="btn-link fw-6 w-100 link">
+                                Already have an account? Log in here
+                                <i class="icon icon-arrow1-top-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

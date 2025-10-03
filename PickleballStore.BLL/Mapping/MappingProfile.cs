@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using PickleballStore.BLL.ViewModels.Account;
 using PickleballStore.BLL.ViewModels.Category;
+using PickleballStore.BLL.ViewModels.Order;
 using PickleballStore.BLL.ViewModels.Product;
 using PickleballStore.BLL.ViewModels.ProductImage;
 using PickleballStore.BLL.ViewModels.ProductVariant;
@@ -78,6 +80,31 @@ namespace PickleballStore.BLL.Mapping
                 opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null)).ReverseMap();
             CreateMap<Slider, CreateSliderViewModel>().ReverseMap();
             CreateMap<Slider, UpdateSliderViewModel>().ReverseMap();
+
+            CreateMap<Order, OrderListViewModel>();
+            CreateMap<Order, OrderDetailsViewModel>();
+            CreateMap<OrderItem, OrderItemViewModel>();
+
+
+            CreateMap<WishlistItem, WishlistItemViewModel>()
+                .ForMember(dest => dest.HasDiscount, opt => opt.Ignore());
+
+
+            CreateMap<AppUser, AccountViewModel>()
+                .ReverseMap()
+                .ForMember(dest => dest.UserName, opt => opt.Ignore())
+                .ForMember(dest => dest.NormalizedUserName, opt => opt.Ignore())
+                .ForMember(dest => dest.NormalizedEmail, opt => opt.Ignore())
+                .ForMember(dest => dest.EmailConfirmed, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForMember(dest => dest.SecurityStamp, opt => opt.Ignore())
+                .ForMember(dest => dest.ConcurrencyStamp, opt => opt.Ignore())
+                .ForMember(dest => dest.PhoneNumber, opt => opt.Ignore())
+                .ForMember(dest => dest.PhoneNumberConfirmed, opt => opt.Ignore())
+                .ForMember(dest => dest.TwoFactorEnabled, opt => opt.Ignore())
+                .ForMember(dest => dest.LockoutEnd, opt => opt.Ignore())
+                .ForMember(dest => dest.LockoutEnabled, opt => opt.Ignore())
+                .ForMember(dest => dest.AccessFailedCount, opt => opt.Ignore());
         }
     }
 }

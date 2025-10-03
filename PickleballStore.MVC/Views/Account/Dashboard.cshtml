@@ -1,0 +1,77 @@
+﻿@model DashboardViewModel
+
+@{
+    ViewData["Title"] = "My Account - Dashboard";
+}
+
+<!-- page-title -->
+<div class="tf-page-title">
+    <div class="container-full">
+        <div class="heading text-center">My Account</div>
+    </div>
+</div>
+<!-- /page-title -->
+
+<!-- page-cart -->
+<section class="flat-spacing-11">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="wrap-sidebar-account">
+                    <ul class="my-account-nav">
+                        <li><span class="my-account-nav-item active">Dashboard</span></li>
+                        <li><a asp-action="Orders" asp-controller="Account" class="my-account-nav-item">Orders</a></li>
+                        <li><a asp-action="Addresses" asp-controller="Account" class="my-account-nav-item">Address</a></li>
+                        <li><a asp-action="AccountDetails" asp-controller="Account" class="my-account-nav-item">Account Details</a></li>
+                        <li><a asp-action="AccountWishlist" asp-controller="Account" class="my-account-nav-item">Wishlist</a></li>
+                        <li>
+                            <form asp-action="Logout" asp-controller="Account" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="my-account-nav-item" style="background: none; border: none; padding: 0; cursor: pointer; text-align: left; width: 100%;">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="my-account-content account-dashboard">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="mb_60">
+                        <h5 class="fw-5 mb_20">Hello @Model.Username</h5>
+                        <p>
+                            From your account dashboard you can view your <a class="text_primary" asp-action="Orders" asp-controller="Account">recent orders</a>, manage your <a class="text_primary" asp-action="Addresses" asp-controller="Account">
+                                shipping and billing
+                                address
+                            </a>, and <a class="text_primary" asp-action="AccountDetails" asp-controller="Account">
+                                edit your
+                                password and account details
+                            </a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- page-cart -->
+
+<div class="btn-sidebar-account">
+    <button data-bs-toggle="offcanvas" data-bs-target="#mbAccount" aria-controls="offcanvas">
+        <i class="icon icon-sidebar-2"></i>
+    </button>
+</div>

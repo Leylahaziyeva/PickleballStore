@@ -1,5 +1,9 @@
 ﻿@model WishlistViewModel
 
+@{
+    ViewData["Title"] = "WishlistPage";
+}
+
 <!-- header -->
 <header id="header" class="header-default">
     <div class="px_15 lg-px_40">
@@ -239,7 +243,6 @@
     </div>
 </header>
 <!-- /header -->
-
 <!-- page-title -->
 <div class="tf-page-title">
     <div class="container-full">
@@ -247,7 +250,6 @@
     </div>
 </div>
 <!-- /page-title -->
-
 <!-- Section Product -->
 <section class="flat-spacing-2">
     <div class="container">
@@ -625,11 +627,4 @@
     </div>
 </section>
 <!-- /Section Product -->
-<!-- modal quick -->
-@foreach (var product in Model.Products)
-{
-    <partial name="_ProductQuickViewModalPartial" model="product"></partial>
 
-    <partial name="_ProductQuickAddModalPartial" model="product"></partial>
-}
-<!-- /modal quick -->

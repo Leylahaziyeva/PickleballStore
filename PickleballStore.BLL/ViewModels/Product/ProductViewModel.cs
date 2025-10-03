@@ -34,6 +34,8 @@ namespace PickleballStore.BLL.ViewModels.Product
 
         public List<ProductImageViewModel> Images { get; set; } = [];
         public List<ProductVariantViewModel> Variants { get; set; } = [];
+        public List<ProductViewModel> RelatedProducts { get; set; } = [];
+        public List<ProductViewModel> RecentlyViewedProducts { get; set; } = [];
 
         public string? BadgeLabel { get; set; }  
         public string? BadgeCssClass { get; set; }       

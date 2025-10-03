@@ -6,6 +6,6 @@
 
         public string ImageName { get; set; } = null!; 
 
-        public ICollection<Product> Products { get; set; } = [];
+        public List<Product> Products { get; set; } = [];
     }
 }

@@ -145,6 +145,14 @@ document.addEventListener("click", function (e) {
         console.log("Decreasing quantity for variant:", variantId);
         changeQuantity(variantId, -1);
     }
+    if (e.target.classList.contains('btn-quantity')) {
+        const modal = e.target.closest('.modal');
+        if (modal) {
+            setTimeout(() => {
+                updateModalPrice(modal);
+            }, 100);
+        }
+    }
 });
 function initializeVariantSelection() {
     document.querySelectorAll('input[type="radio"][name^="color-"]').forEach(radio => {
@@ -168,6 +176,25 @@ function initializeVariantSelection() {
             }
         });
     });
+}
+
+function updateModalPrice(modal) {
+    const quantityInput = modal.querySelector('.wg-quantity input[name="number"]');
+    const priceElement = modal.querySelector('.tf-qty-price');
+
+    if (quantityInput && priceElement) {
+        const quantity = parseInt(quantityInput.value) || 1;
+        const unitPriceText = priceElement.textContent.replace('$', '');
+
+        const unitPrice = parseFloat(modal.dataset.unitPrice || unitPriceText);
+
+        if (!modal.dataset.unitPrice) {
+            modal.dataset.unitPrice = unitPrice;
+        }
+
+        const totalPrice = (unitPrice * quantity).toFixed(2);
+        priceElement.textContent = `$${totalPrice}`;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {

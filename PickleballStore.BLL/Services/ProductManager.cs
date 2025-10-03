@@ -35,6 +35,16 @@ namespace PickleballStore.BLL.Services
             return productViewModel;
         }
 
+        public async Task<List<ProductViewModel>> GetRelatedProductsAsync(int categoryId, int id)
+        {
+            var products = await _repository.GetProductsByCategoryAsync(categoryId, id);
+
+            var relatedProductsViewModel = _mapper.Map<List<ProductViewModel>>(products);
+
+            return relatedProductsViewModel;
+        }
+
+
         //public async Task<CreateProductViewModel> GetCreateProductViewModelAsync()
         //{
         //    var createProductViewModel = new CreateProductViewModel();

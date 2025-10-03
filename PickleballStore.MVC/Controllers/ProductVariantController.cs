@@ -32,7 +32,6 @@ namespace PickleballStore.MVC.Controllers
             await _productVariantService.CreateAsync(model);
             return RedirectToAction("Edit", "Product", new { id = model.ProductId });
         }
-]
         public async Task<IActionResult> Edit(int id)
         {
             var variant = await _productVariantService.GetByIdAsync(id);

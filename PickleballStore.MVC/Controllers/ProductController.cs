@@ -14,17 +14,17 @@ namespace PickleballStore.MVC.Controllers
             _productService = productService;
             //_userManager = userManager;
         }
-
         public async Task<IActionResult> Details(string id)
         {
             int productId = int.Parse(id.Split('-').Last());
 
-            var model = await _productService.GetByIdWithDetailsAsync(productId);
-
-            if (model == null)
+            var product = await _productService.GetByIdWithDetailsAsync(productId);
+            if (product == null)
                 return NotFound();
 
-            return View(model);
+            product.RelatedProducts = await _productService.GetRelatedProductsAsync(product.CategoryId, product.Id);
+
+            return View(product);
         }
     }
 }

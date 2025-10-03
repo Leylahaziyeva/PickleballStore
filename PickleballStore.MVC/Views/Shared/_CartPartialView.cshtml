@@ -111,7 +111,6 @@
                 </div>
                 <div class="tf-page-cart-checkout">
                     <div class="shipping-calculator">
-                        <!-- Keep your existing shipping calculator HTML here -->
                     </div>
                     <div class="cart-checkbox">
                         <input type="checkbox" class="tf-check" id="cart-gift-checkbox">
@@ -133,9 +132,21 @@
                         </label>
                     </div>
                     <div class="cart-checkout-btn">
-                        <a href="@Url.Action("Checkout", "Order")" class="tf-btn w-100 btn-fill animate-hover-btn radius-3 justify-content-center">
-                            <span>Check out</span>
-                        </a>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">
+                                <i class="fas fa-lock"></i> Checkout
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account"
+                               asp-action="Login"
+                               asp-route-returnUrl="@Url.Action("Index", "Checkout")"
+                               class="btn btn-primary">
+                                <i class="fas fa-lock"></i> Login to Checkout
+                            </a>
+                        }
                     </div>
                     <div class="tf-page-cart_imgtrust">
                         <p class="text-center fw-6">Guarantee Safe Checkout</p>

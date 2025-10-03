@@ -1,0 +1,137 @@
+﻿@model AccountViewModel
+
+@{
+    ViewData["Title"] = "Account Details";
+}
+
+<!-- page-title -->
+<div class="tf-page-title">
+    <div class="container-full">
+        <div class="heading text-center">Account Details</div>
+    </div>
+</div>
+<!-- /page-title -->
+
+<!-- page-cart -->
+<section class="flat-spacing-11">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="wrap-sidebar-account">
+                    <ul class="my-account-nav">
+                        <li><a asp-action="Dashboard" asp-controller="Account" class="my-account-nav-item">Dashboard</a></li>
+                        <li><a asp-action="Orders" asp-controller="Account" class="my-account-nav-item">Orders</a></li>
+                        <li><a asp-action="Addresses" asp-controller="Account" class="my-account-nav-item">Address</a></li>
+                        <li><span class="my-account-nav-item active">Account Details</span></li>
+                        <li><a asp-action="AccountWishlist" asp-controller="Account" class="my-account-nav-item">Wishlist</a></li>
+                        <li>
+                            <form asp-action="Logout" asp-controller="Account" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="my-account-nav-item" style="background: none; border: none; padding: 0; cursor: pointer; text-align: left; width: 100%;">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="my-account-content account-edit">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="">
+                        <!-- Account Details Form -->
+                        <form asp-action="UpdateDetails" asp-controller="Account" method="post" id="form-account-details">
+                            @Html.AntiForgeryToken()
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            <div class="tf-field style-1 mb_15">
+                                <input asp-for="FirstName" class="tf-field-input tf-input" placeholder=" " type="text">
+                                <label asp-for="FirstName" class="tf-field-label fw-4 text_black-2">First name</label>
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+
+                            <div class="tf-field style-1 mb_15">
+                                <input asp-for="LastName" class="tf-field-input tf-input" placeholder=" " type="text">
+                                <label asp-for="LastName" class="tf-field-label fw-4 text_black-2">Last name</label>
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
+                            <div class="tf-field style-1 mb_15">
+                                <input asp-for="Email" class="tf-field-input tf-input" placeholder=" " type="email">
+                                <label asp-for="Email" class="tf-field-label fw-4 text_black-2">Email</label>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb_20">
+                                <button type="submit" class="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Password Change Form -->
+                        <h6 class="mb_20 mt_30">Password Change</h6>
+                        <form asp-action="ChangePassword" asp-controller="Account" method="post" id="form-password-change">
+                            @Html.AntiForgeryToken()
+
+                            <div class="tf-field style-1 mb_30">
+                                <input class="tf-field-input tf-input" placeholder=" " type="password"
+                                       id="CurrentPassword" name="CurrentPassword">
+                                <label class="tf-field-label fw-4 text_black-2" for="CurrentPassword">
+                                    Current password
+                                </label>
+                            </div>
+
+                            <div class="tf-field style-1 mb_30">
+                                <input class="tf-field-input tf-input" placeholder=" " type="password"
+                                       id="NewPassword" name="NewPassword">
+                                <label class="tf-field-label fw-4 text_black-2" for="NewPassword">
+                                    New password
+                                </label>
+                            </div>
+
+                            <div class="tf-field style-1 mb_30">
+                                <input class="tf-field-input tf-input" placeholder=" " type="password"
+                                       id="ConfirmPassword" name="ConfirmPassword">
+                                <label class="tf-field-label fw-4 text_black-2" for="ConfirmPassword">
+                                    Confirm password
+                                </label>
+                            </div>
+
+                            <div class="mb_20">
+                                <button type="submit" class="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center">
+                                    Change Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- page-cart -->
+
+<div class="btn-sidebar-account">
+    <button data-bs-toggle="offcanvas" data-bs-target="#mbAccount" aria-controls="offcanvas">
+        <i class="icon icon-sidebar-2"></i>
+    </button>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

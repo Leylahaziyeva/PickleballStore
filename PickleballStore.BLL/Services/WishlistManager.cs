@@ -1,90 +1,46 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using PickleballStore.BLL.Services.Contracts;
-using PickleballStore.BLL.ViewModels.Wishlist;
+using PickleballStore.BLL.ViewModels.Account;
+using PickleballStore.DAL.Repositories.Contracts;
 
 namespace PickleballStore.BLL.Services
 {
-    public class WishlistManager
+    public class WishlistManager : IWishlistService
     {
-        private const string WishlistCookieName = "wishlist";
+        private readonly IWishlistRepository _wishlistRepository;
+        private readonly IProductRepository _productRepository; 
+        private readonly IMapper _mapper;
 
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        private readonly IProductService _productService;
-
-        public WishlistManager(IHttpContextAccessor httpContextAccessor, IProductService productService)
+        public WishlistManager(IWishlistRepository wishlistRepository, IProductRepository productRepository, IMapper mapper)
         {
-            _httpContextAccessor = httpContextAccessor;
-            _productService = productService;
+            _wishlistRepository = wishlistRepository;
+            _productRepository = productRepository;
+            _mapper = mapper;
         }
 
-        public void AddToWishlist(int productId)
+        public Task<bool> AddToWishlistAsync(int productId, string userId)
         {
-            var wishlist = GetWishlistFromCookie();
-            var wishlistItem = wishlist.FirstOrDefault(item => item.ProductId == productId);
-
-            if (wishlistItem == null)
-            {
-                wishlist.Add(new WishlistCookieItemViewModel
-                {
-                    ProductId = productId
-                });
-
-                SaveWishlistToCookie(wishlist);
-            }
+            throw new NotImplementedException();
         }
 
-        public void RemoveFromWishlist(int productId)
+        public Task<List<WishlistItemViewModel>> GetUserWishlistAsync(string userId)
         {
-            var wishlist = GetWishlistFromCookie();
-            var wishlistItem = wishlist.FirstOrDefault(item => item.ProductId == productId);
-            if (wishlistItem != null)
-            {
-                wishlist.Remove(wishlistItem);
-                SaveWishlistToCookie(wishlist);
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<WishlistViewModel> GetWishlistAsync()
+        public Task<int> GetWishlistCountAsync(string userId)
         {
-            var wishlist = GetWishlistFromCookie();
-            var wishlistViewModel = new WishlistViewModel();
-            foreach (var item in wishlist)
-            {
-                var product = await _productService.GetByIdAsync(item.ProductId);
-                if (product != null)
-                {
-                    wishlistViewModel.Items.Add(new WishlistItemViewModel
-                    {
-                        ProductId = product.Id,
-                        ProductName = product.Name!,
-                        ImageName = product.CoverImageName!,
-                        Price = product.Price,
-                    });
-                }
-            }
-            return wishlistViewModel;
+            throw new NotImplementedException();
         }
 
-        private List<WishlistCookieItemViewModel> GetWishlistFromCookie()
+        public Task<bool> IsInWishlistAsync(string userId, int productId)
         {
-            var cookie = _httpContextAccessor.HttpContext?.Request.Cookies[WishlistCookieName];
-            if (string.IsNullOrEmpty(cookie))
-            {
-                return new List<WishlistCookieItemViewModel>();
-            }
-            return System.Text.Json.JsonSerializer.Deserialize<List<WishlistCookieItemViewModel>>(cookie) ?? new List<WishlistCookieItemViewModel>();
+            throw new NotImplementedException();
         }
 
-        private void SaveWishlistToCookie(List<WishlistCookieItemViewModel> wishlist)
+        public Task<bool> RemoveFromWishlistAsync(int wishlistItemId, string userId)
         {
-            var cookieOptions = new CookieOptions
-            {
-                Expires = DateTimeOffset.UtcNow.AddDays(7),
-                HttpOnly = true,
-            };
-            var cookieValue = System.Text.Json.JsonSerializer.Serialize(wishlist);
-            _httpContextAccessor.HttpContext?.Response.Cookies.Append(WishlistCookieName, cookieValue, cookieOptions);
+            throw new NotImplementedException();
         }
     }
 }

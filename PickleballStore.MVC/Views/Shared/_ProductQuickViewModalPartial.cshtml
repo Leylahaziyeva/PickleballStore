@@ -128,11 +128,9 @@
                                     <span class="tf-qty-price">$@Model.Price.ToString("F2")</span>
                                 </a>
 
-                                <a href="#"
-                                   class="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action">
-                                    <span class="icon icon-heart"></span>
-                                    <span class="tooltip">Add to Wishlist</span>
-                                    <span class="icon icon-delete"></span>
+                                <a href="#" onclick="addToWishlist(@Model.Id, this); return false;" class="tf-product-btn-wishlist btn-icon-action">
+                                    <i class="icon-heart"></i>
+                                    <i class="icon-delete"></i>
                                 </a>
 
                                 <a href="#compare"

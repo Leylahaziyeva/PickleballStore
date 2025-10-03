@@ -26,12 +26,30 @@ namespace PickleballStore.DAL.DataContext
         public DbSet<Slider> Sliders { get; set; } = null!;
         public DbSet<SearchSection> SearchSections { get; set; } = null!;
         public DbSet<SearchQuickLink> SearchQuickLinks { get; set; } = null!;
+        public DbSet<Address> Addresses { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<OrderItem> OrderItems { get; set; } = null!;
+        public DbSet<WishlistItem> WishlistItems { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<AppUser>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            builder.Entity<Address>()
+                .HasOne(a => a.User)
+                .WithMany(u => u.Addresses)
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<Product>()
-               .Property(p => p.Price)
-               .HasPrecision(18, 2);
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            builder.Entity<Order>()
+                .Property(o => o.Status)
+                .HasDefaultValue("Pending");
 
             base.OnModelCreating(builder);
         }

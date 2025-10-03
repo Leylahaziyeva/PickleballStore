@@ -18,4 +18,8 @@
     <ProjectReference Include="..\PickleballStore.BLL\PickleballStore.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
