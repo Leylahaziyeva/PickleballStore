@@ -33,9 +33,9 @@ namespace PickleballStore.DAL.DataContext
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<AppUser>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            builder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
 
             builder.Entity<Address>()
                 .HasOne(a => a.User)
@@ -43,13 +43,29 @@ namespace PickleballStore.DAL.DataContext
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Product>()
-                .Property(p => p.Price)
-                .HasPrecision(18, 2);
+            builder.Entity<Order>()
+                .HasOne(o => o.ShippingAddress)
+                .WithMany()
+                .HasForeignKey(o => o.ShippingAddressId)
+                .OnDelete(DeleteBehavior.NoAction); 
 
             builder.Entity<Order>()
-                .Property(o => o.Status)
-                .HasDefaultValue("Pending");
+                .HasOne(o => o.BillingAddress)
+                .WithMany()
+                .HasForeignKey(o => o.BillingAddressId)
+                .OnDelete(DeleteBehavior.NoAction); 
+
+            builder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<OrderItem>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.Items)
+                .HasForeignKey(oi => oi.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(builder);
         }

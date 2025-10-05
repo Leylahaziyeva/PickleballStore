@@ -13,9 +13,8 @@ namespace PickleballStore.BLL.ViewModels.Address
         public string? Company { get; set; }
 
         [Required]
-        public string Street { get; set; } = string.Empty;
+        public string Adress { get; set; } = string.Empty;
 
-        public string? Suite { get; set; }
 
         [Required]
         public string City { get; set; } = string.Empty;
@@ -23,7 +22,6 @@ namespace PickleballStore.BLL.ViewModels.Address
         [Required]
         public string Country { get; set; } = string.Empty;
 
-        public string? Province { get; set; }
 
         [Required]
         public string PostalCode { get; set; } = string.Empty;

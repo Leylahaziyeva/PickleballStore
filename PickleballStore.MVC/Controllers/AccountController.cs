@@ -101,7 +101,6 @@ namespace PickleballStore.MVC.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            // Check if email already exists
             var existingUser = await _userManager.FindByEmailAsync(model.Email);
             if (existingUser != null)
             {
@@ -128,7 +127,6 @@ namespace PickleballStore.MVC.Controllers
                 return View(model);
             }
 
-            // Ensure User role exists
             if (!await _roleManager.RoleExistsAsync("User"))
             {
                 await _roleManager.CreateAsync(new IdentityRole("User"));
@@ -234,7 +232,6 @@ namespace PickleballStore.MVC.Controllers
             return View();
         }
 
-
         [Authorize(Roles = "User")]
         public async Task<IActionResult> Dashboard()
         {
@@ -265,13 +262,122 @@ namespace PickleballStore.MVC.Controllers
             return View(model);
         }
 
+
+        [Authorize]
+        public async Task<IActionResult> Addresses()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction(nameof(Login));
+
+            var addresses = await _addressService.GetUserAddressesAsync(user.Id);
+            return View(addresses);
+        }
+
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AccountDetails(AccountEditViewModel model)
+        public async Task<IActionResult> CreateAddress(CreateAddressViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                TempData["ErrorMessage"] = "Please fill in all required fields correctly.";
+                return RedirectToAction(nameof(Addresses));
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction(nameof(Login));
+
+            await _addressService.CreateAddressAsync(user.Id, model);
+            TempData["SuccessMessage"] = "Address added successfully.";
+            return RedirectToAction(nameof(Addresses));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EditAddress(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var address = await _addressService.GetAddressByIdAsync(id, user.Id);
+            if (address == null)
+            {
+                return NotFound();
+            }
+
+            var model = new UpdateAddressViewModel
+            {
+                Id = id,
+                FirstName = address.FirstName,
+                LastName = address.LastName,
+                Company = address.Company,
+                Adress = address.Adress,
+                City = address.City,
+                Country = address.Country,
+                PostalCode = address.PostalCode,
+                PhoneNumber = address.PhoneNumber,
+                IsDefault = address.IsDefault
+            };
+
+            return PartialView("_EditAddressFormPartial", model);
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAddress(int id, UpdateAddressViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["ErrorMessage"] = "Please fill in all required fields correctly.";
+                return RedirectToAction(nameof(Addresses));
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction(nameof(Login));
+
+            var result = await _addressService.UpdateAddressAsync(id, user.Id, model);
+            if (result)
+            {
+                TempData["SuccessMessage"] = "Address updated successfully.";
+                return RedirectToAction(nameof(Addresses));
+            }
+
+            TempData["ErrorMessage"] = "Failed to update address.";
+            return RedirectToAction(nameof(Addresses));
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAddress(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var result = await _addressService.DeleteAddressAsync(id, user.Id);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateDetails(AccountEditViewModel model)
+        {
+            ModelState.Remove(nameof(model.CurrentPassword));
+            ModelState.Remove(nameof(model.NewPassword));
+            ModelState.Remove(nameof(model.ConfirmPassword));
+
+            if (!ModelState.IsValid)
+                return View("AccountDetails", model);
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return RedirectToAction(nameof(Login));
@@ -287,7 +393,7 @@ namespace PickleballStore.MVC.Controllers
                 if (emailExists)
                 {
                     ModelState.AddModelError(nameof(model.Email), "This email is already in use.");
-                    return View(model);
+                    return View("AccountDetails", model);
                 }
 
                 user.Email = model.Email;
@@ -296,232 +402,57 @@ namespace PickleballStore.MVC.Controllers
                 user.NormalizedUserName = model.Email.ToUpper();
             }
 
-            var updateResult = await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user);
 
-            if (!updateResult.Succeeded)
+            if (result.Succeeded)
             {
-                foreach (var error in updateResult.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return View(model);
-            }
-
-            var isPasswordChangeRequested = !string.IsNullOrEmpty(model.CurrentPassword) ||
-                                           !string.IsNullOrEmpty(model.NewPassword) ||
-                                           !string.IsNullOrEmpty(model.ConfirmPassword);
-
-            if (isPasswordChangeRequested)
-            {
-                if (string.IsNullOrEmpty(model.CurrentPassword))
-                {
-                    ModelState.AddModelError(nameof(model.CurrentPassword), "Current password is required to change password.");
-                    return View(model);
-                }
-
-                if (string.IsNullOrEmpty(model.NewPassword))
-                {
-                    ModelState.AddModelError(nameof(model.NewPassword), "New password is required.");
-                    return View(model);
-                }
-
-                if (string.IsNullOrEmpty(model.ConfirmPassword))
-                {
-                    ModelState.AddModelError(nameof(model.ConfirmPassword), "Confirm password is required.");
-                    return View(model);
-                }
-                var passwordResult = await _userManager.ChangePasswordAsync(
-                    user,
-                    model.CurrentPassword,
-                    model.NewPassword);
-
-                if (!passwordResult.Succeeded)
-                {
-                    foreach (var error in passwordResult.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                    return View(model);
-                }
-
-                await _signInManager.RefreshSignInAsync(user);
-
-                TempData["SuccessMessage"] = "Account details and password updated successfully.";
+                TempData["SuccessMessage"] = "Account details updated successfully.";
             }
             else
             {
-                TempData["SuccessMessage"] = "Account details updated successfully.";
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View("AccountDetails", model);
             }
 
             return RedirectToAction(nameof(AccountDetails));
         }
 
 
-        // GET: Address list page
-        [Authorize]
-        public async Task<IActionResult> Address()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var addresses = await _addressService.GetUserAddressesAsync(user.Id);
-            return View(addresses);
-        }
-
-        // GET: Create new address
-        [Authorize]
-        public IActionResult CreateAddress()
-        {
-            return View(new CreateAddressViewModel());
-        }
-
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAddress(CreateAddressViewModel model)
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            await _addressService.CreateAddressAsync(user.Id, model);
-
-            TempData["SuccessMessage"] = "Address added successfully.";
-            return RedirectToAction(nameof(Address));
-        }
-
-        // GET: Edit address
-        [Authorize]
-        public async Task<IActionResult> EditAddress(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var address = await _addressService.GetAddressByIdAsync(id, user.Id);
-            if (address == null)
             {
-                TempData["ErrorMessage"] = "Address not found.";
-                return RedirectToAction(nameof(Address));
+                TempData["ErrorMessage"] = "Please fill all password fields correctly.";
+                return RedirectToAction(nameof(AccountDetails));
             }
 
-            var model = new UpdateAddressViewModel
-            {
-                FirstName = address.FirstName,
-                LastName = address.LastName,
-                Company = address.Company,
-                Street = address.Street,
-                Suite = address.Suite,
-                City = address.City,
-                Country = address.Country,
-                Province = address.Province,
-                PostalCode = address.PostalCode,
-                PhoneNumber = address.PhoneNumber,
-                IsDefault = address.IsDefault
-            };
-
-            return View(model);
-        }
-
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAddress(int id, UpdateAddressViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return RedirectToAction(nameof(Login));
 
-            var result = await _addressService.UpdateAddressAsync(id, user.Id, model);
+            var result = await _userManager.ChangePasswordAsync(
+                user,
+                model.CurrentPassword,
+                model.NewPassword);
 
-            if (result)
+            if (result.Succeeded)
             {
-                TempData["SuccessMessage"] = "Address updated successfully.";
-                return RedirectToAction(nameof(Address));
-            }
-
-            TempData["ErrorMessage"] = "Failed to update address.";
-            return View(model);
-        }
-
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAddress(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var result = await _addressService.DeleteAddressAsync(id, user.Id);
-
-            if (result)
-            {
-                TempData["SuccessMessage"] = "Address deleted successfully.";
+                await _signInManager.RefreshSignInAsync(user);
+                TempData["SuccessMessage"] = "Password changed successfully.";
             }
             else
             {
-                TempData["ErrorMessage"] = "Failed to delete address.";
+                var errorMessage = result.Errors.FirstOrDefault()?.Description ?? "Failed to change password.";
+                TempData["ErrorMessage"] = errorMessage;
             }
 
-            return RedirectToAction(nameof(Address));
+            return RedirectToAction(nameof(AccountDetails));
         }
-
-        // GET: Orders list
-        [Authorize]
-        public async Task<IActionResult> Orders()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var orders = await _orderService.GetUserOrdersAsync(user.Id);
-            return View(orders);
-        }
-
-        // GET: Order details
-        [Authorize]
-        public async Task<IActionResult> OrderDetails(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var order = await _orderService.GetOrderDetailsAsync(id, user.Id);
-
-            if (order == null)
-            {
-                TempData["ErrorMessage"] = "Order not found.";
-                return RedirectToAction(nameof(Orders));
-            }
-
-            return View(order);
-        }
-
-        // POST: Cancel order
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CancelOrder(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var result = await _orderService.CancelOrderAsync(id, user.Id);
-
-            if (result)
-            {
-                TempData["SuccessMessage"] = "Order cancelled successfully.";
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "Unable to cancel order.";
-            }
-
-            return RedirectToAction(nameof(Orders));
-        }
-
-
 
         public async Task<IActionResult> WishlistPage()
         {

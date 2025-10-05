@@ -1,0 +1,15 @@
+﻿<div class="wrap-sidebar-account">
+    <ul class="my-account-nav">
+        <li><a asp-controller="Account" asp-action="Dashboard" class="my-account-nav-item">Dashboard</a></li>
+        <li><a asp-controller="Orders" asp-action="Index" class="my-account-nav-item">Orders</a></li>
+        <li><a asp-controller="Account" asp-action="Addresses" class="my-account-nav-item">Address</a></li>
+        <li><a asp-controller="Account" asp-action="AccountDetails" class="my-account-nav-item active">Account Details</a></li>
+        <li><a asp-controller="Account" asp-action="MyAccountWishlist" class="my-account-nav-item">Wishlist</a></li>
+        <li>
+            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="my-account-nav-item" style="background: none; border: none; padding: 0; cursor: pointer; text-align: left; width: 100%;">Logout</button>
+            </form>
+        </li>
+    </ul>
+</div>

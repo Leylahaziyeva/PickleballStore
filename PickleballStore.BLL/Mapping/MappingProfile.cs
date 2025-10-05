@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using PickleballStore.BLL.ViewModels.Account;
+using PickleballStore.BLL.ViewModels.Address;
 using PickleballStore.BLL.ViewModels.Category;
+using PickleballStore.BLL.ViewModels.Checkout;
 using PickleballStore.BLL.ViewModels.Order;
 using PickleballStore.BLL.ViewModels.Product;
 using PickleballStore.BLL.ViewModels.ProductImage;
@@ -85,10 +87,30 @@ namespace PickleballStore.BLL.Mapping
             CreateMap<Order, OrderDetailsViewModel>();
             CreateMap<OrderItem, OrderItemViewModel>();
 
+            CreateMap<CheckoutViewModel, Order>()
+                .ForMember(dest => dest.ShippingAddress, opt => opt.Ignore())
+                .ForMember(dest => dest.Items, opt => opt.Ignore())
+                .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())
+                .ForMember(dest => dest.UserId, opt => opt.Ignore());
+
+            CreateMap<CartItemViewModel, OrderItem>()
+                .ForMember(dest => dest.Order, opt => opt.Ignore())
+                .ForMember(dest => dest.OrderId, opt => opt.Ignore())
+                .ForMember(dest => dest.Product, opt => opt.Ignore());
+
+            CreateMap<CreateAddressViewModel, Address>()
+          .ForMember(dest => dest.Adress, opt => opt.MapFrom(src => src.Adress))
+          .ForMember(dest => dest.Id, opt => opt.Ignore())
+          .ForMember(dest => dest.UserId, opt => opt.Ignore());
+
+            CreateMap<UpdateAddressViewModel, Address>()
+                .ForMember(dest => dest.Adress, opt => opt.MapFrom(src => src.Adress))
+                .ForMember(dest => dest.UserId, opt => opt.Ignore());
+
+            CreateMap<Address, AddressViewModel>();
 
             CreateMap<WishlistItem, WishlistItemViewModel>()
                 .ForMember(dest => dest.HasDiscount, opt => opt.Ignore());
-
 
             CreateMap<AppUser, AccountViewModel>()
                 .ReverseMap()

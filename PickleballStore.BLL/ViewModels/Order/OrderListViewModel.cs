@@ -1,6 +1,5 @@
 ﻿namespace PickleballStore.BLL.ViewModels.Order
 {
-    // For orders (Image 1)
     public class OrderListViewModel
     {
         public int Id { get; set; }
@@ -10,8 +9,6 @@
         public decimal TotalAmount { get; set; }
         public int ItemCount { get; set; }
     }
-
-    // For order(Image 2)
     public class OrderDetailsViewModel
     {
         public int Id { get; set; }
@@ -19,8 +16,6 @@
         public string Status { get; set; } = string.Empty;
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
-        public string ItemCategory { get; set; } = string.Empty; // "Fashion"
-        public string CourierName { get; set; } = string.Empty; // "Ribbed modal T-shirt"
         public string ShippingAddress { get; set; } = string.Empty;
         public string? CourierService { get; set; }
         public string? TrackingNumber { get; set; }
@@ -29,6 +24,7 @@
         public DateTime? ShippedDate { get; set; }
         public List<OrderItemViewModel> Items { get; set; } = new();
         public List<OrderHistoryItemViewModel> History { get; set; } = new();
+        public List<string> Categories { get; set; } = new();
     }
 
     public class OrderItemViewModel
@@ -44,7 +40,7 @@
 
     public class OrderHistoryItemViewModel
     {
-        public string Event { get; set; } = string.Empty; // "Product Shipped", "Product Packaging"
+        public string Event { get; set; } = string.Empty; 
         public DateTime Timestamp { get; set; }
         public string? Details { get; set; }
         public bool IsCompleted { get; set; }

@@ -6,7 +6,7 @@
         public AppUser User { get; set; } = null!;
         public string OrderNumber { get; set; } = null!; 
         public decimal TotalAmount { get; set; }
-        public string PaymentMethod { get; set; } = null!; // e.g. "BankTransfer", "CashOnDelivery"
+        public string PaymentMethod { get; set; } = null!; 
         public string? DiscountCode { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.OnHold;
         public int ShippingAddressId { get; set; }
@@ -15,10 +15,12 @@
         public Address? BillingAddress { get; set; } = null!;
 
         // Shipping info
-        public string? CourierService { get; set; } // "FedEx World Service Center"
-        public string? TrackingNumber { get; set; } // "2307-3215-6759"
-        public string? Warehouse { get; set; } // "T-Shirt 10b"
+        public string? CourierService { get; set; } 
+        public string? TrackingNumber { get; set; } 
+        public string? Warehouse { get; set; } 
         public DateTime? EstimatedDeliveryDate { get; set; }
+        public DateTime? ProcessingStartedDate { get; set; }
+        public DateTime? PackagedDate { get; set; }
         public DateTime? ShippedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
         public List<OrderItem> Items { get; set; } = [];

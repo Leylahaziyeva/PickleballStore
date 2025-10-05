@@ -6,6 +6,7 @@ namespace PickleballStore.DAL.DataContext.Entities
     {
         public string? FirstName { get; set; } 
         public string? LastName { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public List<Order> Orders { get; set; } = [];
         public List<Address> Addresses { get; set; } = [];
         public List<WishlistItem> WishlistItems { get; set; } = [];

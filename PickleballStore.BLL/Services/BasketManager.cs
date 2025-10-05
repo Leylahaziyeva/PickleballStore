@@ -91,6 +91,12 @@ namespace PickleballStore.BLL.Services
             return basketViewModel;
         }
 
+        public Task ClearBasketAsync()
+        {
+            _httpContextAccessor.HttpContext?.Response.Cookies.Delete(BasketCookieName);
+            return Task.CompletedTask;
+        }
+
         private List<BasketCookieItemViewModel> GetBasketFromCookie()
         {
             var cookie = _httpContextAccessor.HttpContext?.Request.Cookies[BasketCookieName];

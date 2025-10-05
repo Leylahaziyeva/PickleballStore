@@ -1,4 +1,5 @@
-﻿using PickleballStore.BLL.ViewModels.Order;
+﻿using PickleballStore.BLL.ViewModels.Checkout;
+using PickleballStore.BLL.ViewModels.Order;
 
 namespace PickleballStore.BLL.Services.Contracts
 {
@@ -7,5 +8,6 @@ namespace PickleballStore.BLL.Services.Contracts
         Task<List<OrderListViewModel>> GetUserOrdersAsync(string userId);
         Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId, string userId);
         Task<bool> CancelOrderAsync(int orderId, string userId);
+        Task<int> PlaceOrderAsync(string userId, CheckoutViewModel model);
     }
 }

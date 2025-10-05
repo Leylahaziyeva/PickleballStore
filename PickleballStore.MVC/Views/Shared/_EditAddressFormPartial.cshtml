@@ -1,0 +1,63 @@
+﻿@model UpdateAddressViewModel
+<form asp-controller="Account" asp-action="EditAddress" asp-route-id="@Model.Id" method="post" class="wd-form-address" id="formeditAddress">
+    @Html.AntiForgeryToken()
+    <div class="title">Edit address</div>
+    <div class="box-field grid-2-lg">
+        <div class="tf-field style-1">
+            <input asp-for="FirstName" class="tf-field-input tf-input" placeholder=" ">
+            <label class="tf-field-label fw-4 text_black-2" for="FirstName">First name</label>
+        </div>
+        <div class="tf-field style-1">
+            <input asp-for="LastName" class="tf-field-input tf-input" placeholder=" ">
+            <label class="tf-field-label fw-4 text_black-2" for="LastName">Last name</label>
+        </div>
+    </div>
+    <div class="box-field">
+        <div class="tf-field style-1">
+            <input asp-for="Company" class="tf-field-input tf-input" placeholder=" ">
+            <label class="tf-field-label fw-4 text_black-2" for="Company">Company</label>
+        </div>
+    </div>
+    <div class="box-field">
+        <div class="tf-field style-1">
+            <input asp-for="Adress" class="tf-field-input tf-input" placeholder=" ">
+            <label class="tf-field-label fw-4 text_black-2" for="Adress">Address</label>
+        </div>
+    </div>
+    <div class="box-field">
+        <div class="tf-field style-1">
+            <input asp-for="City" class="tf-field-input tf-input" placeholder=" ">
+            <label class="tf-field-label fw-4 text_black-2" for="City">City</label>
+        </div>
+    </div>
+    <div class="box-field">
+        <div class="tf-field style-1">
+            <input asp-for="Country" class="tf-field-input tf-input" placeholder=" ">
+            <label class="tf-field-label fw-4 text_black-2" for="Country">Country</label>
+        </div>
+    </div>
+    <div class="box-field">
+        <div class="tf-field style-1">
+            <input asp-for="PostalCode" class="tf-field-input tf-input" placeholder=" ">
+            <label class="tf-field-label fw-4 text_black-2" for="PostalCode">Postal/ZIP code</label>
+        </div>
+    </div>
+    <div class="box-field">
+        <div class="tf-field style-1">
+            <input asp-for="PhoneNumber" class="tf-field-input tf-input" placeholder=" " type="text">
+            <label class="tf-field-label fw-4 text_black-2" for="PhoneNumber">Phone</label>
+        </div>
+    </div>
+    <div class="box-field text-start">
+        <div class="box-checkbox fieldset-radio d-flex align-items-center gap-8">
+            <input asp-for="IsDefault" type="checkbox" id="check-edit-address" class="tf-check">
+            <label for="check-edit-address" class="text_black-2 fw-4">
+                Set as default address
+            </label>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-center gap-20">
+        <button type="submit" class="tf-btn btn-fill animate-hover-btn">Update address</button>
+        <button type="button" class="tf-btn btn-fill animate-hover-btn" onclick="cancelEdit('@Model.Id')">Cancel</button>
+    </div>
+</form>

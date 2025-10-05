@@ -7,23 +7,38 @@ namespace PickleballStore.DAL.Repositories
 {
     public class OrderRepository : EfCoreRepository<Order>, IOrderRepository
     {
+        private readonly AppDbContext _dbContext;
+
         public OrderRepository(AppDbContext dbContext) : base(dbContext)
         {
+            _dbContext = dbContext;
         }
 
-        public Task<List<Order>> GetOrdersByStatusAsync(string userId, OrderStatus status)
+        public async Task<List<Order>> GetUserOrdersAsync(string userId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Orders
+                .Include(o => o.Items)
+                .Where(o => o.UserId == userId)
+                .OrderByDescending(o => o.CreatedAt)
+                .ToListAsync();
         }
 
-        public Task<Order?> GetOrderWithDetailsAsync(int orderId, string userId)
+        public async Task<Order?> GetOrderWithDetailsAsync(int orderId, string userId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(i => i.Product)
+                .Include(o => o.ShippingAddress)
+                .FirstOrDefaultAsync(o => o.Id == orderId && o.UserId == userId);
         }
 
-        public Task<List<Order>> GetUserOrdersAsync(string userId)
+        public async Task<List<Order>> GetOrdersByStatusAsync(string userId, OrderStatus status)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Orders
+                .Include(o => o.Items)
+                .Where(o => o.UserId == userId && o.Status == status)
+                .OrderByDescending(o => o.CreatedAt)
+                .ToListAsync();
         }
     }
 }
