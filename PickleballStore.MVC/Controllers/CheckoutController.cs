@@ -13,15 +13,18 @@ namespace PickleballStore.MVC.Controllers
         private readonly IOrderService _orderService;
         private readonly UserManager<AppUser> _userManager;
         private readonly BasketManager _basketManager;
+        private readonly IAddressService _addressService;
 
         public CheckoutController(
             IOrderService orderService,
             UserManager<AppUser> userManager,
-            BasketManager basketManager)
+            BasketManager basketManager,
+            IAddressService addressService)
         {
             _orderService = orderService;
             _userManager = userManager;
             _basketManager = basketManager;
+            _addressService = addressService;
         }
 
         [Authorize]
@@ -41,7 +44,7 @@ namespace PickleballStore.MVC.Controllers
                 ProductId = item.ProductId,
                 ProductName = item.ProductName,
                 ImageUrl = item.ImageName,
-                Color = item.Variant?.OptionValue, 
+                Color = item.Variant?.OptionValue,
                 Quantity = item.Quantity,
                 Price = item.Price
             }).ToList();
@@ -52,6 +55,21 @@ namespace PickleballStore.MVC.Controllers
                 TotalAmount = cartItems.Sum(x => x.Subtotal),
                 PaymentMethod = "BankTransfer"
             };
+
+            var userId = _userManager.GetUserId(User);
+            var addresses = await _addressService.GetUserAddressesAsync(userId!);
+            var defaultAddress = addresses.FirstOrDefault(a => a.IsDefault);
+
+            if (defaultAddress != null)
+            {
+                model.FirstName = defaultAddress.FirstName;
+                model.LastName = defaultAddress.LastName;
+                model.Address = defaultAddress.Adress;
+                model.City = defaultAddress.City;
+                model.Country = defaultAddress.Country;
+                model.PostalCode = defaultAddress.PostalCode;
+                model.PhoneNumber = defaultAddress.PhoneNumber;
+            }
 
             return View(model);
         }
@@ -108,7 +126,7 @@ namespace PickleballStore.MVC.Controllers
                 TempData["Success"] = "Your order has been placed successfully!";
                 return RedirectToAction("Index", "Orders");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ModelState.AddModelError("", "An error occurred while processing your order. Please try again.");
                 return View(model);

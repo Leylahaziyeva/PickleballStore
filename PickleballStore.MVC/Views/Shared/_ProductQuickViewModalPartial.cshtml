@@ -128,10 +128,10 @@
                                     <span class="tf-qty-price">$@Model.Price.ToString("F2")</span>
                                 </a>
 
-                                <a href="#" onclick="addToWishlist(@Model.Id, this); return false;" class="tf-product-btn-wishlist btn-icon-action">
-                                    <i class="icon-heart"></i>
-                                    <i class="icon-delete"></i>
-                                </a>
+                                <div class="tf-product-btn-wishlist btn-icon-action" data-product-id="@Model.Id">
+                                    <i class="icon-heart" onclick="addToWishlist(@Model.Id, this); event.stopPropagation();"></i>
+                                    <i class="icon-delete" onclick="removeFromWishlist(@Model.Id, this); event.stopPropagation();" style="display:none;"></i>
+                                </div>
 
                                 <a href="#compare"
                                    data-bs-toggle="offcanvas"

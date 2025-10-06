@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PickleballStore.BLL.Services.Contracts;
 using PickleballStore.BLL.ViewModels.Account;
-using PickleballStore.BLL.ViewModels.Address;
 using PickleballStore.DAL.DataContext.Entities;
 
 namespace PickleballStore.MVC.Controllers
@@ -142,7 +141,7 @@ namespace PickleballStore.MVC.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View(); // or return PartialView() if it's a modal
+            return PartialView("_ForgotPasswordModal");
         }
 
         [AllowAnonymous]
@@ -262,111 +261,6 @@ namespace PickleballStore.MVC.Controllers
             return View(model);
         }
 
-
-        [Authorize]
-        public async Task<IActionResult> Addresses()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var addresses = await _addressService.GetUserAddressesAsync(user.Id);
-            return View(addresses);
-        }
-
-
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAddress(CreateAddressViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                TempData["ErrorMessage"] = "Please fill in all required fields correctly.";
-                return RedirectToAction(nameof(Addresses));
-            }
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            await _addressService.CreateAddressAsync(user.Id, model);
-            TempData["SuccessMessage"] = "Address added successfully.";
-            return RedirectToAction(nameof(Addresses));
-        }
-
-        [Authorize]
-        public async Task<IActionResult> EditAddress(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return Unauthorized();
-
-            var address = await _addressService.GetAddressByIdAsync(id, user.Id);
-            if (address == null)
-            {
-                return NotFound();
-            }
-
-            var model = new UpdateAddressViewModel
-            {
-                Id = id,
-                FirstName = address.FirstName,
-                LastName = address.LastName,
-                Company = address.Company,
-                Adress = address.Adress,
-                City = address.City,
-                Country = address.Country,
-                PostalCode = address.PostalCode,
-                PhoneNumber = address.PhoneNumber,
-                IsDefault = address.IsDefault
-            };
-
-            return PartialView("_EditAddressFormPartial", model);
-        }
-
-
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAddress(int id, UpdateAddressViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                TempData["ErrorMessage"] = "Please fill in all required fields correctly.";
-                return RedirectToAction(nameof(Addresses));
-            }
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var result = await _addressService.UpdateAddressAsync(id, user.Id, model);
-            if (result)
-            {
-                TempData["SuccessMessage"] = "Address updated successfully.";
-                return RedirectToAction(nameof(Addresses));
-            }
-
-            TempData["ErrorMessage"] = "Failed to update address.";
-            return RedirectToAction(nameof(Addresses));
-        }
-
-
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAddress(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return Unauthorized();
-
-            var result = await _addressService.DeleteAddressAsync(id, user.Id);
-            if (result)
-            {
-                return Ok();
-            }
-
-            return BadRequest();
-        }
-
-
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -419,11 +313,11 @@ namespace PickleballStore.MVC.Controllers
 
             return RedirectToAction(nameof(AccountDetails));
         }
-
-
+    
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -452,50 +346,6 @@ namespace PickleballStore.MVC.Controllers
             }
 
             return RedirectToAction(nameof(AccountDetails));
-        }
-
-        public async Task<IActionResult> WishlistPage()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var items = await _wishlistService.GetUserWishlistAsync(user.Id);
-            var viewModel = new WishlistViewModel { Items = items };
-
-            return View(viewModel);
-        }
-
-        public async Task<IActionResult> MyAccountWishlist()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction(nameof(Login));
-
-            var items = await _wishlistService.GetUserWishlistAsync(user.Id);
-            var viewModel = new WishlistViewModel { Items = items };
-
-            return View("MyAccountWishlist", viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToWishlist(int productId)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return Json(new { success = false });
-
-            var result = await _wishlistService.AddToWishlistAsync(productId, user.Id);
-            return Json(new { success = result });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveFromWishlist(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return Json(new { success = false });
-
-            var result = await _wishlistService.RemoveFromWishlistAsync(id, user.Id);
-            return Json(new { success = result });
         }
     }
 }

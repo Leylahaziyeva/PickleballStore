@@ -1,13 +1,14 @@
-﻿using PickleballStore.BLL.ViewModels.Account;
+﻿using PickleballStore.BLL.ViewModels.Wishlist;
+using PickleballStore.DAL.DataContext.Entities;
 
 namespace PickleballStore.BLL.Services.Contracts
 {
-    public interface IWishlistService
+    public interface IWishlistService : ICrudService<WishlistItem, WishlistViewModel, WishlistCreateViewModel, WishlistUpdateViewModel>
     {
-        Task<List<WishlistItemViewModel>> GetUserWishlistAsync(string userId);
-        Task<bool> RemoveFromWishlistAsync(int wishlistItemId, string userId);
-        Task<bool> IsInWishlistAsync(string userId, int productId);
-        Task<int> GetWishlistCountAsync(string userId);
-        Task<bool> AddToWishlistAsync(int productId, string userId);
+        Task<IEnumerable<WishlistViewModel>> GetUserWishlistAsync(string? userId);
+        Task<bool> IsProductInWishlistAsync(int productId, string? userId);
+        Task<bool> ToggleWishlistAsync(int productId, string? userId);
+        Task<bool> RemoveFromWishlistAsync(int productId, string? userId);
+        Task<int> GetWishlistCountAsync(string? userId);
     }
 }

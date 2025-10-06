@@ -1,40 +1,88 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PickleballStore.BLL.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using PickleballStore.BLL.Services.Contracts;
+using PickleballStore.BLL.ViewModels.Wishlist;
+using PickleballStore.DAL.DataContext.Entities;
 
-namespace PickleballStore.MVC.Controllers
+namespace PickleballStore.Web.Controllers
 {
     public class WishlistController : Controller
     {
-        //private readonly WishlistManager _wishlistManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IWishlistService _wishlistService;
 
-        //public WishlistController(WishlistManager wishlistManager)
-        //{
-        //    _wishlistManager = wishlistManager;
-        //}
-        //public async Task<IActionResult> Index()
-        //{
-        //    var wishlist = await _wishlistManager.GetWishlistAsync();
-        //    return View(wishlist);
-        //}
+        public WishlistController(
+            UserManager<AppUser> userManager,
+            IWishlistService wishlistService)
+        {
+            _userManager = userManager;
+            _wishlistService = wishlistService;
+        }
 
-        //[HttpPost("wishlist/addToWishlist/{productId}")]
-        //public IActionResult AddToWishlist(int productId)
-        //{
-        //    _wishlistManager.AddToWishlist(productId);
-        //    return Json(new { success = true });
-        //}
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var wishlist = await _wishlistService.GetUserWishlistAsync(user?.Id);
+            return View(wishlist);
+        }
 
-        //public async Task<IActionResult> GetWishlist()
-        //{
-        //    var wishlist = await _wishlistManager.GetWishlistAsync();
-        //    return View("Index", wishlist);
-        //}
+        public async Task<IActionResult> MyWishlist()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var wishlist = await _wishlistService.GetUserWishlistAsync(user?.Id);
+            return View("MyWishlist", wishlist);
+        }
 
-        //[HttpPost("wishlist/removeFromWishlist/{productId}")]
-        //public IActionResult RemoveFromWishlist(int productId)
-        //{
-        //    _wishlistManager.RemoveFromWishlist(productId);
-        //    return Json(new { success = true });
-        //}
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> Toggle([FromBody] WishlistCreateViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return Json(new { success = false, message = "Please login to add items to wishlist" });
+            }
+
+            var isAdded = await _wishlistService.ToggleWishlistAsync(model.ProductId, user.Id);
+
+            return Json(new { success = true, isAdded = isAdded });
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> IsInWishlist(int productId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var isInWishlist = await _wishlistService.IsProductInWishlistAsync(productId, user?.Id);
+
+            return Json(new { isInWishlist = isInWishlist });
+        }
+
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> Remove([FromBody] WishlistUpdateViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return Json(new { success = false, message = "Please login to manage wishlist" });
+            }
+
+            var removed = await _wishlistService.RemoveFromWishlistAsync(model.ProductId, user.Id);
+
+            return Json(new { success = removed });
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetCount()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var count = await _wishlistService.GetWishlistCountAsync(user?.Id);
+
+            return Json(new { count = count });
+        }
     }
 }

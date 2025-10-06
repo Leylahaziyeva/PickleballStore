@@ -1,7 +1,5 @@
-﻿@model IEnumerable<OrderListViewModel>
+﻿@model IEnumerable<WishlistViewModel>
 
-
-<!-- header -->
 <header id="header" class="header-default">
     <div class="px_15 lg-px_40">
         <div class="row wrapper-header align-items-center">
@@ -117,74 +115,111 @@
         </div>
     </div>
 </header>
-<!-- /header -->
 
-<!-- page-title -->
 <div class="tf-page-title">
     <div class="container-full">
-        <div class="heading text-center">My Orders</div>
+        <div class="heading text-center">Your wishlist</div>
     </div>
 </div>
 
-<section class="flat-spacing-11">
+<section class="flat-spacing-2">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <partial name="_MenuAccountPartial"></partial>
-            </div>
-            <div class="col-lg-9">
-                <div class="my-account-content account-order">
-                    @if (Model != null && Model.Any())
-                    {
-                        <div class="wrap-account-order">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="fw-6">Order</th>
-                                        <th class="fw-6">Date</th>
-                                        <th class="fw-6">Status</th>
-                                        <th class="fw-6">Total</th>
-                                        <th class="fw-6">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var order in Model)
-                                    {
-                                        <tr class="tf-order-item">
-                                            <td>#@order.OrderNumber</td>
-                                            <td>@order.OrderDate.ToString("MMMM dd, yyyy")</td>
-                                            <td>@order.Status</td>
-                                            <td>$@order.TotalAmount.ToString("0.00") for @order.ItemCount items</td>
-                                            <td>
-                                                <a asp-controller="Orders" asp-action="Details" asp-route-id="@order.Id"
-                                                   class="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center">
-                                                    <span>View</span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="text-center py-5">
-                            <h5>No orders yet</h5>
-                            <p class="text-muted">You haven't placed any orders yet.</p>
-                            <a asp-controller="Shop" asp-action="Index" class="tf-btn btn-fill animate-hover-btn mt-3">
-                                Start Shopping
+        @if (Model.Any())
+        {
+            <div class="grid-layout wrapper-shop" data-grid="grid-4">
+                @foreach (var item in Model)
+                {
+                    <div class="card-product">
+                        <div class="card-product-wrapper">
+                            <a href="@Url.Action("Details", "Product", new { id = item.Product!.Id })" class="product-img">
+                                @{
+                                    var mainImage = item.Product.Images.FirstOrDefault(x => x.IsMain);
+                                    var hoverImage = item.Product.Images.FirstOrDefault(x => x.IsHover);
+                                }
+                                @if (mainImage != null)
+                                {
+                                    <img class="lazyload img-product"
+                                         data-src="/images/products/@mainImage.ImageName"
+                                         src="~/images/products/@mainImage.ImageName"
+                                         alt="@item.Product.Name">
+                                }
+                                @if (hoverImage != null)
+                                {
+                                    <img class="lazyload img-hover"
+                                         data-src="/images/products/@hoverImage.ImageName"
+                                         src="~/images/products/@hoverImage.ImageName"
+                                         alt="@item.Product.Name">
+                                }
                             </a>
+
+                            <div class="list-product-btn">
+                                <a href="#quick_add_@item.Product.Id" data-bs-toggle="modal"
+                                   class="box-icon bg_white quick-add tf-btn-loading">
+                                    <span class="icon icon-bag"></span>
+                                    <span class="tooltip">Quick Add</span>
+                                </a>
+                                <a href="#quick_view_@item.Product.Id" data-bs-toggle="modal"
+                                   class="box-icon bg_white quickview tf-btn-loading">
+                                    <span class="icon icon-view"></span>
+                                    <span class="tooltip">Quick View</span>
+                                </a>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(item.Product.BadgeLabel))
+                            {
+                                <div class="on-sale-wrap">
+                                    <div class="on-sale-item @item.Product.BadgeCssClass">@item.Product.BadgeLabel</div>
+                                </div>
+                            }
                         </div>
-                    }
-                </div>
+
+                        <div class="card-product-info">
+                            <a href="@Url.Action("Details", "Product", new { id = item.Product.Id })"
+                               class="title link">@item.Product.Name</a>
+                            <span class="price">
+                                @if (item.Product.PriceBeforeDiscount.HasValue && item.Product.PriceBeforeDiscount.Value > item.Product.Price)
+                                {
+                                    <span style="text-decoration: line-through; color: gray;">
+                                        $@item.Product.PriceBeforeDiscount.Value.ToString("F2")
+                                    </span>
+                                    <span style="color: red; font-weight: bold;">
+                                        $@item.Product.Price.ToString("F2")
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>$@item.Product.Price.ToString("F2")</span>
+                                }
+                            </span>
+
+                            @if (item.Product.Variants.Any())
+                            {
+                                <ul class="list-color-product">
+                                    @foreach (var variant in item.Product.Variants.Take(3))
+                                    {
+                                        <li class="list-color-item color-swatch">
+                                            <span class="tooltip">@variant.OptionValue</span>
+                                            <span class="swatch-value" style="background-color:@variant.ColorCode"></span>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    </div>
+
+                    @await Html.PartialAsync("~/Views/Shared/_ProductQuickAddModalPartial.cshtml", item.Product)
+                    @await Html.PartialAsync("~/Views/Shared/_ProductQuickViewModalPartial.cshtml", item.Product)
+
+                }
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <h4>Your wishlist is empty</h4>
+                <p>Add items to your wishlist to see them here</p>
+                <a href="@Url.Action("Index", "Product")" class="tf-btn btn-fill">Continue Shopping</a>
+            </div>
+        }
     </div>
 </section>
-
-<div class="btn-sidebar-account">
-    <button data-bs-toggle="offcanvas" data-bs-target="#mbAccount" aria-controls="offcanvas">
-        <i class="icon icon-sidebar-2"></i>
-    </button>
-</div>

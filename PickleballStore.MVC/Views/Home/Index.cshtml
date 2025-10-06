@@ -1,5 +1,6 @@
 ﻿@model HomeViewModel
 
+
 <!-- header -->
 <header id="header" class="header-default header-absolute header-white header-dark-abs">
     <div class="px_15 lg-px_40">
@@ -28,171 +29,49 @@
                             <div class="sub-menu submenu-default">
                                 <ul class="menu-list">
                                     <li>
-                                        <a href="about-us.html" class="menu-link-text link text_black-2">
-                                            about
-                                            us
-                                        </a>
-                                    </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">brands</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="brands.html"
-                                                       class="menu-link-text link text_black-2 position-relative">
-                                                        brands
-                                                        <div class="demo-label">
-                                                            <span class="demo-new">new</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="brands-v2.html"
-                                                       class="menu-link-text link text_black-2">brand v2</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">contact</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="contact-1.html"
-                                                       class="menu-link-text link text_black-2">contact 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="contact-2.html"
-                                                       class="menu-link-text link text_black-2">contact 2</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">faq</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="faq-1.html"
-                                                       class="menu-link-text link text_black-2">faq 01</a>
-                                                </li>
-                                                <li>
-                                                    <a href="faq-2.html"
-                                                       class="menu-link-text link text_black-2">faq 02</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">store</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="our-store.html"
-                                                       class="menu-link-text link text_black-2">our store</a>
-                                                </li>
-                                                <li>
-                                                    <a href="store-locations.html"
-                                                       class="menu-link-text link text_black-2">
-                                                        store
-                                                        locator
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="timeline.html"
+                                        <a asp-controller="Cart" asp-action="Index"
                                            class="menu-link-text link text_black-2 position-relative">
-                                            timeline
-                                            <div class="demo-label"><span class="demo-new">new</span></div>
+                                            View Cart
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="view-cart.html"
+                                        <a asp-controller="Checkout" asp-action="Index"
                                            class="menu-link-text link text_black-2 position-relative">
-                                            view
-                                            cart
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="checkout.html"
-                                           class="menu-link-text link text_black-2 position-relative">
-                                            check
-                                            out
+                                            Check Out
                                         </a>
                                     </li>
                                     <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">payment</a>
+                                        <a href="#" class="menu-link-text link text_black-2">My Account</a>
                                         <div class="sub-menu submenu-default">
                                             <ul class="menu-list">
                                                 <li>
-                                                    <a href="payment-confirmation.html"
+                                                    <a asp-controller="Orders" asp-action="Index"
+                                                       class="menu-link-text link text_black-2">My Orders</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Orders" asp-action="Details"
                                                        class="menu-link-text link text_black-2">
-                                                        payment
-                                                        confirmation
+                                                        My Order
+                                                        Details
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="payment-failure.html"
+                                                    <a asp-controller="Address" asp-action="Index"
+                                                       class="menu-link-text link text_black-2">My Address</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Account" asp-action="AccountDetails"
                                                        class="menu-link-text link text_black-2">
-                                                        payment
-                                                        failure
+                                                        My Account Details
                                                     </a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Wishlist" asp-action="MyWishlist"
+                                                       class="menu-link-text link text_black-2">My Wishlist</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">my account</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="my-account.html"
-                                                       class="menu-link-text link text_black-2">my account</a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-orders.html"
-                                                       class="menu-link-text link text_black-2">my order</a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-orders-details.html"
-                                                       class="menu-link-text link text_black-2">
-                                                        my order
-                                                        details
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-address.html"
-                                                       class="menu-link-text link text_black-2">my address</a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-edit.html"
-                                                       class="menu-link-text link text_black-2">
-                                                        my account
-                                                        details
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-wishlist.html"
-                                                       class="menu-link-text link text_black-2">my wishlist</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="invoice.html"
-                                           class="menu-link-text link text_black-2 position-relative">ınvoice</a>
-                                    </li>
-                                    <li>
-                                        <a href="404.html"
-                                           class="menu-link-text link text_black-2 position-relative">404</a>
-                                    </li>
-                                    <li>
-                                        <a href="icons.html"
-                                           class="menu-link-text link text_black-2 position-relative">ıcons</a>
-                                    </li>
-
                                 </ul>
                             </div>
                         </li>
@@ -225,8 +104,8 @@
                         </a>
                     </li>
                     <li class="nav-wishlist">
-                        <a asp-controller="Account" asp-action="WishlistPage" class="nav-icon-item">
-                            <i class="icon icon-heart"></i><span class="count-box">1</span>
+                        <a asp-controller="Wishlist" asp-action="Index" class="nav-icon-item">
+                            <i class="icon icon-heart"></i><span class="count-box">0</span>
                         </a>
                     </li>
                     <li class="nav-cart">
@@ -438,13 +317,6 @@
                            class="box-icon bg_white quick-add tf-btn-loading quick-add-btn">
                             <span class="icon icon-bag"></span>
                             <span class="tooltip">Quick Add</span>
-                        </a>
-
-                        <a href="#" data-product-id="@product.Id" 
-                           class="box-icon bg_white wishlist btn-icon-action wishlist-btn">
-                            <span class="icon icon-heart"></span>
-                            <span class="tooltip">Add to Wishlist</span>
-                            <span class="icon icon-delete"></span>
                         </a>
                         <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view_@product.Id"
                            class="box-icon bg_white quickview tf-btn-loading quick-view-btn">

@@ -8,6 +8,7 @@ using PickleballStore.BLL.ViewModels.Product;
 using PickleballStore.BLL.ViewModels.ProductImage;
 using PickleballStore.BLL.ViewModels.ProductVariant;
 using PickleballStore.BLL.ViewModels.Slider;
+using PickleballStore.BLL.ViewModels.Wishlist;
 using PickleballStore.DAL.DataContext.Entities;
 
 namespace PickleballStore.BLL.Mapping
@@ -20,13 +21,13 @@ namespace PickleballStore.BLL.Mapping
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : ""))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images))
                 .ForMember(dest => dest.Variants, opt => opt.MapFrom(src => src.Variants))
-                .ForMember(dest => dest.CoverImageName, opt => opt.MapFrom(src => src.CoverImageName)); 
+                .ForMember(dest => dest.CoverImageName, opt => opt.MapFrom(src => src.CoverImageName));
 
 
 
             CreateMap<ProductViewModel, Product>()
                 .ForMember(dest => dest.Images, opt => opt.Ignore())      // Images IFormFile deyil, map etməyəcəyik
-                .ForMember(dest => dest.Variants, opt => opt.Ignore()) 
+                .ForMember(dest => dest.Variants, opt => opt.Ignore())
                 .ForMember(dest => dest.Category, opt => opt.Ignore());
 
 
@@ -73,7 +74,7 @@ namespace PickleballStore.BLL.Mapping
             CreateMap<ProductVariant, CreateProductVariantViewModel>().ReverseMap();
             CreateMap<ProductVariant, UpdateProductVariantViewModel>().ReverseMap();
 
-      
+
             CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<Category, CreateCategoryViewModel>().ReverseMap();
             CreateMap<Category, UpdateCategoryViewModel>().ReverseMap();
@@ -109,8 +110,10 @@ namespace PickleballStore.BLL.Mapping
 
             CreateMap<Address, AddressViewModel>();
 
-            CreateMap<WishlistItem, WishlistItemViewModel>()
-                .ForMember(dest => dest.HasDiscount, opt => opt.Ignore());
+            CreateMap<WishlistItem, WishlistViewModel>();
+            CreateMap<WishlistCreateViewModel, WishlistItem>();
+            CreateMap<WishlistUpdateViewModel, WishlistItem>();
+
 
             CreateMap<AppUser, AccountViewModel>()
                 .ReverseMap()

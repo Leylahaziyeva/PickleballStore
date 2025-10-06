@@ -1,8 +1,6 @@
 ﻿@model List<AddressViewModel>
 
-@{
-    ViewData["Title"] = "Address";
-}
+
 <!-- header -->
 <header id="header" class="header-default">
     <div class="px_15 lg-px_40">
@@ -35,171 +33,49 @@
                             <div class="sub-menu submenu-default">
                                 <ul class="menu-list">
                                     <li>
-                                        <a href="about-us.html" class="menu-link-text link text_black-2">
-                                            About
-                                            us
-                                        </a>
-                                    </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">Brands</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="brands.html"
-                                                       class="menu-link-text link text_black-2 position-relative">
-                                                        Brands
-                                                        <div class="demo-label">
-                                                            <span class="demo-new">New</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="brands-v2.html"
-                                                       class="menu-link-text link text_black-2">Brand V2</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">Contact</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="contact-1.html"
-                                                       class="menu-link-text link text_black-2">Contact 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="contact-2.html"
-                                                       class="menu-link-text link text_black-2">Contact 2</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">FAQ</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="faq-1.html"
-                                                       class="menu-link-text link text_black-2">FAQ 01</a>
-                                                </li>
-                                                <li>
-                                                    <a href="faq-2.html"
-                                                       class="menu-link-text link text_black-2">FAQ 02</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">Store</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="our-store.html"
-                                                       class="menu-link-text link text_black-2">Our store</a>
-                                                </li>
-                                                <li>
-                                                    <a href="store-locations.html"
-                                                       class="menu-link-text link text_black-2">
-                                                        Store
-                                                        locator
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="timeline.html"
+                                        <a asp-controller="Cart" asp-action="Index"
                                            class="menu-link-text link text_black-2 position-relative">
-                                            Timeline
-                                            <div class="demo-label"><span class="demo-new">New</span></div>
+                                            View Cart
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="view-cart.html"
+                                        <a asp-controller="Checkout" asp-action="Index"
                                            class="menu-link-text link text_black-2 position-relative">
-                                            View
-                                            cart
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="checkout.html"
-                                           class="menu-link-text link text_black-2 position-relative">
-                                            Check
-                                            out
+                                            Check Out
                                         </a>
                                     </li>
                                     <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">Payment</a>
+                                        <a href="#" class="menu-link-text link text_black-2">My Account</a>
                                         <div class="sub-menu submenu-default">
                                             <ul class="menu-list">
                                                 <li>
-                                                    <a href="payment-confirmation.html"
+                                                    <a asp-controller="Orders" asp-action="Index"
+                                                       class="menu-link-text link text_black-2">My Orders</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Orders" asp-action="Details"
                                                        class="menu-link-text link text_black-2">
-                                                        Payment
-                                                        Confirmation
+                                                        My Order
+                                                        Details
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="payment-failure.html"
+                                                    <a asp-controller="Address" asp-action="Index"
+                                                       class="menu-link-text link text_black-2">My Address</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Account" asp-action="AccountDetails"
                                                        class="menu-link-text link text_black-2">
-                                                        Payment
-                                                        Failure
+                                                        My Account Details
                                                     </a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Wishlist" asp-action="MyWishlist"
+                                                       class="menu-link-text link text_black-2">My Wishlist</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
-                                    <li class="menu-item-2">
-                                        <a href="#" class="menu-link-text link text_black-2">My account</a>
-                                        <div class="sub-menu submenu-default">
-                                            <ul class="menu-list">
-                                                <li>
-                                                    <a href="my-account.html"
-                                                       class="menu-link-text link text_black-2">My account</a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-orders.html"
-                                                       class="menu-link-text link text_black-2">My order</a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-orders-details.html"
-                                                       class="menu-link-text link text_black-2">
-                                                        My order
-                                                        details
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-address.html"
-                                                       class="menu-link-text link text_black-2">My address</a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-edit.html"
-                                                       class="menu-link-text link text_black-2">
-                                                        My account
-                                                        details
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="my-account-wishlist.html"
-                                                       class="menu-link-text link text_black-2">My wishlist</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="invoice.html"
-                                           class="menu-link-text link text_black-2 position-relative">Invoice</a>
-                                    </li>
-                                    <li>
-                                        <a href="404.html"
-                                           class="menu-link-text link text_black-2 position-relative">404</a>
-                                    </li>
-                                    <li>
-                                        <a href="icons.html"
-                                           class="menu-link-text link text_black-2 position-relative">Icons</a>
-                                    </li>
-
                                 </ul>
                             </div>
                         </li>
@@ -242,7 +118,6 @@
     </div>
 </header>
 <!-- /header -->
-
 <!-- page-title -->
 <div class="tf-page-title">
     <div class="container-full">
@@ -250,7 +125,6 @@
     </div>
 </div>
 <!-- /page-title -->
-
 <!-- page-cart -->
 <section class="flat-spacing-11">
     <div class="container">
@@ -265,7 +139,7 @@
                             Add a new
                             address
                         </button>
-                        <form asp-controller="Account" asp-action="CreateAddress" method="post"
+                        <form asp-controller="Address" asp-action="Create" method="post"
                               class="show-form-address wd-form-address" id="formnewAddress">
                             @Html.AntiForgeryToken()
                             <div class="title">Add a new address</div>
@@ -314,6 +188,7 @@
                                 <div class="select-custom">
                                     <select class="tf-select w-100" id="country" name="Country">
                                         <option value="">---</option>
+                                        <option value="Australia">Azerbaijan</option>
                                         <option value="Australia">Australia</option>
                                         <option value="Austria">Austria</option>
                                         <option value="Belgium">Belgium</option>
@@ -363,7 +238,7 @@
                             </div>
                             <div class="box-field text-start">
                                 <div class="box-checkbox fieldset-radio d-flex align-items-center gap-8">
-                                    <input type="checkbox" id="check-new-address" name="IsDefault" class="tf-check">
+                                    <input type="checkbox" id="check-new-address" name="IsDefault" value="true" class="tf-check">
                                     <label for="check-new-address" class="text_black-2 fw-4">
                                         Set as default address.
                                     </label>
@@ -387,8 +262,8 @@
                                     <p class="mb_10">@item.PhoneNumber</p>
 
                                     <div class="d-flex gap-10 justify-content-center">
-                                        <button class="tf-btn btn-fill animate-hover-btn justify-content-center" 
-                                        onclick="editAddress(@item.Id)"> 
+                                        <button class="tf-btn btn-fill animate-hover-btn justify-content-center"
+                                                onclick="editAddress(@item.Id)">
                                             <span>Edit</span>
                                         </button>
 
@@ -421,7 +296,7 @@
     function editAddress(addressId){
         const addressEdit  = document.getElementById(`addressEdit${addressId}`);
 
-        fetch(`/Account/EditAddress/?id=${addressId}`)
+        fetch(`/Address/Edit/?id=${addressId}`)
             .then(response => response.text())
             .then(html => {
                 addressEdit .innerHTML = html;
@@ -432,7 +307,7 @@
     function deleteAddress(id, element){
         if (!confirm('Delete this address?')) return;
 
-        fetch(`/Account/DeleteAddress/${id}`, {
+        fetch(`/Address/Delete/${id}`, {
             method: "POST",
             headers: {
                 'RequestVerificationToken': token,

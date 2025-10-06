@@ -55,9 +55,6 @@ namespace PickleballStore.BLL.ViewModels.Checkout
 
     public class MustBeTrueAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
-        {
-            return value is bool && (bool)value;
-        }
+        public override bool IsValid(object value) => value is bool && (bool)value;
     }
 }

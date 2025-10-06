@@ -1,5 +1,5 @@
 ﻿@model UpdateAddressViewModel
-<form asp-controller="Account" asp-action="EditAddress" asp-route-id="@Model.Id" method="post" class="wd-form-address" id="formeditAddress">
+<form asp-controller="Address" asp-action="Edit" asp-route-id="@Model.Id" method="post" class="wd-form-address" id="formeditAddress">
     @Html.AntiForgeryToken()
     <div class="title">Edit address</div>
     <div class="box-field grid-2-lg">
