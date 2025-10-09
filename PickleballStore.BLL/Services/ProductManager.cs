@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PickleballStore.BLL.Services.Contracts;
 using PickleballStore.BLL.ViewModels.Product;
+using PickleballStore.BLL.ViewModels.ProductVariant;
 using PickleballStore.DAL.DataContext.Entities;
 using PickleballStore.DAL.Repositories.Contracts;
 
@@ -35,6 +37,45 @@ namespace PickleballStore.BLL.Services
             return productViewModel;
         }
 
+        public async Task<CreateProductViewModel> GetCreateProductViewModelAsync()
+        {
+            var createProductViewModel = new CreateProductViewModel();
+
+            createProductViewModel.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
+
+            return createProductViewModel;
+        }
+
+        public async Task<UpdateProductViewModel> GetUpdateViewModelAsync(int id)
+        {
+            var product = await Repository.GetAsync(
+                predicate: p => p.Id == id,
+                include: source => source
+                    .Include(p => p.Images!)
+                    .Include(p => p.Variants!)
+                    .Include(p => p.Category!)
+            );
+
+            if (product == null) return null!;
+
+            var updateProductViewModel = Mapper.Map<UpdateProductViewModel>(product);
+            updateProductViewModel.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
+
+            if (product.Images != null && product.Images.Any())
+            {
+                updateProductViewModel.ExistingImages = product.Images
+                    .Select(i => i.ImageName)
+                    .ToList();
+            }
+
+            if (product.Variants != null && product.Variants.Any())
+            {
+                updateProductViewModel.Variants = Mapper.Map<List<UpdateProductVariantViewModel>>(product.Variants);
+            }
+
+            return updateProductViewModel;
+        }
+
         public async Task<List<ProductViewModel>> GetRelatedProductsAsync(int categoryId, int id)
         {
             var products = await _repository.GetProductsByCategoryAsync(categoryId, id);
@@ -44,146 +85,150 @@ namespace PickleballStore.BLL.Services
             return relatedProductsViewModel;
         }
 
+        public async Task<List<ProductViewModel>> GetAllWithDetailsAsync()
+        {
+            var products = await Repository.GetAllAsync(
+                include: source => source.Include(p => p.Category!)
+            );
 
-        //public async Task<CreateProductViewModel> GetCreateProductViewModelAsync()
-        //{
-        //    var createProductViewModel = new CreateProductViewModel();
+            return Mapper.Map<List<ProductViewModel>>(products);
+        }
 
-        //    createProductViewModel.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
-        //    createProductViewModel.TagSelectListItems = await _tagService.GetTagSelectListItemsAsync();
+        public override async Task CreateAsync(CreateProductViewModel model)
+        {
+            var coverImageName = await _fileService.SaveFileAsync(model.CoverImageFile);
 
-        //    return createProductViewModel;
-        //}
+            var imageNames = new List<string>();
+            if (model.ImageFiles != null && model.ImageFiles.Any())
+            {
+                foreach (var file in model.ImageFiles)
+                {
+                    var imageName = await _fileService.SaveFileAsync(file);
+                    imageNames.Add(imageName);
+                }
+            }
 
-        //public async Task<UpdateProductViewModel> GetUpdateViewModelAsync(int id)
-        //{
-        //    var product = await Repository.GetAsync(
-        //        predicate: p => p.Id == id,
-        //        include: source => source
-        //            .Include(p => p.Images!)
-        //            .Include(p => p.Category!)
-        //            .Include(p => p.ProductTags!)
-        //                .ThenInclude(pt => pt.Tag!));
+            var product = new Product
+            {
+                Name = model.Name,
+                Description = model.Description,
+                AdditionalInformation = model.AdditionalInformation,
+                Price = model.Price,
+                QuantityAvailable = model.Stock, 
+                CategoryId = model.CategoryId,
+                CoverImageName = coverImageName,
+                IsBestSeller = false, 
+                LiveViewCount = 0,
+                LiveInCarts = 0,
+                BadgeLabel = null,
+                BadgeCssClass = null,
+                CountdownEndDate = null,
 
-        //    if (product == null) return null!;
+                Images = imageNames.Select(name => new ProductImage
+                {
+                    ImageName = name
+                }).ToList(),
 
-        //    var updateProductViewModel = Mapper.Map<UpdateProductViewModel>(product);
-        //    updateProductViewModel.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
+                Variants = model.Variants.Select(v => new ProductVariant
+                {
+                    OptionName = v.OptionName,
+                    OptionValue = v.OptionValue,
+                    ColorCode = v.ColorCode
+                }).ToList()
+            };
 
-        //    var tagSelectListItems = await _tagService.GetTagSelectListItemsAsync();
-        //    var newTagSelectListItems = new List<SelectListItem>();
-        //    if (tagSelectListItems != null && tagSelectListItems.Any())
-        //    {
-        //        foreach (var tag in tagSelectListItems)
-        //        {
-        //            if (!product.ProductTags.Any(pt => pt.TagId == int.Parse(tag.Value)))
-        //            {
-        //                newTagSelectListItems.Add(tag);
-        //            }
-        //        }
-        //    }
+            await _repository.CreateAsync(product);
+        }
 
-        //    updateProductViewModel.TagSelectListItems = newTagSelectListItems;
+        public override async Task<bool> UpdateAsync(int id, UpdateProductViewModel model)
+        {
+            var product = await Repository.GetAsync(
+                predicate: p => p.Id == id,
+                include: source => source
+                    .Include(p => p.Images!)
+                    .Include(p => p.Variants!)
+            );
 
-        //    return updateProductViewModel;
-        //}
+            if (product == null)
+                return false;
 
-        //public override async Task CreateAsync(CreateProductViewModel model)
-        //{
-        //    var product = Mapper.Map<Product>(model);
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.AdditionalInformation = model.AdditionalInformation;
+            product.Price = model.Price;
+            product.QuantityAvailable = model.Stock;
+            product.CategoryId = model.CategoryId;
 
-        //    if (model.TagIds != null && model.TagIds.Any())
-        //    {
-        //        product.ProductTags = model.TagIds.Select(tagId => new ProductTag
-        //        {
-        //            TagId = tagId
-        //        }).ToList();
-        //    }
+            if (model.CoverImageFile != null && model.CoverImageFile.Length > 0)
+            {
+                if (!string.IsNullOrEmpty(product.CoverImageName))
+                {
+                    _fileService.DeleteFile(product.CoverImageName);
+                }
 
-        //    if (model.CoverImageFile != null)
-        //    {
-        //        if (!_fileService.IsImageFile(model.CoverImageFile))
-        //            throw new ArgumentException("The file is not a valid image.", nameof(model.CoverImageFile));
+                var newCoverImageName = await _fileService.SaveFileAsync(model.CoverImageFile);
+                product.CoverImageName = newCoverImageName;
+            }
 
-        //        product.CoverImageName = await _fileService.GenerateFile(model.CoverImageFile, FilePathConstants.ProductImagePath);
-        //    }
+            if (model.ImageFiles != null && model.ImageFiles.Any())
+            {
+                foreach (var file in model.ImageFiles)
+                {
+                    if (file != null && file.Length > 0)
+                    {
+                        var imageName = await _fileService.SaveFileAsync(file);
+                        product.Images!.Add(new ProductImage
+                        {
+                            ImageName = imageName,
+                            ProductId = product.Id
+                        });
+                    }
+                }
+            }
 
-        //    if (model.ImageFiles != null && model.ImageFiles.Any())
-        //    {
-        //        product.Images = new List<ProductImage>();
-        //        foreach (var imageFile in model.ImageFiles)
-        //        {
-        //            if (!_fileService.IsImageFile(imageFile))
-        //                throw new ArgumentException("One of the files is not a valid image.", nameof(model.ImageFiles));
-        //        }
+            if (model.Variants != null)
+            {
+                var existingVariantIds = model.Variants
+                    .Where(v => v.Id > 0)
+                    .Select(v => v.Id)
+                    .ToList();
 
-        //        foreach (var imageFile in model.ImageFiles)
-        //        {
-        //            var imageName = await _fileService.GenerateFile(imageFile, FilePathConstants.ProductImagePath);
-        //            product.Images.Add(new ProductImage
-        //            {
-        //                ImageName = imageName
-        //            });
-        //        }
-        //    }
+                var variantsToRemove = product.Variants!
+                    .Where(v => !existingVariantIds.Contains(v.Id))
+                    .ToList();
 
-        //    await Repository.CreateAsync(product);
-        //}
+                foreach (var variant in variantsToRemove)
+                {
+                    product.Variants!.Remove(variant);
+                }
 
-        //public override async Task<bool> UpdateAsync(int id, UpdateProductViewModel model)
-        //{
-        //    var existingProduct = await Repository.GetByIdAsync(id);
+                foreach (var variantModel in model.Variants)
+                {
+                    if (variantModel.Id > 0)
+                    {
+                        var existingVariant = product.Variants!.FirstOrDefault(v => v.Id == variantModel.Id);
+                        if (existingVariant != null)
+                        {
+                            existingVariant.OptionName = variantModel.OptionName;
+                            existingVariant.OptionValue = variantModel.OptionValue;
+                            existingVariant.ColorCode = variantModel.ColorCode;
+                        }
+                    }
+                    else
+                    {
+                        product.Variants!.Add(new ProductVariant
+                        {
+                            OptionName = variantModel.OptionName,
+                            OptionValue = variantModel.OptionValue,
+                            ColorCode = variantModel.ColorCode,
+                            ProductId = product.Id
+                        });
+                    }
+                }
+            }
 
-        //    if (existingProduct == null) return false;
-
-        //    var existingProducts = Mapper.Map<Product>(model);
-
-        //    if (model.TagIds != null && model.TagIds.Any())
-        //    {
-        //        existingProducts.ProductTags = model.TagIds.Select(tagId => new ProductTag
-        //        {
-        //            TagId = tagId
-        //        }).ToList();
-        //    }
-
-        //    if (model.CoverImageFile != null)
-        //    {
-        //        if (!_fileService.IsImageFile(model.CoverImageFile))
-        //            throw new ArgumentException("The file is not a valid image.", nameof(model.CoverImageFile));
-
-        //        var oldCoverImageName = existingProducts.CoverImageName;
-        //        existingProducts.CoverImageName = await _fileService.GenerateFile(model.CoverImageFile, FilePathConstants.ProductImagePath);
-
-        //        if (!string.IsNullOrEmpty(oldCoverImageName))
-        //        {
-        //            var oldFilePath = Path.Combine(FilePathConstants.ProductImagePath, oldCoverImageName);
-        //            if (File.Exists(oldFilePath))
-        //                File.Delete(oldFilePath);
-        //        }
-
-        //        if (model.ImageFiles != null && model.ImageFiles.Any())
-        //        {
-        //            existingProducts.Images = new List<ProductImage>();
-        //            foreach (var imageFile in model.ImageFiles)
-        //            {
-        //                if (!_fileService.IsImageFile(imageFile))
-        //                    throw new ArgumentException("One of the files is not a valid image.", nameof(model.ImageFiles));
-        //            }
-
-        //            foreach (var imageFile in model.ImageFiles)
-        //            {
-        //                var imageName = await _fileService.GenerateFile(imageFile, FilePathConstants.ProductImagePath);
-        //                existingProducts.Images.Add(new ProductImage
-        //                {
-        //                    ImageName = imageName
-        //                });
-        //            }
-        //        }
-        //    }
-
-        //    await Repository.UpdateAsync(existingProducts);
-
-        //    return true;
-        //}
+            await Repository.UpdateAsync(product);
+            return true;
+        }
     }
 }

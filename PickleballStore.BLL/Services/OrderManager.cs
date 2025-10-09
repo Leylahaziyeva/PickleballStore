@@ -183,5 +183,24 @@ namespace PickleballStore.BLL.Services
 
             return history.OrderBy(h => h.Timestamp).ToList();
         }
+
+        ////Admin funksiyasi - sifarise kuryer teyin edir
+        //public async Task<bool> AssignCourierAsync(int orderId, string courierService, string trackingNumber, string warehouse)
+        //{
+        //    var order = await _repository.GetAsync(o => o.Id == orderId);
+
+        //    if (order == null)
+        //        return false;
+
+        //    order.CourierService = courierService;
+        //    order.TrackingNumber = trackingNumber;
+        //    order.Warehouse = warehouse;
+        //    order.ShippedDate = DateTime.Now;
+        //    order.EstimatedDeliveryDate = DateTime.Now.AddDays(3);
+        //    order.Status = OrderStatus.Shipped;
+
+        //    await _repository.UpdateAsync(order);
+        //    return true;
+        //}
     }
 }

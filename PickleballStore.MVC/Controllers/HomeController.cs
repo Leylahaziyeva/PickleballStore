@@ -11,7 +11,6 @@ namespace PickleballStore.MVC.Controllers
         {
             _homeService = homeService;
         }
-
         public async Task<IActionResult> Index()
         {
             var model = await _homeService.GetHomeViewModel();

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PickleballStore.BLL.Services.Contracts;
 
 namespace PickleballStore.MVC.Controllers

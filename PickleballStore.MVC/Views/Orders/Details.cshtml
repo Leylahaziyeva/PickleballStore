@@ -137,7 +137,7 @@
                         <figure class="img-product">
                             @if (Model.Items.Any() && !string.IsNullOrEmpty(Model.Items.First().ImageUrl))
                             {
-                                <img src="@($"~/images/products/{Model.Items.First().ImageUrl}")" alt="product">
+                                <img src="@($"/images/products/{Model.Items.First().ImageUrl}")" alt="product">
                             }
                             else
                             {
@@ -245,7 +245,7 @@
                                 {
                                     <div class="order-head mb-3">
                                         <figure class="img-product">
-                                            <img src="@($"~/images/products/{item.ImageUrl}")" alt="@item.ProductName">
+                                            <img src="@($"/images/products/{item.ImageUrl}")" alt="@item.ProductName">
                                         </figure>
                                         <div class="content">
                                             <div class="text-2 fw-6">@item.ProductName</div>

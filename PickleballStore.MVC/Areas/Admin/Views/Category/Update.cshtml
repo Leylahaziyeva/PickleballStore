@@ -1,0 +1,77 @@
+﻿@model UpdateCategoryViewModel
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Update Category</h4>
+                <form method="post" enctype="multipart/form-data" class="forms-sample">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageName" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ImageFile">Category Image</label>
+                        <input type="file" name="ImageFile" id="imageInput" class="form-control" accept="image/*" />
+                        <small class="form-text text-muted">Leave empty to keep current image</small>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ImageName))
+                    {
+                        <div class="form-group">
+                            <label>Current Image</label>
+                            <div>
+                                <img src="~/images/categories/@Model.ImageName" alt="@Model.Name" style="max-width: 200px; max-height: 200px; border-radius: 5px; border: 1px solid #ddd;" />
+                            </div>
+                        </div>
+                    }
+
+                    <div class="form-group" id="imagePreviewContainer" style="display: none;">
+                        <label>New Image Preview</label>
+                        <div>
+                            <img id="imagePreview" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 5px; border: 1px solid #ddd;" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" asp-for="IsDeleted" class="form-check-input">
+                                Mark as Deleted
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a asp-controller="category" asp-action="index" class="btn btn-light">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+}

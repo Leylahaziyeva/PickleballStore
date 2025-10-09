@@ -12,8 +12,8 @@ namespace PickleballStore.BLL.ViewModels.Product
         public string? AdditionalInformation { get; set; }
         public decimal Price { get; set; }
         public IFormFile? CoverImageFile { get; set; }  
-        public string? CoverImageName { get; set; }     
-        public List<IFormFile> ImageFiles { get; set; } = [];  
+        public string? CoverImageName { get; set; }
+        public List<IFormFile>? ImageFiles { get; set; } = [];  
         public List<string> ExistingImages { get; set; } = []; 
         public int Stock { get; set; }
         public int CategoryId { get; set; }

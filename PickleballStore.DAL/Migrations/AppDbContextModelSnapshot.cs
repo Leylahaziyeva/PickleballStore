@@ -222,7 +222,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.AppUser", b =>
@@ -332,7 +332,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Currency", b =>
@@ -378,7 +378,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies");
+                    b.ToTable("Currencies", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.FooterBottom", b =>
@@ -415,7 +415,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterInfoId");
 
-                    b.ToTable("FooterBottoms");
+                    b.ToTable("FooterBottoms", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.FooterInfo", b =>
@@ -460,7 +460,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("LogoId");
 
-                    b.ToTable("FooterInfos");
+                    b.ToTable("FooterInfos", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Language", b =>
@@ -495,7 +495,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages");
+                    b.ToTable("Languages", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Logo", b =>
@@ -527,7 +527,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logos");
+                    b.ToTable("Logos", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.NewsletterSubscription", b =>
@@ -561,7 +561,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NewsletterSubscriptions");
+                    b.ToTable("NewsletterSubscriptions", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Order", b =>
@@ -646,7 +646,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.OrderItem", b =>
@@ -700,7 +700,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.PaymentMethod", b =>
@@ -741,7 +741,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterBottomId");
 
-                    b.ToTable("PaymentMethods");
+                    b.ToTable("PaymentMethods", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Product", b =>
@@ -817,7 +817,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.ProductImage", b =>
@@ -863,7 +863,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.ProductVariant", b =>
@@ -910,7 +910,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductVariants");
+                    b.ToTable("ProductVariants", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SearchQuickLink", b =>
@@ -954,7 +954,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("SearchSectionId");
 
-                    b.ToTable("SearchQuickLinks");
+                    b.ToTable("SearchQuickLinks", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SearchSection", b =>
@@ -998,7 +998,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SearchSections");
+                    b.ToTable("SearchSections", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.Slider", b =>
@@ -1048,7 +1048,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Sliders");
+                    b.ToTable("Sliders", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.SocialLink", b =>
@@ -1092,7 +1092,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("FooterInfoId");
 
-                    b.ToTable("SocialLinks");
+                    b.ToTable("SocialLinks", (string)null);
                 });
 
             modelBuilder.Entity("PickleballStore.DAL.DataContext.Entities.WishlistItem", b =>
@@ -1133,7 +1133,7 @@ namespace PickleballStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("WishlistItems");
+                    b.ToTable("WishlistItems", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

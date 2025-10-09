@@ -1,0 +1,65 @@
+﻿@model CategoryViewModel
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Category Details</h4>
+
+                <div class="mb-4">
+                    <a class="btn btn-secondary" asp-controller="category" asp-action="index">
+                        <i class="mdi mdi-arrow-left"></i> Back to List
+                    </a>
+                    <a class="btn btn-warning" asp-controller="category" asp-action="update" asp-route-id="@Model.Id">
+                        <i class="mdi mdi-pencil"></i> Edit
+                    </a>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Name:</label>
+                            <p>@Model.Name</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold">Status:</label>
+                            <p>
+                                @if (Model.IsDeleted)
+                                {
+                                    <span class="badge badge-danger">Deleted</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success">Active</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Category Image:</label>
+                            <div>
+                                @if (!string.IsNullOrEmpty(Model.ImageName))
+                                {
+                                    <img src="~/images/collections/@Model.ImageName"
+                                         alt="@Model.Name"
+                                         class="img-fluid"
+                                         style="max-width: 300px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                }
+                                else
+                                {
+                                    <div class="text-center p-5 border rounded" style="max-width: 300px; background-color: #f8f9fa;">
+                                        <i class="mdi mdi-image-off" style="font-size: 48px; color: #6c757d;"></i>
+                                        <p class="text-muted mt-2">No Image Available</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

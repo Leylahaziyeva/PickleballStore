@@ -40,7 +40,7 @@ namespace PickleballStore.MVC
 
             FilePathConstants.ProductImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "products");
             FilePathConstants.ProfileImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "users");
-            FilePathConstants.CategoryImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "categories");
+            FilePathConstants.CategoryImagePath = Path.Combine(builder.Environment.WebRootPath, "images", "collections");
 
             var app = builder.Build();
 
@@ -58,6 +58,35 @@ namespace PickleballStore.MVC
                 await dataInitializer.InitializeAsync();
             }
 
+            // Admin Role and User 
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+                string adminRole = "Admin";
+                string adminEmail = "admin@example.com";
+                string adminPassword = "Admin@123";
+
+                if (!await roleManager.RoleExistsAsync(adminRole))
+                    await roleManager.CreateAsync(new IdentityRole(adminRole));
+
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                if (adminUser == null)
+                {
+                    adminUser = new AppUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(adminUser, adminPassword);
+                }
+
+                if (!await userManager.IsInRoleAsync(adminUser, adminRole))
+                    await userManager.AddToRoleAsync(adminUser, adminRole);
+            }
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -68,9 +97,9 @@ namespace PickleballStore.MVC
             app.UseAuthentication(); 
             app.UseAuthorization();
 
-            //app.MapControllerRoute(
-            //   name: "areas",
-            //   pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+            app.MapControllerRoute(
+               name: "areas",
+               pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",

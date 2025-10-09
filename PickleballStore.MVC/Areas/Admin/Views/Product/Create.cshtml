@@ -1,0 +1,188 @@
+﻿@model CreateProductViewModel
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card shadow-sm rounded-3">
+            <div class="card-body">
+                <h4 class="card-title">Add product</h4>
+                <form method="post" class="forms-sample" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Name">Product Name</label>
+                                <input asp-for="Name" class="form-control" placeholder="name">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="CategoryId">Category</label>
+                                <select asp-items="Model.CategorySelectListItems" asp-for="CategoryId" class="form-control">
+                                    <option value="">-- Select Category --</option>
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Price">Price</label>
+                                <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="price">
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Stock">Stock</label>
+                                <input asp-for="Stock" type="number" class="form-control" placeholder="stock quantity">
+                                <span asp-validation-for="Stock" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Description">Description</label>
+                        <textarea id="editor" asp-for="Description" rows="5" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="AdditionalInformation">Additional Information</label>
+                        <textarea id="additionalEditor" asp-for="AdditionalInformation" rows="3" class="form-control"></textarea>
+                        <span asp-validation-for="AdditionalInformation" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="CoverImageFile">Cover image</label>
+                        <input asp-for="CoverImageFile" type="file" class="form-control" accept="image/*">
+                        <span asp-validation-for="CoverImageFile" class="text-danger"></span>
+                        <small class="form-text text-muted">Main product image</small>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="ImageFiles">Additional Images</label>
+                        <input asp-for="ImageFiles" type="file" class="form-control" accept="image/*" multiple>
+                        <span asp-validation-for="ImageFiles" class="text-danger"></span>
+                        <small class="form-text text-muted">Select multiple images (optional)</small>
+                    </div>
+
+                    <!-- Product Variants Section -->
+                    <div class="card border mt-4">
+                        <div class="card-header bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Product Variants (Colors, Sizes, etc.)</h5>
+                                <button type="button" class="btn btn-sm btn-success" id="addVariantBtn">
+                                    <i class="mdi mdi-plus"></i> Add Variant
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="variantsContainer">
+                                <!-- Variants will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-controller="product" asp-action="index" class="btn btn-light">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        let editorInstance = null;
+        let additionalEditorInstance = null;
+        let variantIndex = 0;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.querySelector('#editor')) {
+                ClassicEditor
+                    .create(document.querySelector('#editor'))
+                    .then(editor => {
+                        editorInstance = editor;
+                    })
+                    .catch(error => console.error('Editor error:', error));
+            }
+
+            if (document.querySelector('#additionalEditor')) {
+                ClassicEditor
+                    .create(document.querySelector('#additionalEditor'))
+                    .then(editor => {
+                        additionalEditorInstance = editor;
+                    })
+                    .catch(error => console.error('Additional Editor error:', error));
+            }
+
+            document.getElementById('addVariantBtn').addEventListener('click', function() {
+                addVariantRow();
+            });
+
+            document.querySelector('form').addEventListener('submit', function(e) {
+                if (editorInstance) {
+                    document.querySelector('#editor').value = editorInstance.getData();
+                }
+                if (additionalEditorInstance) {
+                    document.querySelector('#additionalEditor').value = additionalEditorInstance.getData();
+                }
+            });
+
+            addVariantRow();
+        });
+
+        function addVariantRow() {
+            const container = document.getElementById('variantsContainer');
+            const variantHtml = `
+                <div class="variant-row border-bottom pb-3 mb-3" data-index="${variantIndex}">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Option Name (e.g., Color, Size)</label>
+                                <input type="text" name="Variants[${variantIndex}].OptionName" class="form-control" placeholder="Color" required />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Option Value (e.g., Red, Large)</label>
+                                <input type="text" name="Variants[${variantIndex}].OptionValue" class="form-control" placeholder="Color name" required />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Color Code (Optional)</label>
+                                <input type="color" name="Variants[${variantIndex}].ColorCode" class="form-control" style="height: 45px;" />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="button" class="btn btn-danger btn-block remove-variant-btn">
+                                    <i class="mdi mdi-delete"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', variantHtml);
+            variantIndex++;
+
+            const lastRow = container.lastElementChild;
+            lastRow.querySelector('.remove-variant-btn').addEventListener('click', function() {
+                lastRow.remove();
+            });
+        }
+    </script>
+}

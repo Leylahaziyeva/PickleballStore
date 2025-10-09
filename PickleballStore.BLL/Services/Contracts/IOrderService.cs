@@ -9,5 +9,6 @@ namespace PickleballStore.BLL.Services.Contracts
         Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId, string userId);
         Task<bool> CancelOrderAsync(int orderId, string userId);
         Task<int> PlaceOrderAsync(string userId, CheckoutViewModel model);
+        //Task<bool> AssignCourierAsync(int orderId, string courierService, string trackingNumber, string warehouse); // AdminOrderController ucundur
     }
 }
