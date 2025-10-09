@@ -21,20 +21,21 @@
                         <div class="mb-3">
                             <img src="~/images/products/@Model.CoverImageName"
                                  alt="@Model.Name"
-                                 class="img-fluid rounded shadow-sm"
+                                 class="img-fluid rounded shadow-sm main-product-image"
                                  style="width: 100%; max-height: 400px; object-fit: cover;" />
                         </div>
+
 
                         @if (Model.Images != null && Model.Images.Any())
                         {
                             <div class="d-flex flex-wrap gap-2">
-                                @foreach (var image in Model.Images)
+                                @foreach (var image in Model.Images.OrderByDescending(i => i.IsMain))
                                 {
                                     <img src="~/images/products/@image.ImageName"
                                          alt="Product Image"
-                                         class="rounded"
-                                         style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid #ddd;"
-                                         onclick="changeMainImage(this.src)" />
+                                         class="rounded thumbnail-image @(image.IsMain ? "active" : "")"
+                                         style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid @(image.IsMain ? "#007bff" : "#ddd");"
+                                         onclick="changeMainImage(this.src, this)" />
                                 }
                             </div>
                         }
@@ -130,16 +131,33 @@
 
 @section Scripts {
     <script>
-        function changeMainImage(src) {
-            document.querySelector('.col-md-5 .img-fluid').src = src;
+        function changeMainImage(src, clickedElement) {
+            const mainImage = document.querySelector('.main-product-image');
+            mainImage.src = src;
+
+
+            document.querySelectorAll('.thumbnail-image').forEach(img => {
+                img.style.borderColor = '#ddd';
+                img.classList.remove('active');
+            });
+
+            clickedElement.style.borderColor = '#007bff';
+            clickedElement.classList.add('active');
         }
 
-        document.querySelectorAll('.col-md-5 img[onclick]').forEach(img => {
-            img.addEventListener('mouseenter', function() {
-                this.style.borderColor = '#007bff';
-            });
-            img.addEventListener('mouseleave', function() {
-                this.style.borderColor = '#ddd';
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.thumbnail-image').forEach(img => {
+                img.addEventListener('mouseenter', function() {
+                    if (!this.classList.contains('active')) {
+                        this.style.borderColor = '#6c757d';
+                    }
+                });
+
+                img.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('active')) {
+                        this.style.borderColor = '#ddd';
+                    }
+                });
             });
         });
     </script>

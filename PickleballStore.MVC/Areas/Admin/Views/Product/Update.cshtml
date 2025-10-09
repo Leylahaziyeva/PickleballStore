@@ -136,6 +136,13 @@
                                                         <input type="color" name="Variants[@i].ColorCode" value="@(Model.Variants[i].ColorCode ?? "#000000")" class="form-control" style="height: 45px;" />
                                                     </div>
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Variant Image (Optional)</label>
+                                                        <input type="file" name="Variants[@i].ImageFile" class="form-control" accept="image/*" />
+
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-1">
                                                     <div class="form-group">
                                                         <label>&nbsp;</label>
@@ -173,7 +180,6 @@
         let variantIndex = @(Model.Variants?.Count ?? 0);
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize CKEditor for Description
             if (document.querySelector('#editor')) {
                 ClassicEditor
                     .create(document.querySelector('#editor'))
@@ -184,7 +190,6 @@
                     .catch(error => console.error('Editor error:', error));
             }
 
-            // Initialize CKEditor for Additional Information
             if (document.querySelector('#additionalEditor')) {
                 ClassicEditor
                     .create(document.querySelector('#additionalEditor'))
@@ -195,7 +200,6 @@
                     .catch(error => console.error('Additional Editor error:', error));
             }
 
-            // Sync CKEditor before submit
             document.querySelector('form').addEventListener('submit', function(e) {
                 if (editorInstance) {
                     document.querySelector('#editor').value = editorInstance.getData();
@@ -205,14 +209,12 @@
                 }
             });
 
-            // Remove variant button handlers for existing variants
             document.querySelectorAll('.remove-variant-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.closest('.variant-row').remove();
                 });
             });
 
-            // Add variant button
             document.getElementById('addVariantBtn').addEventListener('click', function() {
                 addVariantRow();
             });
@@ -241,8 +243,14 @@
                             <div class="form-group">
                                 <label>Color Code (Optional)</label>
                                 <input type="color" name="Variants[${variantIndex}].ColorCode" class="form-control" style="height: 45px;" value="#000000" />
-                            </div>
+                            </div>  
                         </div>
+                           <div class="col-md-3">
+                               <div class="form-group">
+                                 <label>Variant Image (Optional)</label>
+                                  <input type="file" name="Variants[${variantIndex}].ImageFile" class="form-control" accept="image/*" />
+                                </div>
+                             </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label>&nbsp;</label>

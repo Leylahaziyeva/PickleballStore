@@ -108,34 +108,69 @@ namespace PickleballStore.BLL.Services
                 }
             }
 
+            var variants = new List<ProductVariant>();
+            if (model.Variants != null && model.Variants.Any())
+            {
+                foreach (var variant in model.Variants)
+                {
+                    string? variantImageName = null;
+
+                    if (variant.ImageFile != null && variant.ImageFile.Length > 0)
+                    {
+                        variantImageName = await _fileService.SaveFileAsync(variant.ImageFile);
+                    }
+
+                    variants.Add(new ProductVariant
+                    {
+                        OptionName = variant.OptionName,
+                        OptionValue = variant.OptionValue,
+                        ColorCode = variant.ColorCode,
+                        OptionImageName = variantImageName 
+                    });
+                }
+            }
+
             var product = new Product
             {
                 Name = model.Name,
                 Description = model.Description,
                 AdditionalInformation = model.AdditionalInformation,
                 Price = model.Price,
-                QuantityAvailable = model.Stock, 
+                QuantityAvailable = model.Stock,
                 CategoryId = model.CategoryId,
                 CoverImageName = coverImageName,
-                IsBestSeller = false, 
+                IsBestSeller = false,
                 LiveViewCount = 0,
                 LiveInCarts = 0,
                 BadgeLabel = null,
                 BadgeCssClass = null,
                 CountdownEndDate = null,
 
-                Images = imageNames.Select(name => new ProductImage
-                {
-                    ImageName = name
-                }).ToList(),
+                Images = new List<ProductImage>
+        {
+            new ProductImage
+            {
+                ImageName = coverImageName,
+                IsMain = true,
+                IsHover = false
+            }
+        },
 
-                Variants = model.Variants.Select(v => new ProductVariant
-                {
-                    OptionName = v.OptionName,
-                    OptionValue = v.OptionValue,
-                    ColorCode = v.ColorCode
-                }).ToList()
+                Variants = variants 
             };
+
+            if (imageNames.Any())
+            {
+                foreach (var imageName in imageNames)
+                {
+                    product.Images.Add(new ProductImage
+                    {
+                        ImageName = imageName,
+                        IsMain = false,
+                        IsHover = false
+                    });
+                }
+            }
 
             await _repository.CreateAsync(product);
         }
@@ -166,8 +201,22 @@ namespace PickleballStore.BLL.Services
                     _fileService.DeleteFile(product.CoverImageName);
                 }
 
+                var oldCoverImage = product.Images!.FirstOrDefault(i => i.IsMain);
+                if (oldCoverImage != null)
+                {
+                    product.Images!.Remove(oldCoverImage);
+                }
+
                 var newCoverImageName = await _fileService.SaveFileAsync(model.CoverImageFile);
                 product.CoverImageName = newCoverImageName;
+
+                product.Images!.Add(new ProductImage
+                {
+                    ImageName = newCoverImageName,
+                    IsMain = true,
+                    IsHover = false,
+                    ProductId = product.Id
+                });
             }
 
             if (model.ImageFiles != null && model.ImageFiles.Any())
@@ -180,6 +229,8 @@ namespace PickleballStore.BLL.Services
                         product.Images!.Add(new ProductImage
                         {
                             ImageName = imageName,
+                            IsMain = false,
+                            IsHover = false,
                             ProductId = product.Id
                         });
                     }
@@ -199,6 +250,9 @@ namespace PickleballStore.BLL.Services
 
                 foreach (var variant in variantsToRemove)
                 {
+                    if (!string.IsNullOrEmpty(variant.OptionImageName))
+                        _fileService.DeleteFile(variant.OptionImageName);
+
                     product.Variants!.Remove(variant);
                 }
 
@@ -212,15 +266,31 @@ namespace PickleballStore.BLL.Services
                             existingVariant.OptionName = variantModel.OptionName;
                             existingVariant.OptionValue = variantModel.OptionValue;
                             existingVariant.ColorCode = variantModel.ColorCode;
+
+                            if (variantModel.ImageFile != null && variantModel.ImageFile.Length > 0)
+                            {
+                                if (!string.IsNullOrEmpty(existingVariant.OptionImageName))
+                                    _fileService.DeleteFile(existingVariant.OptionImageName);
+
+                                var variantImageName = await _fileService.SaveFileAsync(variantModel.ImageFile);
+                                existingVariant.OptionImageName = variantImageName;
+                            }
                         }
                     }
                     else
                     {
+                        string? newVariantImageName = null;
+                        if (variantModel.ImageFile != null && variantModel.ImageFile.Length > 0)
+                        {
+                            newVariantImageName = await _fileService.SaveFileAsync(variantModel.ImageFile);
+                        }
+
                         product.Variants!.Add(new ProductVariant
                         {
                             OptionName = variantModel.OptionName,
                             OptionValue = variantModel.OptionValue,
                             ColorCode = variantModel.ColorCode,
+                            OptionImageName = newVariantImageName,
                             ProductId = product.Id
                         });
                     }

@@ -184,7 +184,7 @@
             </div>
 
             <!-- List Layout -->
-            <div class="tf-list-layout wrapper-shop" id="listLayout">
+            <div class="tf-list-layout wrapper-shop" id="listLayout" style="display: none;">
                 @foreach (var product in Model.Products)
                 {
                     <div class="card-product list-layout" data-availability="@(product.QuantityAvailable > 0 ? "In stock" : "Out of stock")">
@@ -380,14 +380,19 @@
                 </div>
                 <div id="categories" class="collapse show">
                     <ul class="list-categoris current-scrollbar mb_36">
-                        @foreach (var category in Model.Products.Select(p => p.CategoryName).Distinct())
+                        @foreach (var category in Model.Categories)
                         {
-                            <li class="cate-item"><a href="#"><span>@category</span></a></li>
+                            var isActive = ViewBag.ActiveCategoryId == category.Id ? "active-category" : "";
+                            <li class="cate-item @isActive">
+                                <a asp-controller="Shop" asp-action="ShopByCategory" asp-route-id="@category.Id">
+                                    <span>@category.Name</span>
+                                </a>
+                            </li>
                         }
+
                     </ul>
                 </div>
             </div>
-
             <form action="#" id="facet-filter-form" class="facet-filter-form">
 
                 <!-- Availability -->
@@ -478,3 +483,4 @@
 
 <script src="~/js/jquery.min.js"></script>
 <script src="~/js/shop.js"></script>
+

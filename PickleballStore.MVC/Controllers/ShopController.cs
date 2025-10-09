@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PickleballStore.BLL.Services.Contracts;
 using PickleballStore.BLL.ViewModels.Product;
-using PickleballStore.BLL.ViewModels.Shop;
 
 namespace PickleballStore.MVC.Controllers
 {
     public class ShopController : Controller
     {
         private readonly IShopService _shopService;
+        private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
 
-        public ShopController(IShopService shopService, IProductService productService)
+        public ShopController(IShopService shopService, IProductService productService, ICategoryService categoryService)
         {
             _shopService = shopService;
             _productService = productService;
+            _categoryService = categoryService;
         }
         public async Task<IActionResult> Index(int page = 1)
         {
@@ -47,23 +47,25 @@ namespace PickleballStore.MVC.Controllers
         {
             int pageSize = 12;
 
-            var products = await _productService.GetAllAsync(include: q => q.Include(p => p.Category!));
-            var categoryProducts = products.Where(p => p.CategoryId == id).ToList();
+            var shopModel = await _shopService.GetShopViewModelAsync();
 
-            var model = new ShopViewModel
-            {
-                Products = categoryProducts
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToList(),
-                CurrentPage = page,
-                PageSize = pageSize,
-                TotalItems = categoryProducts.Count
-            };
+            var categoryProducts = shopModel.Products
+                .Where(p => p.CategoryId == id)
+                .ToList();
+
+            shopModel.Products = categoryProducts
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            shopModel.TotalItems = categoryProducts.Count;
+            shopModel.CurrentPage = page;
+            shopModel.PageSize = pageSize;
 
             ViewBag.ProductCount = categoryProducts.Count;
+            ViewBag.ActiveCategoryId = id;
 
-            return View("Index", model);
+            return View("Index", shopModel); 
         }
     }
 }
