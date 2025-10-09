@@ -9,6 +9,7 @@
         public decimal TotalAmount { get; set; }
         public int ItemCount { get; set; }
     }
+
     public class OrderDetailsViewModel
     {
         public int Id { get; set; }
@@ -16,6 +17,7 @@
         public string Status { get; set; } = string.Empty;
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
+        public decimal DiscountAmount { get; set; }
         public string ShippingAddress { get; set; } = string.Empty;
         public string? CourierService { get; set; }
         public string? TrackingNumber { get; set; }

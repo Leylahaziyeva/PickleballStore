@@ -42,13 +42,19 @@ namespace PickleballStore.BLL.Services
             if (order == null)
                 return null;
 
+            var subtotal = order.Items.Sum(i => i.Subtotal);
+
+            var discountAmount = ValidateDiscountCode(order.DiscountCode ?? string.Empty);
+            var totalAfterDiscount = subtotal - discountAmount;
+
             var viewModel = new OrderDetailsViewModel
             {
                 Id = order.Id,
                 OrderNumber = order.OrderNumber,
                 Status = order.Status.ToString(),
                 OrderDate = order.CreatedAt,
-                TotalAmount = order.TotalAmount,
+                TotalAmount = totalAfterDiscount,
+                DiscountAmount = discountAmount,
                 CourierService = order.CourierService,
                 TrackingNumber = order.TrackingNumber,
                 Warehouse = order.Warehouse,
@@ -75,6 +81,17 @@ namespace PickleballStore.BLL.Services
             viewModel.History = BuildOrderHistory(order);
 
             return viewModel;
+        }
+
+        private decimal ValidateDiscountCode(string code)
+        {
+            return code.ToUpper() switch
+            {
+                "SAVE10" => 10,
+                "SAVE20" => 20,
+                "WELCOME15" => 15,
+                _ => 0
+            };
         }
 
         public async Task<bool> CancelOrderAsync(int orderId, string userId)

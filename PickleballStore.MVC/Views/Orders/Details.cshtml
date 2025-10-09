@@ -264,6 +264,13 @@
                                         <span>Subtotal</span>
                                         <span class="fw-6">$@Model.Items.Sum(i => i.Subtotal).ToString("0.00")</span>
                                     </li>
+                                    @if (Model.DiscountAmount > 0)
+                                    {
+                                        <li class="d-flex justify-content-between text-2 mt_4 pb_8 line">
+                                            <span>Total Discounts</span>
+                                            <span class="fw-6">- $@Model.DiscountAmount.ToString("0.00")</span>
+                                        </li>
+                                    }
                                     <li class="d-flex justify-content-between text-2 mt_8">
                                         <span>Order Total</span>
                                         <span class="fw-6">$@Model.TotalAmount.ToString("0.00")</span>

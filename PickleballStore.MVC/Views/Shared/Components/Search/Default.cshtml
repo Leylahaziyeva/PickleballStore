@@ -35,13 +35,12 @@
                                 @foreach (var link in Model.SearchSection.QuickLinks.Where(l => l.IsActive))
                                 {
                                     <li class="tf-quicklink-item">
-                                        <a href="@link.Url">@link.Title</a>
+                                        <a asp-controller="Shop" asp-action="ShopByCategory" asp-route-id="@link.Id"> @link.Title</a>
                                     </li>
                                 }
                             </ul>
                         </div>
                     }
-
                     @if (Model.InspirationProducts?.Any() == true)
                     {
                         <div class="tf-col-content">
@@ -51,12 +50,15 @@
                                 {
                                     <div class="tf-loop-item">
                                         <div class="image">
-                                            <a asp-controller="Product" asp-action="Detail" asp-route-url="@product.DetailsUrl">
+                                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.DetailsUrl">
                                                 <img src="~/images/products/@product.CoverImageName" alt="@product.Name">
                                             </a>
                                         </div>
                                         <div class="content">
-                                            <a asp-controller="Product" asp-action="Detail" asp-route-url="@product.DetailsUrl">@product.Name</a>
+                                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.DetailsUrl">
+                                                @product.Name
+                                            </a>
+
                                             <div class="tf-product-info-price">
                                                 @if (product.PriceBeforeDiscount.HasValue && product.PriceBeforeDiscount > product.Price)
                                                 {

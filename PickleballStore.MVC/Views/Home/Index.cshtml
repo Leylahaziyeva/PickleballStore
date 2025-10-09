@@ -144,15 +144,11 @@
                                     @if (!string.IsNullOrEmpty(slider.Title))
                                     {
                                         <div class="fade-item fade-item-2 title">
-                                            <a asp-controller="Product"
-                                               asp-action="Details"
-                                               asp-route-id="@slider.ProductId"
-                                               class="link text-white">
+                                            <a asp-controller="Product" asp-action="Details" asp-route-id="@slider.ProductId" class="link text-white">
                                                 @slider.Title
                                             </a>
                                         </div>
                                     }
-
                                     @if (slider.NewPrice.HasValue)
                                     {
                                         <div class="fade-item fade-item-3 price">
@@ -165,7 +161,7 @@
                                     }
 
                                     <div class="fade-item fade-item-4">
-                                        <a pickleball-black-1.jpg
+                                        <a asp-controller="Shop" asp-action="Index"
                                            class="tf-btn btn-line btn-line-light collection-other-link fw-6">
                                             <span>Shop now</span>
                                             <i class="icon icon-arrow1-top-left"></i>
