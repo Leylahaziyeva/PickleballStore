@@ -1,0 +1,273 @@
+﻿@model AdminOrderDetailsViewModel
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card shadow-sm rounded-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0">Order Details</h4>
+                    <div>
+                        <a asp-action="UpdateStatus" asp-route-id="@Model.Id" class="btn btn-warning btn-sm">
+                            <i class="mdi mdi-pencil"></i> Update Status
+                        </a>
+                        <a asp-action="Index" class="btn btn-light btn-sm">
+                            <i class="mdi mdi-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Order Information</h5>
+                                <table class="table table-borderless mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 150px;">Order Number:</th>
+                                            <td><strong>@Model.OrderNumber</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Order Date:</th>
+                                            <td>@Model.OrderDate.ToString("dd MMMM yyyy, HH:mm")</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status:</th>
+                                            <td>
+                                                @switch (Model.Status)
+                                                {
+                                                    case "OnHold":
+                                                        <span class="badge badge-warning">On Hold</span>
+                                                        break;
+                                                    case "Processing":
+                                                        <span class="badge badge-info">Processing</span>
+                                                        break;
+                                                    case "InProgress":
+                                                        <span class="badge badge-primary">In Progress</span>
+                                                        break;
+                                                    case "Shipped":
+                                                        <span class="badge badge-success">Shipped</span>
+                                                        break;
+                                                    case "Completed":
+                                                        <span class="badge badge-dark">Completed</span>
+                                                        break;
+                                                    case "Cancelled":
+                                                        <span class="badge badge-danger">Cancelled</span>
+                                                        break;
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Payment Method:</th>
+                                            <td>@Model.PaymentMethod</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card border mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Customer Information</h5>
+                                <table class="table table-borderless mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 150px;">Name:</th>
+                                            <td>@Model.CustomerName</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Email:</th>
+                                            <td>@Model.CustomerEmail</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Shipping Address</h5>
+                                <p class="mb-0">@Model.ShippingAddress</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.BillingAddress))
+                    {
+                        <div class="col-md-6">
+                            <div class="card border mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Billing Address</h5>
+                                    <p class="mb-0">@Model.BillingAddress</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.CourierService))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border mb-3 bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Shipping Information</h5>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <strong>Courier Service:</strong>
+                                            <p>@Model.CourierService</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <strong>Tracking Number:</strong>
+                                            <p>@Model.TrackingNumber</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <strong>Warehouse:</strong>
+                                            <p>@Model.Warehouse</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <strong>Est. Delivery:</strong>
+                                            <p>@Model.EstimatedDeliveryDate?.ToString("dd MMM yyyy")</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card border">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Order Items</h5>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Image</th>
+                                                <th>Color</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Items)
+                                            {
+                                                <tr>
+                                                    <td>@item.ProductName</td>
+                                                    <td>
+                                                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                                        {
+                                                            <img src="~/images/products/@item.ImageUrl" alt="@item.ProductName"
+                                                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="text-muted">No Image</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (!string.IsNullOrEmpty(item.Color))
+                                                        {
+                                                            <span>@item.Color</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="text-muted">-</span>
+                                                        }
+                                                    </td>
+                                                    <td>$@item.Price.ToString("N2")</td>
+                                                    <td>@item.Quantity</td>
+                                                    <td><strong>$@item.Subtotal.ToString("N2")</strong></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            @if (Model.DiscountAmount > 0)
+                                            {
+                                                <tr>
+                                                    <td colspan="5" class="text-right"><strong>Subtotal:</strong></td>
+                                                    <td><strong>$@((Model.TotalAmount + Model.DiscountAmount).ToString("N2"))</strong></td>
+                                                </tr>
+                                                <tr class="text-success">
+                                                    <td colspan="5" class="text-right"><strong>Discount:</strong></td>
+                                                    <td><strong>-$@Model.DiscountAmount.ToString("N2")</strong></td>
+                                                </tr>
+                                            }
+                                            <tr class="table-active">
+                                                <td colspan="5" class="text-right"><strong>Total Amount:</strong></td>
+                                                <td><strong class="text-primary">$@Model.TotalAmount.ToString("N2")</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.ProcessingStartedDate.HasValue || Model.PackagedDate.HasValue ||
+                                Model.ShippedDate.HasValue || Model.DeliveredDate.HasValue)
+                {
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="card border">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Order Timeline</h5>
+                                    <div class="timeline">
+                                        <div class="timeline-item">
+                                            <i class="mdi mdi-check-circle text-success"></i>
+                                            <strong>Order Placed</strong>
+                                            <span class="text-muted"> - @Model.OrderDate.ToString("dd MMM yyyy, HH:mm")</span>
+                                        </div>
+                                        @if (Model.ProcessingStartedDate.HasValue)
+                                        {
+                                            <div class="timeline-item">
+                                                <i class="mdi mdi-check-circle text-success"></i>
+                                                <strong>Processing Started</strong>
+                                                <span class="text-muted"> - @Model.ProcessingStartedDate.Value.ToString("dd MMM yyyy, HH:mm")</span>
+                                            </div>
+                                        }
+                                        @if (Model.PackagedDate.HasValue)
+                                        {
+                                            <div class="timeline-item">
+                                                <i class="mdi mdi-check-circle text-success"></i>
+                                                <strong>Product Packaged</strong>
+                                                <span class="text-muted"> - @Model.PackagedDate.Value.ToString("dd MMM yyyy, HH:mm")</span>
+                                            </div>
+                                        }
+                                        @if (Model.ShippedDate.HasValue)
+                                        {
+                                            <div class="timeline-item">
+                                                <i class="mdi mdi-check-circle text-success"></i>
+                                                <strong>Shipped</strong>
+                                                <span class="text-muted"> - @Model.ShippedDate.Value.ToString("dd MMM yyyy, HH:mm")</span>
+                                            </div>
+                                        }
+                                        @if (Model.DeliveredDate.HasValue)
+                                        {
+                                            <div class="timeline-item">
+                                                <i class="mdi mdi-check-circle text-success"></i>
+                                                <strong>Delivered</strong>
+                                                <span class="text-muted"> - @Model.DeliveredDate.Value.ToString("dd MMM yyyy, HH:mm")</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

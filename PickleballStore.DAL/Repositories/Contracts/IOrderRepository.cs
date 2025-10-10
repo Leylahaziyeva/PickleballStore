@@ -7,5 +7,7 @@ namespace PickleballStore.DAL.Repositories.Contracts
         Task<List<Order>> GetUserOrdersAsync(string userId);
         Task<Order?> GetOrderWithDetailsAsync(int orderId, string userId);
         Task<List<Order>> GetOrdersByStatusAsync(string userId, OrderStatus status);
+        Task<List<Order>> GetAllOrdersWithUserAsync();
+        Task<Order?> GetOrderByIdWithDetailsAsync(int orderId);
     }
 }

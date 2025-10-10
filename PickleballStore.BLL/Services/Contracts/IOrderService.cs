@@ -1,4 +1,5 @@
-﻿using PickleballStore.BLL.ViewModels.Checkout;
+﻿using PickleballStore.BLL.ViewModels.Admin.Order;
+using PickleballStore.BLL.ViewModels.Checkout;
 using PickleballStore.BLL.ViewModels.Order;
 
 namespace PickleballStore.BLL.Services.Contracts
@@ -9,6 +10,9 @@ namespace PickleballStore.BLL.Services.Contracts
         Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId, string userId);
         Task<bool> CancelOrderAsync(int orderId, string userId);
         Task<int> PlaceOrderAsync(string userId, CheckoutViewModel model);
-        //Task<bool> AssignCourierAsync(int orderId, string courierService, string trackingNumber, string warehouse); // AdminOrderController ucundur
+        Task<List<AdminOrderListViewModel>> GetAllOrdersAsync();
+        Task<AdminOrderDetailsViewModel?> GetOrderDetailsByIdAsync(int orderId);
+        Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusViewModel model);
+        Task<bool> SoftDeleteOrderAsync(int orderId);
     }
 }

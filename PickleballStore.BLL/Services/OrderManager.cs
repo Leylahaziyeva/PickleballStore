@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PickleballStore.BLL.Services.Contracts;
+using PickleballStore.BLL.ViewModels.Admin.Order;
 using PickleballStore.BLL.ViewModels.Checkout;
 using PickleballStore.BLL.ViewModels.Order;
 using PickleballStore.DAL.DataContext.Entities;
@@ -201,23 +202,130 @@ namespace PickleballStore.BLL.Services
             return history.OrderBy(h => h.Timestamp).ToList();
         }
 
-        ////Admin funksiyasi - sifarise kuryer teyin edir
-        //public async Task<bool> AssignCourierAsync(int orderId, string courierService, string trackingNumber, string warehouse)
-        //{
-        //    var order = await _repository.GetAsync(o => o.Id == orderId);
+        public async Task<List<AdminOrderListViewModel>> GetAllOrdersAsync()
+        {
+            var orders = await _repository.GetAllOrdersWithUserAsync();
 
-        //    if (order == null)
-        //        return false;
+            return orders.Where(o => !o.IsDeleted).Select(o => new AdminOrderListViewModel
+            {
+                Id = o.Id,
+                OrderNumber = o.OrderNumber,
+                OrderDate = o.CreatedAt,
+                Status = o.Status.ToString(),
+                TotalAmount = o.TotalAmount,
+                ItemCount = o.Items.Count,
+                CustomerName = $"{o.User.FirstName} {o.User.LastName}",
+                CustomerEmail = o.User.Email ?? string.Empty
+            }).OrderByDescending(o => o.OrderDate).ToList();
+        }
 
-        //    order.CourierService = courierService;
-        //    order.TrackingNumber = trackingNumber;
-        //    order.Warehouse = warehouse;
-        //    order.ShippedDate = DateTime.Now;
-        //    order.EstimatedDeliveryDate = DateTime.Now.AddDays(3);
-        //    order.Status = OrderStatus.Shipped;
+        public async Task<AdminOrderDetailsViewModel?> GetOrderDetailsByIdAsync(int orderId)
+        {
+            var order = await _repository.GetOrderByIdWithDetailsAsync(orderId);
 
-        //    await _repository.UpdateAsync(order);
-        //    return true;
-        //}
+            if (order == null)
+                return null;
+
+            var subtotal = order.Items.Sum(i => i.Subtotal);
+            var discountAmount = ValidateDiscountCode(order.DiscountCode ?? string.Empty);
+            var totalAfterDiscount = subtotal - discountAmount;
+
+            var viewModel = new AdminOrderDetailsViewModel
+            {
+                Id = order.Id,
+                OrderNumber = order.OrderNumber,
+                Status = order.Status.ToString(),
+                OrderDate = order.CreatedAt,
+                TotalAmount = totalAfterDiscount,
+                DiscountAmount = discountAmount,
+                CustomerName = $"{order.User.FirstName} {order.User.LastName}",
+                CustomerEmail = order.User.Email ?? string.Empty,
+                PaymentMethod = order.PaymentMethod,
+                CourierService = order.CourierService,
+                TrackingNumber = order.TrackingNumber,
+                Warehouse = order.Warehouse,
+                EstimatedDeliveryDate = order.EstimatedDeliveryDate,
+                ProcessingStartedDate = order.ProcessingStartedDate,
+                PackagedDate = order.PackagedDate,
+                ShippedDate = order.ShippedDate,
+                DeliveredDate = order.DeliveredDate,
+                Items = order.Items.Select(i => new AdminOrderItemViewModel
+                {
+                    Id = i.Id,
+                    ProductName = i.ProductName,
+                    ImageUrl = i.ImageUrl,
+                    Color = i.Color,
+                    Quantity = i.Quantity,
+                    Price = i.Price,
+                    Subtotal = i.Subtotal
+                }).ToList()
+            };
+
+            if (order.ShippingAddress != null)
+            {
+                viewModel.ShippingAddress = $"{order.ShippingAddress.Adress}, {order.ShippingAddress.City}, {order.ShippingAddress.Country}";
+            }
+
+            if (order.BillingAddress != null)
+            {
+                viewModel.BillingAddress = $"{order.BillingAddress.Adress}, {order.BillingAddress.City}, {order.BillingAddress.Country}";
+            }
+
+            return viewModel;
+        }
+
+        public async Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusViewModel model)
+        {
+            var order = await _repository.GetAsync(o => o.Id == model.Id);
+
+            if (order == null)
+                return false;
+
+            var oldStatus = order.Status;
+            order.Status = Enum.Parse<OrderStatus>(model.Status);
+
+            switch (order.Status)
+            {
+                case OrderStatus.Processing:
+                    if (!order.ProcessingStartedDate.HasValue)
+                        order.ProcessingStartedDate = DateTime.UtcNow;
+                    break;
+
+                case OrderStatus.InProgress:
+                    if (!order.PackagedDate.HasValue)
+                        order.PackagedDate = DateTime.UtcNow;
+                    break;
+
+                case OrderStatus.Shipped:
+                    if (!order.ShippedDate.HasValue)
+                        order.ShippedDate = DateTime.UtcNow;
+
+                    order.CourierService = model.CourierService;
+                    order.TrackingNumber = model.TrackingNumber;
+                    order.Warehouse = model.Warehouse;
+                    order.EstimatedDeliveryDate = model.EstimatedDeliveryDate ?? DateTime.UtcNow.AddDays(3);
+                    break;
+
+                case OrderStatus.Completed:
+                    if (!order.DeliveredDate.HasValue)
+                        order.DeliveredDate = DateTime.UtcNow;
+                    break;
+            }
+
+            await _repository.UpdateAsync(order);
+            return true;
+        }
+
+        public async Task<bool> SoftDeleteOrderAsync(int orderId)
+        {
+            var order = await _repository.GetAsync(o => o.Id == orderId);
+
+            if (order == null)
+                return false;
+
+            order.IsDeleted = true;
+            await _repository.UpdateAsync(order);
+            return true;
+        }
     }
 }

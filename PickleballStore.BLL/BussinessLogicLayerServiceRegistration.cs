@@ -23,6 +23,7 @@ namespace PickleballStore.BLL
             services.AddScoped<IWishlistService, WishlistManager>();
             services.AddScoped<IOrderService, OrderManager>();
             services.AddScoped<IAddressService, AddressManager>();
+            services.AddScoped<IDashboardService, DashboardManager>();
             services.AddScoped<FileService>();
             services.AddScoped<BasketManager>();
 

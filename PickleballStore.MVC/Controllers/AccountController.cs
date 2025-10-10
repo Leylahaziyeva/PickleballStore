@@ -83,6 +83,12 @@ namespace PickleballStore.MVC.Controllers
                 return LocalRedirect(returnUrl);
             }
 
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Contains("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
+
             return RedirectToAction(nameof(Dashboard));
         }
 
@@ -236,6 +242,11 @@ namespace PickleballStore.MVC.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return RedirectToAction(nameof(Login));
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
 
             var viewModel = new DashboardViewModel
             {

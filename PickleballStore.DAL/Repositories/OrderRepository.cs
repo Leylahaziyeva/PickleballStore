@@ -40,5 +40,25 @@ namespace PickleballStore.DAL.Repositories
                 .OrderByDescending(o => o.CreatedAt)
                 .ToListAsync();
         }
+
+        public async Task<List<Order>> GetAllOrdersWithUserAsync()
+        {
+            return await _dbContext.Orders
+                .Include(o => o.User)
+                .Include(o => o.Items)
+                .Where(o => !o.IsDeleted)
+                .OrderByDescending(o => o.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<Order?> GetOrderByIdWithDetailsAsync(int orderId)
+        {
+            return await _dbContext.Orders
+                .Include(o => o.User)
+                .Include(o => o.Items)
+                .Include(o => o.ShippingAddress)
+                .Include(o => o.BillingAddress)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+        }
     }
 }

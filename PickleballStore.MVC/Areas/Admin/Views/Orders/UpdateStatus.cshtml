@@ -1,0 +1,114 @@
+﻿@model UpdateOrderStatusViewModel
+
+<div class="row">
+    <div class="col-md-8 mx-auto grid-margin stretch-card">
+        <div class="card shadow-sm rounded-3">
+            <div class="card-body">
+                <h4 class="card-title mb-4 text-center">Update Order Status</h4>
+
+                <form method="post" class="forms-sample">
+                    <input type="hidden" asp-for="Id" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Status" class="form-label fw-bold">Order Status</label>
+                        <select asp-for="Status" class="form-control form-select" id="statusSelect">
+                            <option value="">-- Select Status --</option>
+                            @foreach (var status in ViewBag.OrderStatuses)
+                            {
+                                <option value="@status.Value">@status.Text</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="border rounded p-3 mb-4 bg-light">
+                        <h6 class="fw-bold text-secondary mb-2">Status Guide:</h6>
+                        <div class="small">
+                            <span class="badge bg-warning text-white mb-2 d-inline-block">On Hold</span> - Order received, awaiting processing<br />
+                            <span class="badge bg-info text-white mb-2 d-inline-block">Processing</span> - Order is being prepared<br />
+                            <span class="badge bg-primary text-white mb-2 d-inline-block">In Progress</span> - Order is being packaged<br />
+                            <span class="badge bg-success text-white mb-2 d-inline-block">Shipped</span> - Order has been shipped<br />
+                            <span class="badge bg-secondary text-white mb-2 d-inline-block">Completed</span> - Order delivered successfully<br />
+                            <span class="badge bg-danger text-white mb-2 d-inline-block">Cancelled</span> - Order cancelled
+                        </div>
+                    </div>
+
+                    <div id="shippingFields" style="display: none;">
+                        <div class="card border mb-3 bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary mb-3">Shipping Information</h5>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="CourierService" class="form-label">Courier Service</label>
+                                    <input asp-for="CourierService" class="form-control" placeholder="e.g., DHL, FedEx, UPS" />
+                                    <span asp-validation-for="CourierService" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="TrackingNumber" class="form-label">Tracking Number</label>
+                                    <input asp-for="TrackingNumber" class="form-control" placeholder="Enter tracking number" />
+                                    <span asp-validation-for="TrackingNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="Warehouse" class="form-label">Warehouse</label>
+                                    <input asp-for="Warehouse" class="form-control" placeholder="e.g., Warehouse A, Main Hub" />
+                                    <span asp-validation-for="Warehouse" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="EstimatedDeliveryDate" class="form-label">Estimated Delivery Date</label>
+                                    <input asp-for="EstimatedDeliveryDate" type="date" class="form-control" />
+                                    <span asp-validation-for="EstimatedDeliveryDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="mdi mdi-content-save"></i> Update Status
+                        </button>
+                        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">
+                            <i class="mdi mdi-arrow-left"></i> Back
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusSelect = document.getElementById('statusSelect');
+            const shippingFields = document.getElementById('shippingFields');
+
+            function toggleShippingFields() {
+                if (statusSelect.value === 'Shipped') {
+                    shippingFields.style.display = 'block';
+                    document.querySelectorAll('#shippingFields input').forEach(input => {
+                        if (input.type !== 'date') {
+                            input.setAttribute('required', 'required');
+                        }
+                    });
+                } else {
+                    shippingFields.style.display = 'none';
+                    document.querySelectorAll('#shippingFields input').forEach(input => {
+                        input.removeAttribute('required');
+                    });
+                }
+            }
+
+            toggleShippingFields();
+
+            statusSelect.addEventListener('change', toggleShippingFields);
+        });
+    </script>
+}

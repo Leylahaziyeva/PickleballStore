@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PickleballStore.BLL.ViewModels.Account;
 using PickleballStore.BLL.ViewModels.Address;
+using PickleballStore.BLL.ViewModels.Admin.Order;
 using PickleballStore.BLL.ViewModels.Category;
 using PickleballStore.BLL.ViewModels.Checkout;
 using PickleballStore.BLL.ViewModels.Order;
@@ -87,6 +88,16 @@ namespace PickleballStore.BLL.Mapping
             CreateMap<Order, OrderListViewModel>();
             CreateMap<Order, OrderDetailsViewModel>();
             CreateMap<OrderItem, OrderItemViewModel>();
+
+            CreateMap<Order, AdminOrderListViewModel>()
+                .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
+                .ForMember(dest => dest.CustomerEmail, opt => opt.MapFrom(src => src.User.Email));
+
+            CreateMap<Order, AdminOrderDetailsViewModel>()
+                .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
+                .ForMember(dest => dest.CustomerEmail, opt => opt.MapFrom(src => src.User.Email));
+
+            CreateMap<OrderItem, AdminOrderItemViewModel>();
 
             CreateMap<CheckoutViewModel, Order>()
                 .ForMember(dest => dest.ShippingAddress, opt => opt.Ignore())

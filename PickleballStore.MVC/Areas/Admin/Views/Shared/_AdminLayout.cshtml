@@ -18,6 +18,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="~/admin/images/favicon.png" />
 </head>
+
 <body>
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
@@ -165,11 +166,10 @@
         </nav>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
@@ -197,6 +197,20 @@
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" asp-controller="product" asp-action="index">Products</a></li>
                                 <li class="nav-item"> <a class="nav-link" asp-controller="product" asp-action="create">Add Product</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#orders-menu" aria-expanded="false" aria-controls="orders-menu">
+                            <i class="mdi mdi-cart menu-icon"></i>
+                            <span class="menu-title">Orders</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="orders-menu">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Orders" asp-action="Index">All Orders</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -295,7 +309,4 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-
 </html>
-
-
